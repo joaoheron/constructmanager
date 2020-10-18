@@ -9,28 +9,27 @@ public class ValidateInput {
 
     private Context context;
     private EditText email, password, repeat_password;
+    private String email_str, pw_str, repeat_pw_str;
 
-    String email_str, pw_str, repeat_pw_str;
-
-    ValidateInput(Context c, EditText e) {
+    public ValidateInput(Context c, EditText e) {
         context = c;
         email = e;
     }
 
-    ValidateInput(Context c, EditText e, EditText p) {
+    public ValidateInput(Context c, EditText e, EditText p) {
         context = c;
         email = e;
         password = p;
     }
 
-    ValidateInput(Context c, EditText e, EditText p, EditText rp){
+    public ValidateInput(Context c, EditText e, EditText p, EditText rp){
         context = c;
         email = e;
         password = p;
         repeat_password = rp;
     }
 
-    boolean validateEmail() {
+    public boolean validateEmail() {
         email_str = email.getText().toString().trim();
 //        Log.wtf("WTF", "email input: " + email_str);
         if (email_str.isEmpty()) {
@@ -44,7 +43,7 @@ public class ValidateInput {
         }
     }
 
-    boolean validatePassword() {
+    public boolean validatePassword() {
         pw_str = password.getText().toString();
 
         if (pw_str.isEmpty()) {
@@ -58,7 +57,7 @@ public class ValidateInput {
         }
     }
 
-    boolean validateRepeatPassword() {
+    public boolean validateRepeatPassword() {
         repeat_pw_str = repeat_password.getText().toString().trim();
         if (repeat_pw_str.isEmpty()) {
             Toast.makeText(context, "Preencha sua senha novamente", Toast.LENGTH_LONG).show();

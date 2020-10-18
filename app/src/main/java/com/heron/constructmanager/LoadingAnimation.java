@@ -9,11 +9,11 @@ public class LoadingAnimation {
     private Activity activity;
     private AlertDialog dialog;
 
-    LoadingAnimation(Activity a) {
+    public LoadingAnimation(Activity a) {
         activity = a;
     }
 
-    void loadingAnimationDialog() {
+    public void loadingAnimationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -24,7 +24,7 @@ public class LoadingAnimation {
         dialog.show();
     }
 
-    void dismissLoading() {
+    public void dismissLoading() {
         dialog.dismiss();
     }
 }

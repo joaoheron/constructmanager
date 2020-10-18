@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
-    tools:context=".HomeActivity">
+    tools:context=".activities.HomeActivity">
 
     <Button
         android:id="@+id/obras_button_home"
