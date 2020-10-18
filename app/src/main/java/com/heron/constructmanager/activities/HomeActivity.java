@@ -34,7 +34,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         update_email_button = findViewById(R.id.update_email_button_home);
         update_password_button = findViewById(R.id.update_password_button_home);
         logout_button = findViewById(R.id.logout_button_home);
@@ -76,8 +75,8 @@ public class HomeActivity extends AppCompatActivity {
         obras_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                saveNameInDb(user);
-
+                Intent intent = new Intent(HomeActivity.this, ListaObrasActivity.class);
+                startActivity(intent);
             }
         });
 
