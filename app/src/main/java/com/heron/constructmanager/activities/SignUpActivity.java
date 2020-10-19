@@ -80,7 +80,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (email_verified && pw_verified && repeat_pw_verified) {
 
-
             email_str = sign_up_email.getText().toString().trim();
             pw_str = sign_up_password.getText().toString().trim();
 
