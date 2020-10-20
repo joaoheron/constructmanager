@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ import java.util.Map;
 
 public class NewObraForm extends AppCompatActivity {
 
+    ImageView back_arrow;
+
     DatabaseReference root_ref;
     FirebaseAuth auth;
 
@@ -50,6 +53,7 @@ public class NewObraForm extends AppCompatActivity {
         type = findViewById(R.id.new_obra_type);
         responsibles = findViewById(R.id.new_obra_responsibles);
         add_button = findViewById(R.id.new_obra_add_button);
+        back_arrow = findViewById(R.id.new_obra_back_arrow);
         // Firebase
         auth = FirebaseAuth.getInstance();
         root_ref = FirebaseDatabase.getInstance().getReference();
@@ -58,6 +62,13 @@ public class NewObraForm extends AppCompatActivity {
         // Loading animation
         loading = new LoadingAnimation(this);
         // Listeners
+        back_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

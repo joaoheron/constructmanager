@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +38,7 @@ public class ListaObrasActivity extends AppCompatActivity {
     RecyclerView recycler_view;
 
     Button add_obra;
+    ImageView back_arrow_button;
 
     DatabaseReference obras_ref;
     FirebaseDatabase db;
@@ -54,7 +56,16 @@ public class ListaObrasActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         user = auth.getCurrentUser();
 
+        back_arrow_button = findViewById(R.id.list_obras_back_arrow);
         add_obra = findViewById(R.id.list_obras_add_button);
+
+        back_arrow_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         add_obra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
