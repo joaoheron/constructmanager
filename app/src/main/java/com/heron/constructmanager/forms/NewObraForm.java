@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,9 +29,8 @@ import java.util.Map;
 
 public class NewObraForm extends AppCompatActivity {
 
-    DatabaseReference db;
+    DatabaseReference root_ref;
     FirebaseAuth auth;
-    FirebaseUser user;
 
     EditText title, address, type, responsibles;
     Button add_button;
@@ -52,7 +52,7 @@ public class NewObraForm extends AppCompatActivity {
         add_button = findViewById(R.id.new_obra_add_button);
         // Firebase
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance().getReference();
+        root_ref = FirebaseDatabase.getInstance().getReference();
         // Validate
         validate_input = new ValidateInput(NewObraForm.this, title, address, type, responsibles);
         // Loading animation
@@ -77,7 +77,7 @@ public class NewObraForm extends AppCompatActivity {
                     responsibles_str = responsibles.getText().toString().trim();
                     user_id_str = auth.getCurrentUser().getUid();
 
-                    writeNewObra(user_id_str, title_str, address_str, type_str, responsibles_str);
+                    writeObra(user_id_str, title_str, address_str, type_str, responsibles_str);
 
                     loading.dismissLoading();
                     finish();
@@ -91,29 +91,24 @@ public class NewObraForm extends AppCompatActivity {
 
     }
 
-
-//    // [START basic_write]
-//    private void writeNewObra(String title, String address, String type,  String responsibles) {
-//        String key = db.child("obras").push().getKey();
-//        // TODO fazer um map para adicionar a obra para os responsaveis em questao
-//        Obra obra = new Obra(title, address, type, "Preparacao", responsibles);
-//        db.child("obras").child(key).setValue(obra);
-//
-//    }
-    // [END basic_write]
-
-    private void writeNewObra(String user_id, String title, String address, String type,  String responsibles) {
+    private void writeObra(String user_id, String title, String address, String type,  String responsibles) {
         // Create new post at /users/$user_id/$obra_id and at
         // /obras/$obra_id simultaneously
-        String key = db.child("obras").push().getKey();
+        String key = root_ref.child("obras").push().getKey();
         Obra obra = new Obra(title, address, type, "Preparacao", responsibles);
         Map<String, Object> postValues = obra.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/obras/" + key, postValues);
-        childUpdates.put("/users/" + user_id + "/" + key, postValues);
+        childUpdates.put("/users/" + user_id + "/obras/" + key, postValues);
 
-        db.updateChildren(childUpdates);
+        root_ref.updateChildren(childUpdates).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Toast.makeText(NewObraForm.this, "Obra cadastrada com sucesso.", Toast.LENGTH_LONG).show();
+            } else{
+                Toast.makeText(NewObraForm.this, "Erro ao cadastrar obra! Tente novamente.", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
