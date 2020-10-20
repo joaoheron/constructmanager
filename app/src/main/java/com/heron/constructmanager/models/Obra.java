@@ -11,6 +11,19 @@ public class Obra {
     private String titulo;
     private String endereco;
 
+    @Exclude
+    String uid;
+
+    @Exclude
+    public String getUid() {
+        return uid;
+    }
+
+    @Exclude
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getTitulo() {
         return titulo;
     }

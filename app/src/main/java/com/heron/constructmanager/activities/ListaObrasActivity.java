@@ -83,6 +83,7 @@ public class ListaObrasActivity extends AppCompatActivity {
                 Obra obra;
                 for(DataSnapshot obra_snap : snapshot.getChildren()) {
                     obra = obra_snap.getValue(Obra.class);
+                    obra.setUid(obra_snap.getKey()); // !!!
                     obras.add(obra);
                 }
                 adapter = new ObrasAdapter(obras, context);

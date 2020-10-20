@@ -37,9 +37,6 @@ public class ObrasAdapter extends RecyclerView.Adapter<ObrasAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             card_obra_title_text = itemView.findViewById(R.id.card_obra_title_text);
-//            card_obra_address_text = itemView.findViewById(R.id.card_obra_address_text);
-//            card_obra_eye_button = itemView.findViewById(R.id.card_obra_eye_button);
-
         }
     }
 
@@ -53,14 +50,22 @@ public class ObrasAdapter extends RecyclerView.Adapter<ObrasAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.card_obra_title_text.setText(obrasList.get(position).getTitulo());
-//        holder.card_obra_address_text.setText(obrasList.get(position).getEndereco());
+        final Obra obra = obrasList.get(position);
+
+        holder.card_obra_title_text.setText(obra.getTitulo());
         holder.card_obra_title_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO Definir a activity com base no stage da obra
                 Intent intent = new Intent(context, ObraPreparacaoView.class);
-                context.startActivity(intent);            }
+                intent.putExtra("title", obra.getTitulo());
+                intent.putExtra("address", obra.getEndereco());
+                intent.putExtra("stage", obra.getEtapa());
+                intent.putExtra("type", obra.getTipo_obra());
+                intent.putExtra("responsibles", obra.getResponsibles());
+                intent.putExtra("uid", obra.getUid());
+                context.startActivity(intent);
+            }
         });
 
     }
