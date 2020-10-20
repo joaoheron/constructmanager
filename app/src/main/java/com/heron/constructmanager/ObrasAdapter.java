@@ -1,15 +1,21 @@
+
 package com.heron.constructmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.heron.constructmanager.activities.ListaObrasActivity;
+import com.heron.constructmanager.forms.NewObraForm;
 import com.heron.constructmanager.models.Obra;
+import com.heron.constructmanager.views.ObraPreparacaoView;
 
 import java.util.ArrayList;
 
@@ -25,12 +31,15 @@ public class ObrasAdapter extends RecyclerView.Adapter<ObrasAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title_obra_text, address_obra_text;
+        TextView card_obra_title_text, card_obra_address_text;
+        Button card_obra_eye_button;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title_obra_text = itemView.findViewById(R.id.title_obra_text);
-            address_obra_text = itemView.findViewById(R.id.address_obra_text);
+            card_obra_title_text = itemView.findViewById(R.id.card_obra_title_text);
+//            card_obra_address_text = itemView.findViewById(R.id.card_obra_address_text);
+//            card_obra_eye_button = itemView.findViewById(R.id.card_obra_eye_button);
+
         }
     }
 
@@ -44,8 +53,15 @@ public class ObrasAdapter extends RecyclerView.Adapter<ObrasAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title_obra_text.setText(obrasList.get(position).getTitulo());
-        holder.address_obra_text.setText(obrasList.get(position).getEndereco());
+        holder.card_obra_title_text.setText(obrasList.get(position).getTitulo());
+//        holder.card_obra_address_text.setText(obrasList.get(position).getEndereco());
+        holder.card_obra_title_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO Definir a activity com base no stage da obra
+                Intent intent = new Intent(context, ObraPreparacaoView.class);
+                context.startActivity(intent);            }
+        });
 
     }
 

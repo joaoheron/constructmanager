@@ -31,7 +31,7 @@ public class ListaObrasActivity extends AppCompatActivity {
 
     Context context;
 
-    ArrayList<Obra> obras = new ArrayList<>();
+    ArrayList<Obra> obras;
     ObrasAdapter adapter;
 
     RecyclerView recycler_view;
@@ -47,7 +47,7 @@ public class ListaObrasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_obras);
-
+        obras = new ArrayList<>();
         context = this;
 
         auth = FirebaseAuth.getInstance();
@@ -79,6 +79,7 @@ public class ListaObrasActivity extends AppCompatActivity {
         obras_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                obras = new ArrayList<>();
                 Obra obra;
                 for(DataSnapshot obra_snap : snapshot.getChildren()) {
                     obra = obra_snap.getValue(Obra.class);

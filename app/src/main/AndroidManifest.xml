@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Constructmanager">
-        <activity android:name=".forms.NewObraForm"></activity>
+        <activity android:name=".views.ObraPreparacaoView"></activity>
+        <activity android:name=".forms.NewObraForm" />
         <activity android:name=".activities.ListaObrasActivity" />
         <activity android:name=".activities.UpdatePasswordActivity" />
         <activity android:name=".activities.UpdateEmailActivity" />
