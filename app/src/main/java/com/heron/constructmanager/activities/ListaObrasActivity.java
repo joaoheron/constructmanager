@@ -2,6 +2,8 @@ package com.heron.constructmanager.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +22,8 @@ import com.heron.constructmanager.forms.NewObraForm;
 import com.heron.constructmanager.models.Obra;
 
 public class ListaObrasActivity extends AppCompatActivity {
+
+    RecyclerView recycler_view;
 
     Button add_obra;
 
@@ -45,6 +49,12 @@ public class ListaObrasActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        recycler_view.findViewById(R.id.list_obras_recycler_view);
+        recycler_view.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recycler_view.setLayoutManager(linearLayoutManager);
 
     }
 

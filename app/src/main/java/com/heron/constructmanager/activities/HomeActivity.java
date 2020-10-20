@@ -28,7 +28,6 @@ public class HomeActivity extends AppCompatActivity {
     Button update_email_button, update_password_button, logout_button, obras_button;
     TextView email_text, id_text, verified_account_txt;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,30 +46,6 @@ public class HomeActivity extends AppCompatActivity {
         // Db operations
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-////        db.setPersistenceEnabled(true);
-//        // Write a message to the database
-//        DatabaseReference usersRef = db.getReference("users");
-//        DatabaseReference myRef = db.getReference("message");
-//        myRef.setValue("Donald Duck!");
-////
-//
-//        // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                System.out.println("Value is: " + value);
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                System.out.println("Cancelled!" + error.toException());
-//            }
-//        });
 
         obras_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,25 +133,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void saveNameInDb(FirebaseUser user) {
-//        FirebaseDatabase db;
-//        DatabaseReference root_ref;
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-//        root_ref = db.getReference();
-
-        // Write a message to the database
-        DatabaseReference myRef = db.getReference("message");
-        myRef.setValue("Hello, World!");
-
-//        DatabaseReference email_reference = root_ref.child("users").child(user.getUid()).child("email");
-//        email_reference.setValue(email_str);
-
-//        String new_id = "1111";
-//        Obra obra = new Obra(new_id, email_str, email_str, "lograudors");
-//        ref.child(new_id).setValue(obra);
-
-    }
 }
 
 
