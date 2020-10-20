@@ -10,6 +10,47 @@ import java.util.Map;
 public class Obra {
     private String titulo;
     private String endereco;
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getTipo_obra() {
+        return tipo_obra;
+    }
+
+    public void setTipo_obra(String tipo_obra) {
+        this.tipo_obra = tipo_obra;
+    }
+
+    public String getEtapa() {
+        return etapa;
+    }
+
+    public void setEtapa(String etapa) {
+        this.etapa = etapa;
+    }
+
+    public String getResponsibles() {
+        return responsibles;
+    }
+
+    public void setResponsibles(String responsibles) {
+        this.responsibles = responsibles;
+    }
+
     private String tipo_obra;
     private String etapa;
     private String responsibles;
