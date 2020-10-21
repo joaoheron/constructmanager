@@ -1,26 +1,13 @@
-package com.heron.constructmanager;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.heron.constructmanager.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.heron.constructmanager.LoadingAnimation;
+import com.heron.constructmanager.R;
+import com.heron.constructmanager.ValidateInput;
 import com.heron.constructmanager.models.User;
 
 public class MainActivity extends Activity {

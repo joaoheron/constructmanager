@@ -1,30 +1,22 @@
-package com.heron.constructmanager;
+package com.heron.constructmanager.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.heron.constructmanager.R;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -36,12 +28,10 @@ public class HomeActivity extends AppCompatActivity {
     Button update_email_button, update_password_button, logout_button, obras_button;
     TextView email_text, id_text, verified_account_txt;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
 
         update_email_button = findViewById(R.id.update_email_button_home);
         update_password_button = findViewById(R.id.update_password_button_home);
@@ -57,35 +47,11 @@ public class HomeActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-////        db.setPersistenceEnabled(true);
-//        // Write a message to the database
-//        DatabaseReference usersRef = db.getReference("users");
-//        DatabaseReference myRef = db.getReference("message");
-//        myRef.setValue("Donald Duck!");
-////
-//
-//        // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                System.out.println("Value is: " + value);
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                System.out.println("Cancelled!" + error.toException());
-//            }
-//        });
-
         obras_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                saveNameInDb(user);
-
+                Intent intent = new Intent(HomeActivity.this, ListaObrasActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -167,25 +133,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void saveNameInDb(FirebaseUser user) {
-//        FirebaseDatabase db;
-//        DatabaseReference root_ref;
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-//        root_ref = db.getReference();
-
-        // Write a message to the database
-        DatabaseReference myRef = db.getReference("message");
-        myRef.setValue("Hello, World!");
-
-//        DatabaseReference email_reference = root_ref.child("users").child(user.getUid()).child("email");
-//        email_reference.setValue(email_str);
-
-//        String new_id = "1111";
-//        Obra obra = new Obra(new_id, email_str, email_str, "lograudors");
-//        ref.child(new_id).setValue(obra);
-
-    }
 }
 
 
