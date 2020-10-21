@@ -1,5 +1,5 @@
 
-package com.heron.constructmanager;
+package com.heron.constructmanager.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.heron.constructmanager.R;
 import com.heron.constructmanager.models.Obra;
-import com.heron.constructmanager.views.ObraPreparacaoView;
+import com.heron.constructmanager.activities.views.ObraPreparacaoViewActivity;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,7 @@ public class ObrasAdapter extends RecyclerView.Adapter<ObrasAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 // TODO Definir a activity com base no stage da obra
-                Intent intent = new Intent(context, ObraPreparacaoView.class);
+                Intent intent = new Intent(context, ObraPreparacaoViewActivity.class);
                 intent.putExtra("title", obra.getTitulo());
                 intent.putExtra("address", obra.getEndereco());
                 intent.putExtra("stage", obra.getEtapa());

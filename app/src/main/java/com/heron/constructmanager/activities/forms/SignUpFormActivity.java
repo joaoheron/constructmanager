@@ -1,8 +1,7 @@
-package com.heron.constructmanager.activities;
+package com.heron.constructmanager.activities.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,11 +17,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.heron.constructmanager.LoadingAnimation;
+import com.heron.constructmanager.animations.LoadingAnimation;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
+import com.heron.constructmanager.activities.HomeActivity;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpFormActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
         loading = new LoadingAnimation(this);
 
         // Listeners
-        valiteInput = new ValidateInput(SignUpActivity.this, signUpEmailEditText, signUpPwEditText, signUpRepeatPwEditText);
+        valiteInput = new ValidateInput(SignUpFormActivity.this, signUpEmailEditText, signUpPwEditText, signUpRepeatPwEditText);
 
         backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +88,12 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                                Intent intent = new Intent(SignUpFormActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 loading.dismissLoading();
                                 finish();
                             } else {
-                                Toast.makeText(SignUpActivity.this, "Erro inesperado. Tente novamente.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpFormActivity.this, "Erro inesperado. Tente novamente.", Toast.LENGTH_SHORT).show();
                                 loading.dismissLoading();
                             }
                         }

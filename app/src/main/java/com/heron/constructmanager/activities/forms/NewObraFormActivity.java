@@ -1,34 +1,26 @@
-package com.heron.constructmanager.forms;
+package com.heron.constructmanager.activities.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.heron.constructmanager.LoadingAnimation;
+import com.heron.constructmanager.animations.LoadingAnimation;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
-import com.heron.constructmanager.activities.HomeActivity;
-import com.heron.constructmanager.activities.MainActivity;
 import com.heron.constructmanager.models.Obra;
-import com.heron.constructmanager.models.User;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class NewObraForm extends AppCompatActivity {
+public class NewObraFormActivity extends AppCompatActivity {
 
     ImageView backArrowImg;
 
@@ -58,7 +50,7 @@ public class NewObraForm extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         rootReference = FirebaseDatabase.getInstance().getReference();
         // Validate
-        validateInput = new ValidateInput(NewObraForm.this, titleEditText, addressEditText, typeEditText, responsiblesEditText);
+        validateInput = new ValidateInput(NewObraFormActivity.this, titleEditText, addressEditText, typeEditText, responsiblesEditText);
         // Loading animation
         loading = new LoadingAnimation(this);
         // Listeners
@@ -115,9 +107,9 @@ public class NewObraForm extends AppCompatActivity {
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                Toast.makeText(NewObraForm.this, "Obra cadastrada com sucesso.", Toast.LENGTH_LONG).show();
+                Toast.makeText(NewObraFormActivity.this, "Obra cadastrada com sucesso.", Toast.LENGTH_LONG).show();
             } else{
-                Toast.makeText(NewObraForm.this, "Erro ao cadastrar obra! Tente novamente.", Toast.LENGTH_LONG).show();
+                Toast.makeText(NewObraFormActivity.this, "Erro ao cadastrar obra! Tente novamente.", Toast.LENGTH_LONG).show();
             }
         });
     }

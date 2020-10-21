@@ -1,4 +1,4 @@
-package com.heron.constructmanager.activities;
+package com.heron.constructmanager.activities.lists;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,14 +20,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.heron.constructmanager.ObrasAdapter;
+import com.heron.constructmanager.adapters.ObrasAdapter;
 import com.heron.constructmanager.R;
-import com.heron.constructmanager.forms.NewObraForm;
+import com.heron.constructmanager.activities.forms.NewObraFormActivity;
 import com.heron.constructmanager.models.Obra;
 
 import java.util.ArrayList;
 
-public class ListaObrasActivity extends AppCompatActivity {
+public class ListObrasActivity extends AppCompatActivity {
 
     Context context;
 
@@ -69,7 +68,7 @@ public class ListaObrasActivity extends AppCompatActivity {
         addObraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListaObrasActivity.this, NewObraForm.class);
+                Intent intent = new Intent(ListObrasActivity.this, NewObraFormActivity.class);
                 startActivity(intent);
             }
         });
@@ -103,7 +102,7 @@ public class ListaObrasActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(ListaObrasActivity.this, "Erro inesperado.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ListObrasActivity.this, "Erro inesperado.", Toast.LENGTH_LONG).show();
             }
         });
 

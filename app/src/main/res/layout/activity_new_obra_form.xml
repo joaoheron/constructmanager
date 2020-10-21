@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".forms.NewObraForm">
+    tools:context=".activities.forms.NewObraFormActivity">
 
     <ImageView
         android:id="@+id/new_obra_back_arrow"

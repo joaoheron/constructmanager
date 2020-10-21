@@ -1,8 +1,7 @@
-package com.heron.constructmanager.activities;
+package com.heron.constructmanager.activities.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -18,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 
-public class UpdateEmailActivity extends AppCompatActivity {
+public class UpdateEmailFormActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -49,7 +48,7 @@ public class UpdateEmailActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         // Validation
-        validate = new ValidateInput(UpdateEmailActivity.this, newEmailEditText);
+        validate = new ValidateInput(UpdateEmailFormActivity.this, newEmailEditText);
 
         setCurrentEmail();
 
@@ -69,9 +68,9 @@ public class UpdateEmailActivity extends AppCompatActivity {
                 if (email_verified && user != null) {
                     newEmailStr = newEmailEditText.getText().toString().trim();
                     user.updateEmail(newEmailStr);
-                    Toast.makeText(UpdateEmailActivity.this, "E-mail atualizado com sucesso.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateEmailFormActivity.this, "E-mail atualizado com sucesso.", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(UpdateEmailActivity.this, "E-mail inválido.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateEmailFormActivity.this, "E-mail inválido.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -80,10 +79,10 @@ public class UpdateEmailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (user.isEmailVerified()) {
-                    Toast.makeText(UpdateEmailActivity.this, "E-mail já foi verificado.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateEmailFormActivity.this, "E-mail já foi verificado.", Toast.LENGTH_LONG).show();
                 } else {
                     user.sendEmailVerification();
-                    Toast.makeText(UpdateEmailActivity.this, "E-mail de verificação enviado.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateEmailFormActivity.this, "E-mail de verificação enviado.", Toast.LENGTH_LONG).show();
                 }
             }
         });

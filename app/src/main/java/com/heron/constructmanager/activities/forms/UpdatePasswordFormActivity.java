@@ -1,8 +1,7 @@
-package com.heron.constructmanager.activities;
+package com.heron.constructmanager.activities.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import android.view.View;
@@ -15,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.heron.constructmanager.R;
 
-public class UpdatePasswordActivity extends AppCompatActivity {
+public class UpdatePasswordFormActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -54,10 +53,10 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                 if (user != null) {
                     if (newPasswordStr.equals(repeatPasswordStr)) {
                         user.updatePassword(newPasswordStr);
-                        Toast.makeText(UpdatePasswordActivity.this, "Senha atualizada com sucesso.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UpdatePasswordFormActivity.this, "Senha atualizada com sucesso.", Toast.LENGTH_LONG).show();
 
                     } else {
-                        Toast.makeText(UpdatePasswordActivity.this, "Senhas inseridas não são iguais.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UpdatePasswordFormActivity.this, "Senhas inseridas não são iguais.", Toast.LENGTH_LONG).show();
                     }
                 }
             }

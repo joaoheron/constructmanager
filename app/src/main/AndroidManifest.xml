@@ -9,11 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Constructmanager">
-        <activity android:name=".views.ObraPreparacaoView"></activity>
-        <activity android:name=".forms.NewObraForm" />
-        <activity android:name=".activities.ListaObrasActivity" />
-        <activity android:name=".activities.UpdatePasswordActivity" />
-        <activity android:name=".activities.UpdateEmailActivity" />
+        <activity android:name=".activities.forms.ObraExecucaoCancelamentoFormActivity"></activity>
+        <activity android:name=".activities.forms.ObraExecucaoReponsabilidadeFormActivity" />
+        <activity android:name=".activities.forms.ObraExecucaoFotoFormActivity" />
+        <activity android:name=".activities.forms.ObraExecucaoOrcamentoFormActivity" />
+        <activity android:name=".activities.forms.ObraExecucaoCronogramaFormActivity" />
+        <activity android:name=".activities.forms.ObraCancelFormActivity" />
+        <activity android:name=".activities.views.ObraConcluidaViewActivity" />
+        <activity android:name=".activities.views.ObraCanceladaViewActivity" />
+        <activity android:name=".activities.lists.ListFotosActivity" />
+        <activity android:name=".activities.views.ObraExecucaoFotoViewActivity" />
+        <activity android:name=".activities.lists.ListResponsabilidadesActivity" />
+        <activity android:name=".activities.lists.ListCronogramasActivity" />
+        <activity android:name=".activities.lists.ListOrcamentosActivity" />
+        <activity android:name=".activities.views.ObraExecucaoMapViewActivity" />
+        <activity android:name=".activities.views.ObraExecucaoInfoViewActivity" />
+        <activity android:name=".activities.views.ObraExecucaoCronogramaViewAcitivity" />
+        <activity android:name=".activities.views.ObraExecucaoOrcamentoViewActivity" />
+        <activity android:name=".activities.views.ObraExecucaoViewActivity" />
+        <activity android:name=".activities.views.ObraPreparacaoViewActivity" />
+        <activity android:name=".activities.forms.NewObraFormActivity" />
+        <activity android:name=".activities.lists.ListObrasActivity" />
+        <activity android:name=".activities.forms.UpdatePasswordFormActivity" />
+        <activity android:name=".activities.forms.UpdateEmailFormActivity" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
@@ -22,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.forms.SignUpFormActivity" />
     </application>
 
 </manifest>

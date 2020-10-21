@@ -14,9 +14,10 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.heron.constructmanager.R;
+import com.heron.constructmanager.activities.forms.UpdateEmailFormActivity;
+import com.heron.constructmanager.activities.forms.UpdatePasswordFormActivity;
+import com.heron.constructmanager.activities.lists.ListObrasActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         obrasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, ListaObrasActivity.class);
+                Intent intent = new Intent(HomeActivity.this, ListObrasActivity.class);
                 startActivity(intent);
             }
         });
@@ -58,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         updateEmaiilButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, UpdateEmailActivity.class);
+                Intent intent = new Intent(HomeActivity.this, UpdateEmailFormActivity.class);
                 startActivity(intent);
             }
         });
@@ -67,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         updatePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, UpdatePasswordActivity.class);
+                Intent intent = new Intent(HomeActivity.this, UpdatePasswordFormActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,8 +1,10 @@
-package com.heron.constructmanager;
+package com.heron.constructmanager.animations;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
+
+import com.heron.constructmanager.R;
 
 public class LoadingAnimation {
 

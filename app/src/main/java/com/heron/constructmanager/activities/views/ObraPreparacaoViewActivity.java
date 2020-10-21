@@ -1,18 +1,15 @@
-package com.heron.constructmanager.views;
+package com.heron.constructmanager.activities.views;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.heron.constructmanager.R;
 
-public class ObraPreparacaoView extends AppCompatActivity {
+public class ObraPreparacaoViewActivity extends AppCompatActivity {
 
     ImageView backArrowImg;
     TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;

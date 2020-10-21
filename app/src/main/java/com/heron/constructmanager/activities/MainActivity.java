@@ -20,9 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.heron.constructmanager.LoadingAnimation;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
+import com.heron.constructmanager.animations.LoadingAnimation;
+import com.heron.constructmanager.activities.forms.SignUpFormActivity;
 import com.heron.constructmanager.models.User;
 
 public class MainActivity extends Activity {
@@ -61,7 +62,7 @@ public class MainActivity extends Activity {
         createAccText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(MainActivity.this, SignUpFormActivity.class);
                 startActivity(intent);
             }
         });
