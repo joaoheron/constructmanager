@@ -20,40 +20,40 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser user;
 
-    String new_password_str, repeat_password_str;
+    String newPasswordStr, repeatPasswordStr;
 
-    ImageView back_arrow;
-    Button update_password_button;
-    EditText new_password, repeat_password;
+    ImageView backArrowImg;
+    Button updatePasswordButton;
+    EditText newPwEditText, repeatPwEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_password);
 
-        back_arrow = findViewById(R.id.update_password_back_arrow);
-        update_password_button = findViewById(R.id.update_password_button);
-        new_password = findViewById(R.id.update_password_new_password);
-        repeat_password = findViewById(R.id.update_password_repeat_password);
+        backArrowImg = findViewById(R.id.update_password_back_arrow);
+        updatePasswordButton = findViewById(R.id.update_password_button);
+        newPwEditText = findViewById(R.id.update_password_new_password);
+        repeatPwEditText = findViewById(R.id.update_password_repeat_password);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        back_arrow.setOnClickListener(new View.OnClickListener() {
+        backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        update_password_button.setOnClickListener(new View.OnClickListener() {
+        updatePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new_password_str = new_password.getText().toString().trim();
-                repeat_password_str = repeat_password.getText().toString().trim();
+                newPasswordStr = newPwEditText.getText().toString().trim();
+                repeatPasswordStr = repeatPwEditText.getText().toString().trim();
                 if (user != null) {
-                    if (new_password_str.equals(repeat_password_str)) {
-                        user.updatePassword(new_password_str);
+                    if (newPasswordStr.equals(repeatPasswordStr)) {
+                        user.updatePassword(newPasswordStr);
                         Toast.makeText(UpdatePasswordActivity.this, "Senha atualizada com sucesso.", Toast.LENGTH_LONG).show();
 
                     } else {

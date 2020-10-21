@@ -23,14 +23,14 @@ public class UpdateEmailActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser user;
 
-    String new_email_str;
+    String newEmailStr;
 
     ValidateInput validate;
 
-    ImageView back_arrow;
-    EditText current_email, new_email;
-    TextView send_verification_email;
-    Button update_email;
+    ImageView backArrowImg;
+    EditText currentEmailEditText, newEmailEditText;
+    TextView sendVerificationEmailText;
+    Button updateEmailButton;
 
     Handler handler;
 
@@ -40,35 +40,35 @@ public class UpdateEmailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_update_email);
         // Components
-        back_arrow = findViewById(R.id.update_email_back_arrow);
-        current_email = findViewById(R.id.update_email_current_email);
-        new_email = findViewById(R.id.update_email_new_email);
-        update_email = findViewById(R.id.update_email_button);
-        send_verification_email = findViewById(R.id.send_verification_email_txt);
+        backArrowImg = findViewById(R.id.update_email_back_arrow);
+        currentEmailEditText = findViewById(R.id.update_email_current_email);
+        newEmailEditText = findViewById(R.id.update_email_new_email);
+        updateEmailButton = findViewById(R.id.update_email_button);
+        sendVerificationEmailText = findViewById(R.id.send_verification_email_txt);
         // Db objects
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         // Validation
-        validate = new ValidateInput(UpdateEmailActivity.this, new_email);
+        validate = new ValidateInput(UpdateEmailActivity.this, newEmailEditText);
 
         setCurrentEmail();
 
         // Listeners
-        back_arrow.setOnClickListener(new View.OnClickListener() {
+        backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        update_email.setOnClickListener(new View.OnClickListener() {
+        updateEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean email_verified = validate.validateEmail();
 
                 if (email_verified && user != null) {
-                    new_email_str = new_email.getText().toString().trim();
-                    user.updateEmail(new_email_str);
+                    newEmailStr = newEmailEditText.getText().toString().trim();
+                    user.updateEmail(newEmailStr);
                     Toast.makeText(UpdateEmailActivity.this, "E-mail atualizado com sucesso.", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(UpdateEmailActivity.this, "E-mail inválido.", Toast.LENGTH_LONG).show();
@@ -76,7 +76,7 @@ public class UpdateEmailActivity extends AppCompatActivity {
             }
         });
 
-        send_verification_email.setOnClickListener(new View.OnClickListener() {
+        sendVerificationEmailText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (user.isEmailVerified()) {
@@ -91,9 +91,9 @@ public class UpdateEmailActivity extends AppCompatActivity {
 
     public void setCurrentEmail(){
         if (user != null) {
-            current_email.setEnabled(true);
-            current_email.setText(user.getEmail());
-            current_email.setEnabled(false);
+            currentEmailEditText.setEnabled(true);
+            currentEmailEditText.setText(user.getEmail());
+            currentEmailEditText.setEnabled(false);
         }
         else {
             Toast.makeText(this, "Faça login para continuar.", Toast.LENGTH_LONG).show();

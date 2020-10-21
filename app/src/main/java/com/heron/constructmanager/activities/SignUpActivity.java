@@ -26,13 +26,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
-    String email_str, pw_str;
+    String emailStr, pwStr;
 
-    EditText sign_up_email, sign_up_password, sign_up_repeat_password;
-    ImageView back_arrow;
-    Button sign_up;
+    EditText signUpEmailEditText, signUpPwEditText, signUpRepeatPwEditText;
+    ImageView backArrowImg;
+    Button signUpButton;
 
-    ValidateInput validate_input;
+    ValidateInput valiteInput;
     LoadingAnimation loading;
 
     @Override
@@ -40,11 +40,11 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         // Components
-        sign_up_email = findViewById(R.id.sign_up_email);
-        sign_up_password = findViewById(R.id.sign_up_password);
-        sign_up_repeat_password = findViewById(R.id.sign_up_repeat_password);
-        back_arrow = findViewById(R.id.sign_up_back_arrow);
-        sign_up = findViewById(R.id.sign_up_button);
+        signUpEmailEditText = findViewById(R.id.sign_up_email);
+        signUpPwEditText = findViewById(R.id.sign_up_password);
+        signUpRepeatPwEditText = findViewById(R.id.sign_up_repeat_password);
+        backArrowImg = findViewById(R.id.sign_up_back_arrow);
+        signUpButton = findViewById(R.id.sign_up_button);
 
         // Firebase Auth
         auth = FirebaseAuth.getInstance();
@@ -53,16 +53,16 @@ public class SignUpActivity extends AppCompatActivity {
         loading = new LoadingAnimation(this);
 
         // Listeners
-        validate_input = new ValidateInput(SignUpActivity.this, sign_up_email, sign_up_password, sign_up_repeat_password);
+        valiteInput = new ValidateInput(SignUpActivity.this, signUpEmailEditText, signUpPwEditText, signUpRepeatPwEditText);
 
-        back_arrow.setOnClickListener(new View.OnClickListener() {
+        backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        sign_up.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signUpNewAcc();
@@ -74,16 +74,16 @@ public class SignUpActivity extends AppCompatActivity {
     public void signUpNewAcc() {
         loading.loadingAnimationDialog();
 
-        boolean email_verified = validate_input.validateEmail();
-        boolean pw_verified = validate_input.validatePassword();
-        boolean repeat_pw_verified = validate_input.validateRepeatPassword();
+        boolean emailVerified = valiteInput.validateEmail();
+        boolean pwVerified = valiteInput.validatePassword();
+        boolean repeatPwVerified = valiteInput.validateRepeatPassword();
 
-        if (email_verified && pw_verified && repeat_pw_verified) {
+        if (emailVerified && pwVerified && repeatPwVerified) {
 
-            email_str = sign_up_email.getText().toString().trim();
-            pw_str = sign_up_password.getText().toString().trim();
+            emailStr = signUpEmailEditText.getText().toString().trim();
+            pwStr = signUpPwEditText.getText().toString().trim();
 
-            auth.createUserWithEmailAndPassword(email_str, pw_str)
+            auth.createUserWithEmailAndPassword(emailStr, pwStr)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

@@ -30,17 +30,17 @@ import java.util.Map;
 
 public class NewObraForm extends AppCompatActivity {
 
-    ImageView back_arrow;
+    ImageView backArrowImg;
 
-    DatabaseReference root_ref;
+    DatabaseReference rootReference;
     FirebaseAuth auth;
 
-    EditText title, address, type, responsibles;
-    Button add_button;
+    EditText titleEditText, addressEditText, typeEditText, responsiblesEditText;
+    Button addButton;
 
-    String user_id_str, title_str, address_str, type_str, responsibles_str;
+    String userIdStr, titleStr, addressStr, typeStr, responsiblesStr;
 
-    ValidateInput validate_input;
+    ValidateInput validateInput;
     LoadingAnimation loading;
 
     @Override
@@ -48,47 +48,47 @@ public class NewObraForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_obra_form);
         // Components
-        title = findViewById(R.id.new_obra_title);
-        address = findViewById(R.id.new_obra_address);
-        type = findViewById(R.id.new_obra_type);
-        responsibles = findViewById(R.id.new_obra_responsibles);
-        add_button = findViewById(R.id.new_obra_add_button);
-        back_arrow = findViewById(R.id.new_obra_back_arrow);
+        titleEditText = findViewById(R.id.new_obra_title);
+        addressEditText = findViewById(R.id.new_obra_address);
+        typeEditText = findViewById(R.id.new_obra_type);
+        responsiblesEditText = findViewById(R.id.new_obra_responsibles);
+        addButton = findViewById(R.id.new_obra_add_button);
+        backArrowImg = findViewById(R.id.new_obra_back_arrow);
         // Firebase
         auth = FirebaseAuth.getInstance();
-        root_ref = FirebaseDatabase.getInstance().getReference();
+        rootReference = FirebaseDatabase.getInstance().getReference();
         // Validate
-        validate_input = new ValidateInput(NewObraForm.this, title, address, type, responsibles);
+        validateInput = new ValidateInput(NewObraForm.this, titleEditText, addressEditText, typeEditText, responsiblesEditText);
         // Loading animation
         loading = new LoadingAnimation(this);
         // Listeners
-        back_arrow.setOnClickListener(new View.OnClickListener() {
+        backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        add_button.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 loading.loadingAnimationDialog();
 
-                boolean title_verified = validate_input.validateTitle();
-                boolean address_verified = validate_input.validateAddress();
-                boolean type_verified = validate_input.validateType();
-                boolean responsibles_verified = validate_input.validateResponsibles();
+                boolean title_verified = validateInput.validateTitle();
+                boolean address_verified = validateInput.validateAddress();
+                boolean type_verified = validateInput.validateType();
+                boolean responsibles_verified = validateInput.validateResponsibles();
 
                 if (title_verified && address_verified && type_verified && responsibles_verified) {
 
-                    title_str = title.getText().toString().trim();
-                    address_str = address.getText().toString().trim();
-                    type_str = type.getText().toString().trim();
-                    responsibles_str = responsibles.getText().toString().trim();
-                    user_id_str = auth.getCurrentUser().getUid();
+                    titleStr = titleEditText.getText().toString().trim();
+                    addressStr = addressEditText.getText().toString().trim();
+                    typeStr = typeEditText.getText().toString().trim();
+                    responsiblesStr = responsiblesEditText.getText().toString().trim();
+                    userIdStr = auth.getCurrentUser().getUid();
 
-                    writeObra(user_id_str, title_str, address_str, type_str, responsibles_str);
+                    writeObra(userIdStr, titleStr, addressStr, typeStr, responsiblesStr);
 
                     loading.dismissLoading();
                     finish();
@@ -105,7 +105,7 @@ public class NewObraForm extends AppCompatActivity {
     private void writeObra(String user_id, String title, String address, String type,  String responsibles) {
         // Create new post at /users/$user_id/$obra_id and at
         // /obras/$obra_id simultaneously
-        String key = root_ref.child("obras").push().getKey();
+        String key = rootReference.child("obras").push().getKey();
         Obra obra = new Obra(title, address, type, "Preparacao", responsibles);
         Map<String, Object> postValues = obra.toMap();
 
@@ -113,7 +113,7 @@ public class NewObraForm extends AppCompatActivity {
         childUpdates.put("/obras/" + key, postValues);
         childUpdates.put("/users/" + user_id + "/obras/" + key, postValues);
 
-        root_ref.updateChildren(childUpdates).addOnCompleteListener(task -> {
+        rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Toast.makeText(NewObraForm.this, "Obra cadastrada com sucesso.", Toast.LENGTH_LONG).show();
             } else{

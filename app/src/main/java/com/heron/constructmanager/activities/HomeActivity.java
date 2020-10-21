@@ -23,23 +23,23 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser user;
 
-    String email_str, id_str;
+    String emailStr, idStr;
 
-    Button update_email_button, update_password_button, logout_button, obras_button;
-    TextView email_text, id_text, verified_account_txt;
+    Button updateEmaiilButton, updatePasswordButton, logoutButton, obrasButton;
+    TextView emailText, idText, verifiedAccountText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        update_email_button = findViewById(R.id.update_email_button_home);
-        update_password_button = findViewById(R.id.update_password_button_home);
-        logout_button = findViewById(R.id.logout_button_home);
-        email_text = findViewById(R.id.email_address_text_home);
-        id_text = findViewById(R.id.id_text_home);
-        verified_account_txt = findViewById(R.id.verified_account_home);
-        obras_button = findViewById(R.id.obras_button_home);
+        updateEmaiilButton = findViewById(R.id.update_email_button_home);
+        updatePasswordButton = findViewById(R.id.update_password_button_home);
+        logoutButton = findViewById(R.id.logout_button_home);
+        emailText = findViewById(R.id.email_address_text_home);
+        idText = findViewById(R.id.id_text_home);
+        verifiedAccountText = findViewById(R.id.verified_account_home);
+        obrasButton = findViewById(R.id.obras_button_home);
 
         fillUserInfo();
 
@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        obras_button.setOnClickListener(new View.OnClickListener() {
+        obrasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, ListaObrasActivity.class);
@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        update_email_button.setOnClickListener(new View.OnClickListener() {
+        updateEmaiilButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, UpdateEmailActivity.class);
@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        update_password_button.setOnClickListener(new View.OnClickListener() {
+        updatePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, UpdatePasswordActivity.class);
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        logout_button.setOnClickListener(new View.OnClickListener() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 auth.signOut();
@@ -116,18 +116,18 @@ public class HomeActivity extends AppCompatActivity {
     public void checkAcccountVerification() {
         boolean verified = user.isEmailVerified();
         if (verified) {
-            verified_account_txt.setText("Conta verificada");
-            verified_account_txt.setTextColor(getResources().getColor(R.color.green));
+            verifiedAccountText.setText("Conta verificada");
+            verifiedAccountText.setTextColor(getResources().getColor(R.color.green));
         }
     }
 
     public void fillUserInfo() {
         if (user != null) {
-            email_str = user.getEmail();
-            id_str = user.getUid();
+            emailStr = user.getEmail();
+            idStr = user.getUid();
             // Set email and id
-            email_text.setText(email_str);
-            id_text.setText(id_str);
+            emailText.setText(emailStr);
+            idText.setText(idStr);
             // Set account verification
             checkAcccountVerification();
         }

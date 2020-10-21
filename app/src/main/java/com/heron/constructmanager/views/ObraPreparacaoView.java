@@ -14,38 +14,37 @@ import com.heron.constructmanager.R;
 
 public class ObraPreparacaoView extends AppCompatActivity {
 
-    ImageView back_arrow_button;
-
-    TextView title_text, stage_text, address_text, responsibles_text, type_text;
-    String title_str, stage_str, address_str, responsibles_str, type_str;
+    ImageView backArrowImg;
+    TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;
+    String titleStr, stageStr, addressStr, responsiblesStr, typeStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_obra_preparacao_view);
 
-        title_text = findViewById(R.id.obra_prep_view_title_text);
-        stage_text = findViewById(R.id.obra_prep_view_stage_text);
-        address_text = findViewById(R.id.obra_prep_view_address_text);
-        type_text = findViewById(R.id.obra_prep_view_type_text);
-        responsibles_text = findViewById(R.id.obra_prep_view_responsibles_text);
-        back_arrow_button = findViewById(R.id.obra_prep_view_back_arrow);
+        titleTextView = findViewById(R.id.obra_prep_view_title_text);
+        stageTextView = findViewById(R.id.obra_prep_view_stage_text);
+        addressTextView = findViewById(R.id.obra_prep_view_address_text);
+        typeTextView = findViewById(R.id.obra_prep_view_type_text);
+        responsiblesTextView = findViewById(R.id.obra_prep_view_responsibles_text);
+        backArrowImg = findViewById(R.id.obra_prep_view_back_arrow);
 
         if(getIntent().getExtras() != null) {
-            title_str = getIntent().getStringExtra("title");
-            stage_str = getIntent().getStringExtra("stage");
-            address_str = getIntent().getStringExtra("address");
-            type_str = getIntent().getStringExtra("type");
-            responsibles_str = getIntent().getStringExtra("responsibles");
+            titleStr = getIntent().getStringExtra("title");
+            stageStr = getIntent().getStringExtra("stage");
+            addressStr = getIntent().getStringExtra("address");
+            typeStr = getIntent().getStringExtra("type");
+            responsiblesStr = getIntent().getStringExtra("responsibles");
         }
 
-        title_text.setText(title_str);
-        stage_text.setText(stage_str);
-        address_text.setText(address_str);
-        type_text.setText(type_str);
-        responsibles_text.setText(responsibles_str);
+        titleTextView.setText(titleStr);
+        stageTextView.setText(stageStr);
+        addressTextView.setText(addressStr);
+        typeTextView.setText(typeStr);
+        responsiblesTextView.setText(responsiblesStr);
 
-        back_arrow_button.setOnClickListener(new View.OnClickListener() {
+        backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

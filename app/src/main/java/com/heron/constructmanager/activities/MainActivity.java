@@ -31,25 +31,25 @@ public class MainActivity extends Activity {
     private DatabaseReference db;
     private FirebaseUser user;
 
-    String email_str, pw_str;
+    String emailStr, pwStr;
 
-    ValidateInput validate_input;
+    ValidateInput validateInput;
     LoadingAnimation loading;
 
-    EditText sign_in_email, sign_in_password;
-    TextView create_account;
-    Button sign_in;
+    EditText signInEmail, signInPassword;
+    TextView createAccText;
+    Button signInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        create_account = findViewById(R.id.create_account_txt);
-        sign_in = findViewById(R.id.sign_in_button);
-        sign_in_email = findViewById(R.id.sign_in_email);
-        sign_in_password = findViewById(R.id.sign_in_password);
-        validate_input = new ValidateInput(MainActivity.this, sign_in_email, sign_in_password);
+        createAccText = findViewById(R.id.create_account_txt);
+        signInButton = findViewById(R.id.sign_in_button);
+        signInEmail = findViewById(R.id.sign_in_email);
+        signInPassword = findViewById(R.id.sign_in_password);
+        validateInput = new ValidateInput(MainActivity.this, signInEmail, signInPassword);
 
         // Init firebase Auth
         auth = FirebaseAuth.getInstance();
@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
         // Loading animation
         loading = new LoadingAnimation(this);
 
-        create_account.setOnClickListener(new View.OnClickListener() {
+        createAccText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        sign_in.setOnClickListener(new View.OnClickListener() {
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signInAcc();
@@ -92,15 +92,15 @@ public class MainActivity extends Activity {
     public void signInAcc() {
         loading.loadingAnimationDialog();
 
-        boolean email_verified = validate_input.validateEmail();
-        boolean pw_verified = validate_input.validatePassword();
+        boolean email_verified = validateInput.validateEmail();
+        boolean pw_verified = validateInput.validatePassword();
 
         if (email_verified && pw_verified) {
 
-            email_str = sign_in_email.getText().toString().trim();
-            pw_str = sign_in_password.getText().toString().trim();
+            emailStr = signInEmail.getText().toString().trim();
+            pwStr = signInPassword.getText().toString().trim();
 
-            auth.signInWithEmailAndPassword(email_str, pw_str)
+            auth.signInWithEmailAndPassword(emailStr, pwStr)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

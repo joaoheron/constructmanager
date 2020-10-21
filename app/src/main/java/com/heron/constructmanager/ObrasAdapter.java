@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.heron.constructmanager.activities.ListaObrasActivity;
-import com.heron.constructmanager.forms.NewObraForm;
 import com.heron.constructmanager.models.Obra;
 import com.heron.constructmanager.views.ObraPreparacaoView;
 
@@ -31,12 +29,12 @@ public class ObrasAdapter extends RecyclerView.Adapter<ObrasAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView card_obra_title_text, card_obra_address_text;
-        Button card_obra_eye_button;
+        TextView cardObraTitleTextView, cardObraAddressTextView;
+        Button cardObraEyeButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            card_obra_title_text = itemView.findViewById(R.id.card_obra_title_text);
+            cardObraTitleTextView = itemView.findViewById(R.id.card_obra_title_text);
         }
     }
 
@@ -52,8 +50,8 @@ public class ObrasAdapter extends RecyclerView.Adapter<ObrasAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Obra obra = obrasList.get(position);
 
-        holder.card_obra_title_text.setText(obra.getTitulo());
-        holder.card_obra_title_text.setOnClickListener(new View.OnClickListener() {
+        holder.cardObraTitleTextView.setText(obra.getTitulo());
+        holder.cardObraTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO Definir a activity com base no stage da obra

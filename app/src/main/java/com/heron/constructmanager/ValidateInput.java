@@ -9,7 +9,7 @@ public class ValidateInput {
 
     private Context context;
     private EditText email, password, repeat_password, title, address, type, responsibles;
-    private String email_str, pw_str, repeat_pw_str, title_str, address_str, type_str, responsibles_str;
+    private String emailStr, pwStr, repeatPwStr, titleStr, addressStr, typeStr, responsiblesStr;
 
     public ValidateInput(Context c, EditText e) {
         context = c;
@@ -38,8 +38,8 @@ public class ValidateInput {
     }
 
     public boolean validateTitle() {
-        title_str = title.getText().toString().trim();
-        if (title_str.isEmpty()) {
+        titleStr = title.getText().toString().trim();
+        if (titleStr.isEmpty()) {
             Toast.makeText(context, "Preencha o título.", Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -48,8 +48,8 @@ public class ValidateInput {
     }
 
     public boolean validateAddress() {
-        address_str = address.getText().toString().trim();
-        if (address_str.isEmpty()) {
+        addressStr = address.getText().toString().trim();
+        if (addressStr.isEmpty()) {
             Toast.makeText(context, "Preencha o endereço.", Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -58,8 +58,8 @@ public class ValidateInput {
 
     }
     public boolean validateType() {
-        type_str = title.getText().toString().trim();
-        if (type_str.isEmpty()) {
+        typeStr = title.getText().toString().trim();
+        if (typeStr.isEmpty()) {
             Toast.makeText(context, "Preencha o tipo de obra.", Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -68,8 +68,8 @@ public class ValidateInput {
 
     }
     public boolean validateResponsibles() {
-        responsibles_str = responsibles.getText().toString().trim();
-        if (responsibles_str.isEmpty()) {
+        responsiblesStr = responsibles.getText().toString().trim();
+        if (responsiblesStr.isEmpty()) {
             Toast.makeText(context, "Selecione algum responsável pela obra.", Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -78,11 +78,11 @@ public class ValidateInput {
     }
 
     public boolean validateEmail() {
-        email_str = email.getText().toString().trim();
-        if (email_str.isEmpty()) {
+        emailStr = email.getText().toString().trim();
+        if (emailStr.isEmpty()) {
             Toast.makeText(context, "Preencha seu e-mail.", Toast.LENGTH_LONG).show();
             return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email_str).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailStr).matches()) {
             Toast.makeText(context, "E-mail inválido.", Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -91,12 +91,12 @@ public class ValidateInput {
     }
 
     public boolean validatePassword() {
-        pw_str = password.getText().toString();
+        pwStr = password.getText().toString();
 
-        if (pw_str.isEmpty()) {
+        if (pwStr.isEmpty()) {
             Toast.makeText(context, "Preencha sua senha", Toast.LENGTH_LONG).show();
             return false;
-        } else if (pw_str.length() < 8) {
+        } else if (pwStr.length() < 8) {
             Toast.makeText(context, "Preencha uma senha com mais de 8 caracteres.", Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -105,12 +105,12 @@ public class ValidateInput {
     }
 
     public boolean validateRepeatPassword() {
-        repeat_pw_str = repeat_password.getText().toString().trim();
-        if (repeat_pw_str.isEmpty()) {
+        repeatPwStr = repeat_password.getText().toString().trim();
+        if (repeatPwStr.isEmpty()) {
             Toast.makeText(context, "Preencha sua senha novamente", Toast.LENGTH_LONG).show();
             return false;
         }
-        else if (!repeat_pw_str.equals(pw_str)) {
+        else if (!repeatPwStr.equals(pwStr)) {
             Toast.makeText(context, "As senhas prenchidas são diferentes", Toast.LENGTH_LONG).show();
             return false;
         }

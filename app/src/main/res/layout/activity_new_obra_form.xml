@@ -78,7 +78,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="96dp"
-        android:background="@color/colorPrimaryPrimary"
+        android:background="@color/colorPrimary"
         android:text="Cadastrar"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"

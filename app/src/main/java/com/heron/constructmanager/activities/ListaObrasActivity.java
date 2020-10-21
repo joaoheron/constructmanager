@@ -35,12 +35,12 @@ public class ListaObrasActivity extends AppCompatActivity {
     ArrayList<Obra> obras;
     ObrasAdapter adapter;
 
-    RecyclerView recycler_view;
+    RecyclerView recyclerView;
 
-    Button add_obra;
-    ImageView back_arrow_button;
+    Button addObraButton;
+    ImageView backArrowButton;
 
-    DatabaseReference obras_ref;
+    DatabaseReference obrasReference;
     FirebaseDatabase db;
     FirebaseUser user;
     FirebaseAuth auth;
@@ -56,17 +56,17 @@ public class ListaObrasActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         user = auth.getCurrentUser();
 
-        back_arrow_button = findViewById(R.id.list_obras_back_arrow);
-        add_obra = findViewById(R.id.list_obras_add_button);
+        backArrowButton = findViewById(R.id.list_obras_back_arrow);
+        addObraButton = findViewById(R.id.list_obras_add_button);
 
-        back_arrow_button.setOnClickListener(new View.OnClickListener() {
+        backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        add_obra.setOnClickListener(new View.OnClickListener() {
+        addObraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ListaObrasActivity.this, NewObraForm.class);
@@ -74,11 +74,11 @@ public class ListaObrasActivity extends AppCompatActivity {
             }
         });
 
-        recycler_view = findViewById(R.id.list_obras_recycler_view);
-        recycler_view.setHasFixedSize(true);
+        recyclerView = findViewById(R.id.list_obras_recycler_view);
+        recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recycler_view.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         readObras();
 
@@ -86,8 +86,8 @@ public class ListaObrasActivity extends AppCompatActivity {
 
     private void readObras() {
 
-        obras_ref = db.getReference().child("users").child(user.getUid()).child("obras");
-        obras_ref.addValueEventListener(new ValueEventListener() {
+        obrasReference = db.getReference().child("users").child(user.getUid()).child("obras");
+        obrasReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 obras = new ArrayList<>();
@@ -98,7 +98,7 @@ public class ListaObrasActivity extends AppCompatActivity {
                     obras.add(obra);
                 }
                 adapter = new ObrasAdapter(obras, context);
-                recycler_view.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
