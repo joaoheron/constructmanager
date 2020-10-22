@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.UpdateEmailFormActivity;
 import com.heron.constructmanager.activities.forms.UpdatePasswordFormActivity;
-import com.heron.constructmanager.activities.lists.ListObrasActivity;
+import com.heron.constructmanager.activities.lists.ListConstructionsActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
 
     String emailStr, idStr;
 
-    Button updateEmaiilButton, updatePasswordButton, logoutButton, obrasButton;
+    Button updateEmaiilButton, updatePasswordButton, logoutButton, constructionsButton;
     TextView emailText, idText, verifiedAccountText;
 
     @Override
@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         emailText = findViewById(R.id.email_address_text_home);
         idText = findViewById(R.id.id_text_home);
         verifiedAccountText = findViewById(R.id.verified_account_home);
-        obrasButton = findViewById(R.id.obras_button_home);
+        constructionsButton = findViewById(R.id.constructions_button_home);
 
         fillUserInfo();
 
@@ -48,10 +48,10 @@ public class HomeActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        obrasButton.setOnClickListener(new View.OnClickListener() {
+        constructionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, ListObrasActivity.class);
+                Intent intent = new Intent(HomeActivity.this, ListConstructionsActivity.class);
                 startActivity(intent);
             }
         });

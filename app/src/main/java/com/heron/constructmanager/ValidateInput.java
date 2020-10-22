@@ -40,7 +40,7 @@ public class ValidateInput {
     public boolean validateTitle() {
         titleStr = title.getText().toString().trim();
         if (titleStr.isEmpty()) {
-            Toast.makeText(context, "Preencha o título.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Preencha o title.", Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
@@ -60,7 +60,7 @@ public class ValidateInput {
     public boolean validateType() {
         typeStr = title.getText().toString().trim();
         if (typeStr.isEmpty()) {
-            Toast.makeText(context, "Preencha o tipo de obra.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Preencha o type de construction.", Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
@@ -70,7 +70,7 @@ public class ValidateInput {
     public boolean validateResponsibles() {
         responsiblesStr = responsibles.getText().toString().trim();
         if (responsiblesStr.isEmpty()) {
-            Toast.makeText(context, "Selecione algum responsável pela obra.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Selecione algum responsável pela construction.", Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
