@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.heron.constructmanager.adapters.ConstructionAdapter;
+import com.heron.constructmanager.adapters.ConstructionInformationAdapter;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.models.Construction;
@@ -32,7 +32,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
     Context context;
 
     ArrayList<Construction> constructions;
-    ConstructionAdapter adapter;
+    ConstructionInformationAdapter adapter;
 
     RecyclerView recyclerView;
 
@@ -96,7 +96,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
                     construction.setUid(construction_snap.getKey()); // !!!
                     constructions.add(construction);
                 }
-                adapter = new ConstructionAdapter(constructions, context);
+                adapter = new ConstructionInformationAdapter(constructions, context);
                 recyclerView.setAdapter(adapter);
             }
 

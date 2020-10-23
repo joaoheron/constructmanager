@@ -90,7 +90,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
 
                 if (infosVerified()) {
                     getEditTextsContent();
-                    service.writeConstruction(userIdStr, titleStr, addressStr, stageStr, typeStr, responsiblesStr, constructionUidStr);
+                    service.writeConstructionInfo(userIdStr, titleStr, addressStr, stageStr, typeStr, responsiblesStr, constructionUidStr);
                     loading.dismissLoading();
                     finish();
                 }

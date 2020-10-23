@@ -132,7 +132,6 @@ public class SignUpFormActivity extends AppCompatActivity {
     // [START basic_write]
     private void writeNewUser(String userId, String name, String email) {
         User user = new User(name, email);
-
         db.child("users").child(userId).setValue(user);
     }
     // [END basic_write]

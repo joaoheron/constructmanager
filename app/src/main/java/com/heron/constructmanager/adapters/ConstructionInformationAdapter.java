@@ -18,12 +18,12 @@ import com.heron.constructmanager.activities.views.ConstructionPrepViewActivity;
 
 import java.util.ArrayList;
 
-public class ConstructionAdapter extends RecyclerView.Adapter<ConstructionAdapter.ViewHolder> {
+public class ConstructionInformationAdapter extends RecyclerView.Adapter<ConstructionInformationAdapter.ViewHolder> {
 
     private final ArrayList<Construction> constructionsList;
     private final Context context;
 
-    public ConstructionAdapter(ArrayList<Construction> constructionsList, Context context) {
+    public ConstructionInformationAdapter(ArrayList<Construction> constructionsList, Context context) {
         this.constructionsList = constructionsList;
         this.context = context;
     }
@@ -50,22 +50,21 @@ public class ConstructionAdapter extends RecyclerView.Adapter<ConstructionAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Construction construction = constructionsList.get(position);
-        holder.cardConstructionTitleTextView.setText(construction.getTitle());
+        holder.cardConstructionTitleTextView.setText(construction.getInformation().getTitle());
         holder.cardConstructionTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO Definir a activity com base no stage da construction
                 Intent intent = new Intent(context, ConstructionPrepViewActivity.class);
-                intent.putExtra("title", construction.getTitle());
-                intent.putExtra("address", construction.getAddress());
-                intent.putExtra("stage", construction.getStage());
-                intent.putExtra("type", construction.getType());
-                intent.putExtra("responsibles", construction.getResponsibles());
+                intent.putExtra("title", construction.getInformation().getTitle());
+                intent.putExtra("address", construction.getInformation().getAddress());
+                intent.putExtra("stage", construction.getInformation().getStage());
+                intent.putExtra("type", construction.getInformation().getType());
+                intent.putExtra("responsibles", construction.getInformation().getResponsibles());
                 intent.putExtra("constructionUid", construction.getUid());
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override

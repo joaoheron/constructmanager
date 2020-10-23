@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.heron.constructmanager.models.Construction;
+import com.heron.constructmanager.models.Information;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,12 +45,13 @@ public class ConstructionService {
     public void cancelConstruction(String userId, String title, String address, String type, String responsibles, String constructionUid) {
         String stage = "Cancelada";
 
-        Construction construction = new Construction(title, address, type, stage, responsibles);
-        Map<String, Object> postValues = construction.toMap();
+        Information information = new Information(title, address, type, stage, responsibles);
+        Construction construction = new Construction(information);
+        Map<String, Object> postValues = construction.getInformation().toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/constructions/" + constructionUid, postValues);
-        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid, postValues);
+        childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
+        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, CANCEL);
@@ -59,31 +61,33 @@ public class ConstructionService {
     public void advanceStageToExec(String userId, String title, String address, String type, String responsibles, String constructionUid) {
         String stage = "Execução";
 
-        Construction construction = new Construction(title, address, type, stage, responsibles);
-        Map<String, Object> postValues = construction.toMap();
+        Information information = new Information(title, address, type, stage, responsibles);
+        Construction construction = new Construction(information);
+        Map<String, Object> postValues = construction.getInformation().toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/constructions/" + constructionUid, postValues);
-        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid, postValues);
+        childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
+        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, NEW_STAGE);
         });
     }
 
-    public void writeConstruction(String userId, String title, String address, String stage, String type, String responsibles, String constructionUid) {
+    public void writeConstructionInfo(String userId, String title, String address, String stage, String type, String responsibles, String constructionUid) {
         // Create new post at /users/$user_id/$construction_id and at
         // /constructions/$construction_id simultaneously
         if (constructionUid == null) {
             constructionUid = rootReference.child("constructions").push().getKey();
         }
 
-        Construction construction = new Construction(title, address, type, stage, responsibles);
-        Map<String, Object> postValues = construction.toMap();
+        Information information = new Information(title, address, type, stage, responsibles);
+        Construction construction = new Construction(information);
+        Map<String, Object> postValues = construction.getInformation().toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/constructions/" + constructionUid, postValues);
-        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid, postValues);
+        childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
+        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, WRITE);
