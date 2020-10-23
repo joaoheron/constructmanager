@@ -7,4 +7,5 @@
     <string name="map">Mapa</string>
     <string name="resp">Responsáveis</string>
     <string name="cancelled">Cancelada</string>
+    <string name="exec">Execução</string>
 </resources>
