@@ -54,6 +54,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         // Firebase
         auth = FirebaseAuth.getInstance();
         rootReference = FirebaseDatabase.getInstance().getReference();
+        userIdStr = auth.getCurrentUser().getUid();
         // Validate
         validateInput = new ValidateInput(ConstructionPrepFormActivity.this, titleEditText, addressEditText, typeEditText, responsiblesEditText);
         // Loading animation
@@ -97,7 +98,6 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
                     addressStr = addressEditText.getText().toString().trim();
                     typeStr = typeEditText.getText().toString().trim();
                     responsiblesStr = responsiblesEditText.getText().toString().trim();
-                    userIdStr = auth.getCurrentUser().getUid();
 
                     service.writeConstruction(userIdStr, titleStr, addressStr, stageStr, typeStr, responsiblesStr, constructionUidStr);
                     loading.dismissLoading();
