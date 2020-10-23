@@ -21,7 +21,7 @@ import com.heron.constructmanager.service.ConstructionService;
 
 public class ConstructionPrepFormActivity extends AppCompatActivity {
 
-    ImageView backArrowImg, deleteImg;
+    ImageView backArrowImg, deleteImg, newStageImg, cancelImg;
 
     DatabaseReference rootReference;
     FirebaseAuth auth;
@@ -51,6 +51,8 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         addButton = findViewById(R.id.construction_prep_add_button);
         backArrowImg = findViewById(R.id.construction_prep_back_arrow);
         deleteImg = findViewById(R.id.construction_prep_delete);
+        newStageImg = findViewById(R.id.construction_prep_new_stage);
+        cancelImg = findViewById(R.id.construction_prep_cancel);
         // Firebase
         auth = FirebaseAuth.getInstance();
         rootReference = FirebaseDatabase.getInstance().getReference();
@@ -84,21 +86,10 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 loading.loadingAnimationDialog();
 
-                boolean title_verified = validateInput.validateTitle();
-                boolean address_verified = validateInput.validateAddress();
-                boolean type_verified = validateInput.validateType();
-                boolean responsibles_verified = validateInput.validateResponsibles();
-
-                if (title_verified && address_verified && type_verified && responsibles_verified) {
-
-                    titleStr = titleEditText.getText().toString().trim();
-                    addressStr = addressEditText.getText().toString().trim();
-                    typeStr = typeEditText.getText().toString().trim();
-                    responsiblesStr = responsiblesEditText.getText().toString().trim();
-
+                if (infosVerified()) {
+                    getEditTextsContent();
                     service.writeConstruction(userIdStr, titleStr, addressStr, stageStr, typeStr, responsiblesStr, constructionUidStr);
                     loading.dismissLoading();
                     finish();
@@ -133,6 +124,77 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             }
         });
 
+        cancelImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (infosVerified()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepFormActivity.this);
+                    builder.setTitle("Cancelar obra");
+                    builder.setMessage("Tem certeza que deseja cancelar a obra?");
+                    AlertDialog dialog = builder.create();
+                    dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            getEditTextsContent();
+                            service.cancelConstruction(userIdStr, titleStr, addressStr, typeStr, responsiblesStr, constructionUidStr);
+                            finish();
+                        }
+                    });
+                    dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+            }
+        });
+
+        newStageImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (infosVerified()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepFormActivity.this);
+                    builder.setTitle("Avançar etapa");
+                    builder.setMessage("Tem certeza que deseja avançar a etapa da obra para \"Em execução\"?");
+                    AlertDialog dialog = builder.create();
+                    dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            getEditTextsContent();
+                            service.advanceStageToExec(userIdStr, titleStr, addressStr, typeStr, responsiblesStr, constructionUidStr);
+                            finish();
+                        }
+                    });
+                    dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+
+                }
+            }
+        });
+
+    }
+
+    public boolean infosVerified() {
+        boolean title_verified = validateInput.validateTitle();
+        boolean address_verified = validateInput.validateAddress();
+        boolean type_verified = validateInput.validateType();
+        boolean responsibles_verified = validateInput.validateResponsibles();
+
+        return title_verified && address_verified && type_verified && responsibles_verified;
+    }
+
+    public void getEditTextsContent() {
+        titleStr = titleEditText.getText().toString().trim();
+        addressStr = addressEditText.getText().toString().trim();
+        typeStr = typeEditText.getText().toString().trim();
+        responsiblesStr = responsiblesEditText.getText().toString().trim();
     }
 
 }

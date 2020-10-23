@@ -31,11 +31,37 @@
         app:tint="@color/colorPrimary"
         tools:ignore="VectorDrawableCompat" />
 
+    <ImageView
+        android:id="@+id/construction_prep_new_stage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/construction_prep_back_arrow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_new_stage_button"
+        app:tint="@color/colorPrimary"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageView
+        android:id="@+id/construction_prep_cancel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/construction_prep_new_stage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cancel_button"
+        app:tint="@color/colorPrimary"
+        tools:ignore="VectorDrawableCompat" />
+
     <EditText
         android:id="@+id/construction_prep_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="128dp"
         android:ems="10"
         android:hint="Title"
         android:inputType="text"
