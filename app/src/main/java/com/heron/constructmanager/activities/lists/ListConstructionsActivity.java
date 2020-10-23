@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.heron.constructmanager.adapters.ConstructionAdapter;
 import com.heron.constructmanager.R;
-import com.heron.constructmanager.activities.forms.ConstructionNewFormActivity;
+import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.models.Construction;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
         addConstructionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListConstructionsActivity.this, ConstructionNewFormActivity.class);
+                Intent intent = new Intent(ListConstructionsActivity.this, ConstructionPrepFormActivity.class);
                 startActivity(intent);
             }
         });

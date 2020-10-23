@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".activities.views.ConstructionPrepViewActivity">
 
+    <!--    <Spinner-->
+    <!--        android:id="@+id/spinner"-->
+    <!--        android:layout_width="50dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:layout_marginRight="32dp"-->
+    <!--        android:background="@drawable/ic_menu"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
     <ImageView
         android:id="@+id/construction_prep_view_back_arrow"
         android:layout_width="50dp"
@@ -17,16 +27,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_left_arrow"
         tools:ignore="VectorDrawableCompat" />
-
-    <!--    <Spinner-->
-<!--        android:id="@+id/spinner"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:layout_marginRight="32dp"-->
-<!--        android:background="@drawable/ic_menu"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ImageView
         android:id="@+id/construction_prep_view_edit"
@@ -229,7 +229,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

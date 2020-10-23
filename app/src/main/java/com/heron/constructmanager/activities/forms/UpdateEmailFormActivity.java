@@ -31,8 +31,6 @@ public class UpdateEmailFormActivity extends AppCompatActivity {
     TextView sendVerificationEmailText;
     Button updateEmailButton;
 
-    Handler handler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

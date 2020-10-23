@@ -17,14 +17,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.heron.constructmanager.activities.MainActivity;
 import com.heron.constructmanager.animations.LoadingAnimation;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 import com.heron.constructmanager.activities.HomeActivity;
+import com.heron.constructmanager.models.User;
 
 public class SignUpFormActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private DatabaseReference db;
+    private FirebaseUser user;
 
     String emailStr, pwStr;
 
@@ -48,6 +55,7 @@ public class SignUpFormActivity extends AppCompatActivity {
 
         // Firebase Auth
         auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance().getReference();
 
         // Animation
         loading = new LoadingAnimation(this);
@@ -88,10 +96,9 @@ public class SignUpFormActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent intent = new Intent(SignUpFormActivity.this, HomeActivity.class);
-                                startActivity(intent);
+                                user = auth.getCurrentUser();
+                                onCompleteSuccess(user);
                                 loading.dismissLoading();
-                                finish();
                             } else {
                                 Toast.makeText(SignUpFormActivity.this, "Erro inesperado. Tente novamente.", Toast.LENGTH_SHORT).show();
                                 loading.dismissLoading();
@@ -102,5 +109,33 @@ public class SignUpFormActivity extends AppCompatActivity {
             loading.dismissLoading();
         }
     }
+
+    private void onCompleteSuccess(FirebaseUser user) {
+        String username = usernameFromEmail(user.getEmail());
+
+        // Write new user
+        writeNewUser(user.getUid(), username, user.getEmail());
+
+        Intent intent = new Intent(SignUpFormActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private String usernameFromEmail(String email) {
+        if (email.contains("@")) {
+            return email.split("@")[0];
+        } else {
+            return email;
+        }
+    }
+
+    // [START basic_write]
+    private void writeNewUser(String userId, String name, String email) {
+        User user = new User(name, email);
+
+        db.child("users").child(userId).setValue(user);
+    }
+    // [END basic_write]
+
 
 }

@@ -28,7 +28,7 @@
         <activity android:name=".activities.views.ConstructionExecBudgetViewActivity" />
         <activity android:name=".activities.views.ConstructionExecViewActivity" />
         <activity android:name=".activities.views.ConstructionPrepViewActivity" />
-        <activity android:name=".activities.forms.ConstructionNewFormActivity" />
+        <activity android:name=".activities.forms.ConstructionPrepFormActivity" />
         <activity android:name=".activities.lists.ListConstructionsActivity" />
         <activity android:name=".activities.forms.UpdatePasswordFormActivity" />
         <activity android:name=".activities.forms.UpdateEmailFormActivity" />
