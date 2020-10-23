@@ -18,19 +18,6 @@
         app:srcCompat="@drawable/ic_left_arrow"
         tools:ignore="VectorDrawableCompat" />
 
-    <ImageView
-        android:id="@+id/construction_exec_info_view_edit"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        app:tint="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_edit_card"
-        tools:ignore="VectorDrawableCompat" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/construction_exec_info_view_title_card"
         android:layout_width="match_parent"
@@ -100,7 +87,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

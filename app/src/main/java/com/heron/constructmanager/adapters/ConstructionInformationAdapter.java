@@ -66,17 +66,14 @@ public class ConstructionInformationAdapter extends RecyclerView.Adapter<Constru
                 Intent intent;
                 if (construction.getInformation().getStage().equals(PREPARACAO)) {
                     intent = new Intent(context, ConstructionPrepViewActivity.class);
-                    putExtrasConstructionPrep(intent, construction);
                 } else if (construction.getInformation().getStage().equals(EXECUCAO)) {
                     intent = new Intent(context, ConstructionExecViewActivity.class);
-                    putExtrasConstructionExec(intent, construction);
                 } else if (construction.getInformation().getStage().equals(CANCELADA)) {
                     intent = new Intent(context, ConstructionCancelledViewActivity.class);
-                    putExtrasConstructionCancelled(intent, construction);
                 } else {
                     intent = new Intent(context, ConstructionFinishedViewActivity.class);
-                    putExtrasConstructionFinished(intent, construction);
                 }
+                intent = putExtrasConstruction(intent, construction);
                 context.startActivity(intent);
             }
         });
@@ -87,39 +84,40 @@ public class ConstructionInformationAdapter extends RecyclerView.Adapter<Constru
         return constructionsList.size();
     }
 
-    private void putExtrasConstructionPrep(Intent intent, Construction construction) {
+    private Intent putExtrasConstruction(Intent intent, Construction construction) {
         intent.putExtra("title", construction.getInformation().getTitle());
         intent.putExtra("address", construction.getInformation().getAddress());
         intent.putExtra("stage", construction.getInformation().getStage());
         intent.putExtra("type", construction.getInformation().getType());
         intent.putExtra("responsibles", construction.getInformation().getResponsibles());
         intent.putExtra("constructionUid", construction.getUid());
+        return intent;
     }
 
-    private void putExtrasConstructionExec(Intent intent, Construction construction) {
-        intent.putExtra("title", construction.getInformation().getTitle());
-        intent.putExtra("address", construction.getInformation().getAddress());
-        intent.putExtra("stage", construction.getInformation().getStage());
-        intent.putExtra("type", construction.getInformation().getType());
-        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
-        intent.putExtra("constructionUid", construction.getUid());
-    }
-
-    private void putExtrasConstructionCancelled(Intent intent, Construction construction) {
-        intent.putExtra("title", construction.getInformation().getTitle());
-        intent.putExtra("address", construction.getInformation().getAddress());
-        intent.putExtra("stage", construction.getInformation().getStage());
-        intent.putExtra("type", construction.getInformation().getType());
-        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
-        intent.putExtra("constructionUid", construction.getUid());
-    }
-
-    private void putExtrasConstructionFinished(Intent intent, Construction construction) {
-        intent.putExtra("title", construction.getInformation().getTitle());
-        intent.putExtra("address", construction.getInformation().getAddress());
-        intent.putExtra("stage", construction.getInformation().getStage());
-        intent.putExtra("type", construction.getInformation().getType());
-        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
-        intent.putExtra("constructionUid", construction.getUid());
-    }
+//    private void putExtrasConstructionExec(Intent intent, Construction construction) {
+//        intent.putExtra("title", construction.getInformation().getTitle());
+//        intent.putExtra("address", construction.getInformation().getAddress());
+//        intent.putExtra("stage", construction.getInformation().getStage());
+//        intent.putExtra("type", construction.getInformation().getType());
+//        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
+//        intent.putExtra("constructionUid", construction.getUid());
+//    }
+//
+//    private void putExtrasConstructionCancelled(Intent intent, Construction construction) {
+//        intent.putExtra("title", construction.getInformation().getTitle());
+//        intent.putExtra("address", construction.getInformation().getAddress());
+//        intent.putExtra("stage", construction.getInformation().getStage());
+//        intent.putExtra("type", construction.getInformation().getType());
+//        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
+//        intent.putExtra("constructionUid", construction.getUid());
+//    }
+//
+//    private void putExtrasConstructionFinished(Intent intent, Construction construction) {
+//        intent.putExtra("title", construction.getInformation().getTitle());
+//        intent.putExtra("address", construction.getInformation().getAddress());
+//        intent.putExtra("stage", construction.getInformation().getStage());
+//        intent.putExtra("type", construction.getInformation().getType());
+//        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
+//        intent.putExtra("constructionUid", construction.getUid());
+//    }
 }
