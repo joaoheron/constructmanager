@@ -50,7 +50,6 @@ public class ConstructionAdapter extends RecyclerView.Adapter<ConstructionAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Construction construction = constructionsList.get(position);
-
         holder.cardConstructionTitleTextView.setText(construction.getTitle());
         holder.cardConstructionTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,9 +59,9 @@ public class ConstructionAdapter extends RecyclerView.Adapter<ConstructionAdapte
                 intent.putExtra("title", construction.getTitle());
                 intent.putExtra("address", construction.getAddress());
                 intent.putExtra("stage", construction.getStage());
-                intent.putExtra("type", construction.getType_construction());
+                intent.putExtra("type", construction.getType());
                 intent.putExtra("responsibles", construction.getResponsibles());
-                intent.putExtra("uid", construction.getUid());
+                intent.putExtra("constructionUid", construction.getUid());
                 context.startActivity(intent);
             }
         });
