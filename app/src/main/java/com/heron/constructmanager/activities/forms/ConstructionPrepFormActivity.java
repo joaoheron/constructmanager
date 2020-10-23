@@ -2,6 +2,7 @@ package com.heron.constructmanager.activities.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.heron.constructmanager.animations.LoadingAnimation;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 import com.heron.constructmanager.models.Construction;
+import com.heron.constructmanager.service.ConstructionService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +28,12 @@ public class ConstructionNewFormActivity extends AppCompatActivity {
 
     DatabaseReference rootReference;
     FirebaseAuth auth;
+    ConstructionService service;
 
     EditText titleEditText, addressEditText, typeEditText, responsiblesEditText;
     Button addButton;
 
-    String userIdStr, titleStr, addressStr, typeStr, responsiblesStr;
+    String userIdStr, titleStr, addressStr, typeStr, responsiblesStr, constructionUidStr, mode, constructionUid;
 
     ValidateInput validateInput;
     LoadingAnimation loading;
@@ -39,6 +42,9 @@ public class ConstructionNewFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_construction_new_form);
+        mode = "add";
+        constructionUidStr = "";
+        service = new ConstructionService(this);
         // Components
         titleEditText = findViewById(R.id.new_construction_title);
         addressEditText = findViewById(R.id.new_construction_address);
@@ -53,6 +59,21 @@ public class ConstructionNewFormActivity extends AppCompatActivity {
         validateInput = new ValidateInput(ConstructionNewFormActivity.this, titleEditText, addressEditText, typeEditText, responsiblesEditText);
         // Loading animation
         loading = new LoadingAnimation(this);
+
+        if(getIntent().getExtras() != null) {
+            titleStr = getIntent().getStringExtra("title");
+            addressStr = getIntent().getStringExtra("address");
+            typeStr = getIntent().getStringExtra("type");
+            responsiblesStr = getIntent().getStringExtra("responsibles");
+            constructionUidStr = getIntent().getStringExtra("constructionUid");
+            mode = getIntent().getStringExtra("mode");
+
+            titleEditText.setText(titleStr);
+            addressEditText.setText(addressStr);
+            typeEditText.setText(typeStr);
+            responsiblesEditText.setText(responsiblesStr);
+        }
+
         // Listeners
         backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +101,13 @@ public class ConstructionNewFormActivity extends AppCompatActivity {
                     responsiblesStr = responsiblesEditText.getText().toString().trim();
                     userIdStr = auth.getCurrentUser().getUid();
 
-                    writeConstruction(userIdStr, titleStr, addressStr, typeStr, responsiblesStr);
+                    service.writeConstruction(userIdStr, titleStr, addressStr, typeStr, responsiblesStr, null);
+
+//                    if (mode.equals("add")) {
+//
+//                    } else {
+//                        service.editConstruction(userIdStr, constructionUidStr, titleStr, addressStr, typeStr, responsiblesStr);
+//                    }
 
                     loading.dismissLoading();
                     finish();
@@ -92,26 +119,6 @@ public class ConstructionNewFormActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void writeConstruction(String user_id, String title, String address, String type,  String responsibles) {
-        // Create new post at /users/$user_id/$construction_id and at
-        // /constructions/$construction_id simultaneously
-        String key = rootReference.child("constructions").push().getKey();
-        Construction construction = new Construction(title, address, type, "Preparacao", responsibles);
-        Map<String, Object> postValues = construction.toMap();
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/constructions/" + key, postValues);
-        childUpdates.put("/users/" + user_id + "/constructions/" + key, postValues);
-
-        rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                Toast.makeText(ConstructionNewFormActivity.this, "Construction cadastrada com sucesso.", Toast.LENGTH_LONG).show();
-            } else{
-                Toast.makeText(ConstructionNewFormActivity.this, "Erro ao cadastrar construction! Tente novamente.", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
 }

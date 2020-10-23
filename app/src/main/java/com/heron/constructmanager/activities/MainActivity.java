@@ -106,8 +106,9 @@ public class MainActivity extends Activity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                onAuthSuccess(task.getResult().getUser());
-                                loading.dismissLoading();
+                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();                                loading.dismissLoading();
                             } else {
                                 Toast.makeText(MainActivity.this, "Erro inesperado. Tente novamente.", Toast.LENGTH_SHORT).show();
                                 loading.dismissLoading();
@@ -119,33 +120,6 @@ public class MainActivity extends Activity {
         }
 
     }
-
-    private void onAuthSuccess(FirebaseUser user) {
-        String username = usernameFromEmail(user.getEmail());
-
-        // Write new user
-        writeNewUser(user.getUid(), username, user.getEmail());
-
-        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private String usernameFromEmail(String email) {
-        if (email.contains("@")) {
-            return email.split("@")[0];
-        } else {
-            return email;
-        }
-    }
-
-    // [START basic_write]
-    private void writeNewUser(String userId, String name, String email) {
-        User user = new User(name, email);
-
-        db.child("users").child(userId).setValue(user);
-    }
-    // [END basic_write]
 
 
 }
