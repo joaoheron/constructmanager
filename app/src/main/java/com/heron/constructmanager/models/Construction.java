@@ -10,18 +10,21 @@ import java.util.Map;
 public class Construction {
     private String title;
     private String address;
+    private String type;
+    private String stage;
+    private String responsibles;
 
     @Exclude
-    String uid;
+    String constructionUid;
 
     @Exclude
     public String getUid() {
-        return uid;
+        return constructionUid;
     }
 
     @Exclude
     public void setUid(String uid) {
-        this.uid = uid;
+        this.constructionUid = uid;
     }
 
     public String getTitle() {
@@ -40,12 +43,12 @@ public class Construction {
         this.address = address;
     }
 
-    public String getType_construction() {
-        return constructionType;
+    public String getType() {
+        return type;
     }
 
-    public void setType_construction(String constructionType) {
-        this.constructionType = constructionType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getStage() {
@@ -64,18 +67,14 @@ public class Construction {
         this.responsibles = responsibles;
     }
 
-    private String constructionType;
-    private String stage;
-    private String responsibles;
-
     public Construction() {
         // Default constructor required for calls to DataSnapshot.getValue(Construction.class)
     }
 
-    public Construction(String title, String address, String constructionType, String stage, String responsibles) {
+    public Construction(String title, String address, String type, String stage, String responsibles) {
         this.title = title;
         this.address = address;
-        this.constructionType = constructionType;
+        this.type = type;
         this.stage = stage;
         this.responsibles = responsibles;
     }
@@ -86,7 +85,7 @@ public class Construction {
         HashMap<String, Object> result = new HashMap<>();
         result.put("title", title);
         result.put("address", address);
-        result.put("constructionType", constructionType);
+        result.put("type", type);
         result.put("stage", stage);
         result.put("responsibles", responsibles);
 
