@@ -15,6 +15,7 @@
         android:layout_marginTop="64dp"
         android:background="@color/colorPrimary"
         android:text="Obras"
+        
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"

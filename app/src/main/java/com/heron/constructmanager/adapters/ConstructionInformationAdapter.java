@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.heron.constructmanager.R;
+import com.heron.constructmanager.activities.views.ConstructionCancelledViewActivity;
+import com.heron.constructmanager.activities.views.ConstructionExecViewActivity;
+import com.heron.constructmanager.activities.views.ConstructionFinishedViewActivity;
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.activities.views.ConstructionPrepViewActivity;
 
@@ -20,8 +23,14 @@ import java.util.ArrayList;
 
 public class ConstructionInformationAdapter extends RecyclerView.Adapter<ConstructionInformationAdapter.ViewHolder> {
 
+    private final String PREPARACAO = "Preparação";
+    private final String EXECUCAO = "Execução";
+    private final String CONCLUIDA = "Concluída";
+    private final String CANCELADA = "Cancelada";
+
     private final ArrayList<Construction> constructionsList;
     private final Context context;
+
 
     public ConstructionInformationAdapter(ArrayList<Construction> constructionsList, Context context) {
         this.constructionsList = constructionsList;
@@ -54,14 +63,20 @@ public class ConstructionInformationAdapter extends RecyclerView.Adapter<Constru
         holder.cardConstructionTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Definir a activity com base no stage da construction
-                Intent intent = new Intent(context, ConstructionPrepViewActivity.class);
-                intent.putExtra("title", construction.getInformation().getTitle());
-                intent.putExtra("address", construction.getInformation().getAddress());
-                intent.putExtra("stage", construction.getInformation().getStage());
-                intent.putExtra("type", construction.getInformation().getType());
-                intent.putExtra("responsibles", construction.getInformation().getResponsibles());
-                intent.putExtra("constructionUid", construction.getUid());
+                Intent intent;
+                if (construction.getInformation().getStage().equals(PREPARACAO)) {
+                    intent = new Intent(context, ConstructionPrepViewActivity.class);
+                    putExtrasConstructionPrep(intent, construction);
+                } else if (construction.getInformation().getStage().equals(EXECUCAO)) {
+                    intent = new Intent(context, ConstructionExecViewActivity.class);
+                    putExtrasConstructionExec(intent, construction);
+                } else if (construction.getInformation().getStage().equals(CANCELADA)) {
+                    intent = new Intent(context, ConstructionCancelledViewActivity.class);
+                    putExtrasConstructionCancelled(intent, construction);
+                } else {
+                    intent = new Intent(context, ConstructionFinishedViewActivity.class);
+                    putExtrasConstructionFinished(intent, construction);
+                }
                 context.startActivity(intent);
             }
         });
@@ -70,5 +85,41 @@ public class ConstructionInformationAdapter extends RecyclerView.Adapter<Constru
     @Override
     public int getItemCount() {
         return constructionsList.size();
+    }
+
+    private void putExtrasConstructionPrep(Intent intent, Construction construction) {
+        intent.putExtra("title", construction.getInformation().getTitle());
+        intent.putExtra("address", construction.getInformation().getAddress());
+        intent.putExtra("stage", construction.getInformation().getStage());
+        intent.putExtra("type", construction.getInformation().getType());
+        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
+        intent.putExtra("constructionUid", construction.getUid());
+    }
+
+    private void putExtrasConstructionExec(Intent intent, Construction construction) {
+        intent.putExtra("title", construction.getInformation().getTitle());
+        intent.putExtra("address", construction.getInformation().getAddress());
+        intent.putExtra("stage", construction.getInformation().getStage());
+        intent.putExtra("type", construction.getInformation().getType());
+        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
+        intent.putExtra("constructionUid", construction.getUid());
+    }
+
+    private void putExtrasConstructionCancelled(Intent intent, Construction construction) {
+        intent.putExtra("title", construction.getInformation().getTitle());
+        intent.putExtra("address", construction.getInformation().getAddress());
+        intent.putExtra("stage", construction.getInformation().getStage());
+        intent.putExtra("type", construction.getInformation().getType());
+        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
+        intent.putExtra("constructionUid", construction.getUid());
+    }
+
+    private void putExtrasConstructionFinished(Intent intent, Construction construction) {
+        intent.putExtra("title", construction.getInformation().getTitle());
+        intent.putExtra("address", construction.getInformation().getAddress());
+        intent.putExtra("stage", construction.getInformation().getStage());
+        intent.putExtra("type", construction.getInformation().getType());
+        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
+        intent.putExtra("constructionUid", construction.getUid());
     }
 }

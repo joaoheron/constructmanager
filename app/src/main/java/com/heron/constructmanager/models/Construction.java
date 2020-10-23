@@ -5,19 +5,14 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Construction {
-//    private String title;
-//    private String address;
-//    private String type;
-//    private String stage;
-//    private String responsibles;
-    private Information information;
+
+    Information information;
+    @Exclude
+    String constructionUid;
 
     public Information getInformation(){ return information; }
 
     public void setInformation(Information information){ this.information = information; }
-
-    @Exclude
-    String constructionUid;
 
     @Exclude
     public String getUid() {
@@ -29,45 +24,6 @@ public class Construction {
         this.constructionUid = uid;
     }
 
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//
-//    public String getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(String address) {
-//        this.address = address;
-//    }
-//
-//    public String getType() {
-//        return type;
-//    }
-//
-//    public void setType(String type) {
-//        this.type = type;
-//    }
-//
-//    public String getStage() {
-//        return stage;
-//    }
-//
-//    public void setStage(String stage) {
-//        this.stage = stage;
-//    }
-//
-//    public String getResponsibles() {
-//        return responsibles;
-//    }
-//
-//    public void setResponsibles(String responsibles) {
-//        this.responsibles = responsibles;
-//    }
 
     public Construction() {
         // Default constructor required for calls to DataSnapshot.getValue(Construction.class)
