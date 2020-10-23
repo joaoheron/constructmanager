@@ -50,7 +50,5 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 }
