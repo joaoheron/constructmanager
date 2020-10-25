@@ -43,7 +43,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
 
     NachoTextView nachoTextView;
     ImageView backArrowImg, deleteImg, newStageImg, cancelImg;
-    EditText titleEditText, addressEditText, typeEditText, responsiblesEditText;
+    EditText titleEditText, addressEditText, typeEditText;
     Button addButton;
 
     List<User> selectedUsersList;
@@ -74,12 +74,13 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        userIdStr = user.getUid();
 
         // Components
         titleEditText = findViewById(R.id.construction_prep_title);
         addressEditText = findViewById(R.id.construction_prep_address);
         typeEditText = findViewById(R.id.construction_prep_type);
-        responsiblesEditText = findViewById(R.id.construction_prep_responsibles);
+//        responsiblesEditText = findViewById(R.id.construction_prep_responsibles);
         addButton = findViewById(R.id.construction_prep_add_button);
         backArrowImg = findViewById(R.id.construction_prep_back_arrow);
         deleteImg = findViewById(R.id.construction_prep_delete);
@@ -91,28 +92,23 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             titleStr = getIntent().getStringExtra("title");
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
-            responsiblesStr = getIntent().getStringExtra("responsibles");
+//            selectedEmailsList = getIntent().getStringArrayListExtra("responsibles");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
 
             titleEditText.setText(titleStr);
             addressEditText.setText(addressStr);
             typeEditText.setText(typeStr);
-            responsiblesEditText.setText(responsiblesStr);
         }
 
-        // Firebase
-        auth = FirebaseAuth.getInstance();
-        userIdStr = auth.getCurrentUser().getUid();
         // Validate
-        validateInput = new ValidateInput(ConstructionPrepFormActivity.this, titleEditText, addressEditText, typeEditText, responsiblesEditText);
+        validateInput = new ValidateInput(ConstructionPrepFormActivity.this, titleEditText, addressEditText, typeEditText, null);
         // Loading animation
         loading = new LoadingAnimation(this);
 
         userService.readUsers();
 
-//        readUsers();
-//        String[] allUserEmails = allEmailsList.toArray(new String[0]);
-        String[] suggestions = new String[]{"Tortilla Chips", "Melted Cheese", "Salsa", "Guacamole", "Mexico", "Jalapeno"};
+        String[] suggestions = selectedEmailsList.toArray(new String[0]);
+
         adapterUsers = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, suggestions);
         nachoTextView.setAdapter(adapterUsers);
         setUpNachoTextView();
@@ -133,7 +129,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
                 if (infosVerified()) {
                     getEditTextsContent();
                     selectedUsersList = userService.getUsersByEmails(selectedEmailsList);
-                    service.writeConstructionInfo(userIdStr, titleStr, addressStr, stageStr, typeStr, responsiblesStr, constructionUidStr);
+                    service.writeConstructionInfo(userIdStr, titleStr, addressStr, stageStr, typeStr, selectedUsersList, constructionUidStr);
                     loading.dismissLoading();
                     finish();
                 }
@@ -153,7 +149,8 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
                 dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        service.deleteConstruction(userIdStr, constructionUidStr);
+                        selectedUsersList = userService.getUsersByEmails(selectedEmailsList);
+                        service.deleteConstruction(userIdStr, constructionUidStr, selectedUsersList);
                         finish();
                     }
                 });
@@ -179,7 +176,8 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             getEditTextsContent();
-                            service.cancelConstruction(userIdStr, titleStr, addressStr, typeStr, responsiblesStr, constructionUidStr);
+                            selectedUsersList = userService.getUsersByEmails(selectedEmailsList);
+                            service.cancelConstruction(userIdStr, titleStr, addressStr, typeStr, selectedUsersList, constructionUidStr);
                             finish();
                         }
                     });
@@ -206,7 +204,8 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             getEditTextsContent();
-                            service.advanceStageToExec(userIdStr, titleStr, addressStr, typeStr, responsiblesStr, constructionUidStr);
+                            selectedUsersList = userService.getUsersByEmails(selectedEmailsList);
+                            service.advanceStageToExec(userIdStr, titleStr, addressStr, typeStr, selectedUsersList, constructionUidStr);
                             finish();
                         }
                     });
@@ -252,16 +251,14 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         boolean title_verified = validateInput.validateTitle();
         boolean address_verified = validateInput.validateAddress();
         boolean type_verified = validateInput.validateType();
-        boolean responsibles_verified = validateInput.validateResponsibles();
 
-        return title_verified && address_verified && type_verified && responsibles_verified;
+        return title_verified && address_verified && type_verified;
     }
 
     public void getEditTextsContent() {
         titleStr = titleEditText.getText().toString().trim();
         addressStr = addressEditText.getText().toString().trim();
         typeStr = typeEditText.getText().toString().trim();
-        responsiblesStr = responsiblesEditText.getText().toString().trim();
         selectedEmailsList = nachoTextView.getChipValues();
     }
 

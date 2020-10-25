@@ -90,7 +90,6 @@ public class ConstructionInformationAdapter extends RecyclerView.Adapter<Constru
         intent.putExtra("address", construction.getInformation().getAddress());
         intent.putExtra("stage", construction.getInformation().getStage());
         intent.putExtra("type", construction.getInformation().getType());
-        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
         intent.putExtra("constructionUid", construction.getUid());
         return intent;
     }

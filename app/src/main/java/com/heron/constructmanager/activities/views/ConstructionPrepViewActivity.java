@@ -1,12 +1,15 @@
 package com.heron.constructmanager.activities.views;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,6 +32,9 @@ import com.heron.constructmanager.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.lang.String.join;
 
 public class ConstructionPrepViewActivity extends AppCompatActivity {
 
@@ -36,16 +42,19 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
     ImageView backArrowImg, editImg;
     TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;
     String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr;
+    List<String> responsiblesEmailList;
 
     FirebaseAuth auth;
     FirebaseDatabase db;
     FirebaseUser user;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_construction_prep_view);
         context = this;
+        responsiblesEmailList = new ArrayList<>();
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
@@ -64,15 +73,16 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
             stageStr = getIntent().getStringExtra("stage");
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
-            responsiblesStr = getIntent().getStringExtra("responsibles");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
+//            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
         }
 
         titleTextView.setText(titleStr);
         stageTextView.setText(stageStr);
         addressTextView.setText(addressStr);
         typeTextView.setText(typeStr);
-        responsiblesTextView.setText(responsiblesStr);
+//        responsiblesStr = join(", ", responsiblesEmailList);
+//        responsiblesTextView.setText(responsiblesStr);
 
         backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +99,6 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
                 intent.putExtra("address", addressStr);
                 intent.putExtra("stage", stageStr);
                 intent.putExtra("type", typeStr);
-                intent.putExtra("responsibles", responsiblesStr);
                 intent.putExtra("constructionUid", constructionUidStr);
                 context.startActivity(intent);
             }

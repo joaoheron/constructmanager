@@ -19,6 +19,7 @@ import com.heron.constructmanager.activities.lists.ListConstructionsActivity;
 import com.heron.constructmanager.adapters.ConstructionInformationAdapter;
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.models.Information;
+import com.heron.constructmanager.models.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class ConstructionService {
 
     //  @@@@@@@@@@ WRITE, EDIT AND DELETE @@@@@@@@@@
 
-    public void writeConstructionInfo(String userId, String title, String address, String stage, String type, String responsibles, String constructionUid) {
+    public void writeConstructionInfo(String userId, String title, String address, String stage, String type, List<User> responsibles, String constructionUid) {
         // Create new post at /users/$user_id/$construction_id and at /constructions/$construction_id simultaneously
         if (constructionUid == null) {
             constructionUid = rootReference.child("constructions").push().getKey();
@@ -64,15 +65,27 @@ public class ConstructionService {
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
         childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
+        for (User responsible: responsibles) {
+            if (!responsible.getUid().equals(userId)) {
+                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
+            }
+        }
+
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, WRITE);
         });
     }
 
-    public void deleteConstruction(String userId, String constructionUid) {
+    public void deleteConstruction(String userId, String constructionUid, List<User> responsibles) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid, null);
         childUpdates.put("/users/" + userId + "/constructions/" + constructionUid, null);
+
+        for (User responsible: responsibles) {
+            if (!responsible.getUid().equals(userId)) {
+                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", null);
+            }
+        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, DELETE);
@@ -82,7 +95,7 @@ public class ConstructionService {
 
     //  @@@@@@@@@@ STAGE ACTIONS @@@@@@@@@@
 
-    public void cancelConstruction(String userId, String title, String address, String type, String responsibles, String constructionUid) {
+    public void cancelConstruction(String userId, String title, String address, String type, List<User> responsibles, String constructionUid) {
         String stage = "Cancelada";
 
         Information information = new Information(title, address, type, stage, responsibles);
@@ -93,12 +106,18 @@ public class ConstructionService {
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
         childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
+        for (User responsible: responsibles) {
+            if (!responsible.getUid().equals(userId)) {
+                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
+            }
+        }
+
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, CANCEL);
         });
     }
 
-    public void advanceStageToExec(String userId, String title, String address, String type, String responsibles, String constructionUid) {
+    public void advanceStageToExec(String userId, String title, String address, String type, List<User> responsibles, String constructionUid) {
         String stage = "Execução";
 
         Information information = new Information(title, address, type, stage, responsibles);
@@ -109,10 +128,66 @@ public class ConstructionService {
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
         childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
+        for (User responsible: responsibles) {
+            if (!responsible.getUid().equals(userId)) {
+                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
+            }
+        }
+
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, NEW_STAGE);
         });
     }
+
+//    public void writeConstructionInfo(String userId, String title, String address, String stage, String type, String responsibles, String constructionUid) {
+//        // Create new post at /users/$user_id/$construction_id and at /constructions/$construction_id simultaneously
+//        if (constructionUid == null) {
+//            constructionUid = rootReference.child("constructions").push().getKey();
+//        }
+//        Information information = new Information(title, address, type, stage, responsibles);
+//        Construction construction = new Construction(information);
+//        Map<String, Object> postValues = construction.getInformation().toMap();
+//
+//        Map<String, Object> childUpdates = new HashMap<>();
+//        childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
+//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
+//
+//        rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
+//            showToastMsg(task, WRITE);
+//        });
+//    }
+
+//    public void cancelConstruction(String userId, String title, String address, String type, String responsibles, String constructionUid) {
+//        String stage = "Cancelada";
+//
+//        Information information = new Information(title, address, type, stage, responsibles);
+//        Construction construction = new Construction(information);
+//        Map<String, Object> postValues = construction.getInformation().toMap();
+//
+//        Map<String, Object> childUpdates = new HashMap<>();
+//        childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
+//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
+//
+//        rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
+//            showToastMsg(task, CANCEL);
+//        });
+//    }
+//
+//    public void advanceStageToExec(String userId, String title, String address, String type, String responsibles, String constructionUid) {
+//        String stage = "Execução";
+//
+//        Information information = new Information(title, address, type, stage, responsibles);
+//        Construction construction = new Construction(information);
+//        Map<String, Object> postValues = construction.getInformation().toMap();
+//
+//        Map<String, Object> childUpdates = new HashMap<>();
+//        childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
+//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
+//
+//        rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
+//            showToastMsg(task, NEW_STAGE);
+//        });
+//    }
 
     //  @@@@@@@@@@ GET REFERENCES @@@@@@@@@@
 

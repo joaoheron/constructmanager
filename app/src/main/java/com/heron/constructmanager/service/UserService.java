@@ -88,9 +88,7 @@ public class UserService {
         } else {
             Toast.makeText(context, "Erro tentar realizar " + action + " !", Toast.LENGTH_LONG).show();
         }
-
     }
-
 }
 
 
