@@ -36,14 +36,10 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
     ImageView backArrowImg, editImg;
     TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;
     String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr;
-    UserService userService;
 
     FirebaseAuth auth;
     FirebaseDatabase db;
     FirebaseUser user;
-
-    ArrayList<User> users;
-    ArrayAdapter<String> adapterUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +58,6 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
         responsiblesTextView = findViewById(R.id.construction_prep_view_responsibles_text);
         backArrowImg = findViewById(R.id.construction_prep_view_back_arrow);
         editImg = findViewById(R.id.construction_prep_view_edit);
-
-        readUsers();
 
         if (getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
@@ -97,42 +91,10 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
                 intent.putExtra("type", typeStr);
                 intent.putExtra("responsibles", responsiblesStr);
                 intent.putExtra("constructionUid", constructionUidStr);
-                intent.putStringArrayListExtra("usernamesList", getAllUsernames());
                 context.startActivity(intent);
             }
         });
     }
 
-    private void readUsers() {
-        DatabaseReference usersReference = db.getReference("/users/");
-        usersReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                users = new ArrayList<>();
-                User user;
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    user = userSnapshot.getValue(User.class);
-                    user.setUid(userSnapshot.getKey());
-                    System.out.println(user.getEmail());
-                    users.add(user);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-    }
-
-    public ArrayList<String> getAllUsernames() {
-        ArrayList<String> usernamesList = new ArrayList<String>();
-        if (users != null && users.size() > 0) {
-            for (User user : users) {
-                usernamesList.add(user.getName());
-            }
-        }
-        return usernamesList;
-    }
 
 }

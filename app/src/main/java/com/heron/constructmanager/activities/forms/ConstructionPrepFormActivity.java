@@ -75,6 +75,18 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
+        // Components
+        titleEditText = findViewById(R.id.construction_prep_title);
+        addressEditText = findViewById(R.id.construction_prep_address);
+        typeEditText = findViewById(R.id.construction_prep_type);
+        responsiblesEditText = findViewById(R.id.construction_prep_responsibles);
+        addButton = findViewById(R.id.construction_prep_add_button);
+        backArrowImg = findViewById(R.id.construction_prep_back_arrow);
+        deleteImg = findViewById(R.id.construction_prep_delete);
+        newStageImg = findViewById(R.id.construction_prep_new_stage);
+        cancelImg = findViewById(R.id.construction_prep_cancel);
+        nachoTextView = findViewById(R.id.construction_prep_nacho_res_text_view);
+
         if(getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
             addressStr = getIntent().getStringExtra("address");
@@ -87,18 +99,6 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             typeEditText.setText(typeStr);
             responsiblesEditText.setText(responsiblesStr);
         }
-
-        // Components
-        titleEditText = findViewById(R.id.construction_prep_title);
-        addressEditText = findViewById(R.id.construction_prep_address);
-        typeEditText = findViewById(R.id.construction_prep_type);
-        responsiblesEditText = findViewById(R.id.construction_prep_responsibles);
-        addButton = findViewById(R.id.construction_prep_add_button);
-        backArrowImg = findViewById(R.id.construction_prep_back_arrow);
-        deleteImg = findViewById(R.id.construction_prep_delete);
-        newStageImg = findViewById(R.id.construction_prep_new_stage);
-        cancelImg = findViewById(R.id.construction_prep_cancel);
-        nachoTextView = findViewById(R.id.construction_prep_nacho_res_text_view);
 
         // Firebase
         auth = FirebaseAuth.getInstance();
