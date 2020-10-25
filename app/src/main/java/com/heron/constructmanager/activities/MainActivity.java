@@ -20,53 +20,52 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.heron.constructmanager.LoadingAnimation;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
+import com.heron.constructmanager.animations.LoadingAnimation;
+import com.heron.constructmanager.activities.forms.SignUpFormActivity;
 import com.heron.constructmanager.models.User;
 
 public class MainActivity extends Activity {
 
     private FirebaseAuth auth;
-    private DatabaseReference db;
     private FirebaseUser user;
 
-    String email_str, pw_str;
+    String emailStr, pwStr;
 
-    ValidateInput validate_input;
+    ValidateInput validateInput;
     LoadingAnimation loading;
 
-    EditText sign_in_email, sign_in_password;
-    TextView create_account;
-    Button sign_in;
+    EditText signInEmail, signInPassword;
+    TextView createAccText;
+    Button signInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        create_account = findViewById(R.id.create_account_txt);
-        sign_in = findViewById(R.id.sign_in_button);
-        sign_in_email = findViewById(R.id.sign_in_email);
-        sign_in_password = findViewById(R.id.sign_in_password);
-        validate_input = new ValidateInput(MainActivity.this, sign_in_email, sign_in_password);
+        createAccText = findViewById(R.id.create_account_txt);
+        signInButton = findViewById(R.id.sign_in_button);
+        signInEmail = findViewById(R.id.sign_in_email);
+        signInPassword = findViewById(R.id.sign_in_password);
+        validateInput = new ValidateInput(MainActivity.this, signInEmail, signInPassword);
 
         // Init firebase Auth
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance().getReference();
 
         // Loading animation
         loading = new LoadingAnimation(this);
 
-        create_account.setOnClickListener(new View.OnClickListener() {
+        createAccText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(MainActivity.this, SignUpFormActivity.class);
                 startActivity(intent);
             }
         });
 
-        sign_in.setOnClickListener(new View.OnClickListener() {
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signInAcc();
@@ -92,20 +91,22 @@ public class MainActivity extends Activity {
     public void signInAcc() {
         loading.loadingAnimationDialog();
 
-        boolean email_verified = validate_input.validateEmail();
-        boolean pw_verified = validate_input.validatePassword();
+        boolean email_verified = validateInput.validateEmail();
+        boolean pw_verified = validateInput.validatePassword();
 
         if (email_verified && pw_verified) {
 
-            email_str = sign_in_email.getText().toString().trim();
-            pw_str = sign_in_password.getText().toString().trim();
+            emailStr = signInEmail.getText().toString().trim();
+            pwStr = signInPassword.getText().toString().trim();
 
-            auth.signInWithEmailAndPassword(email_str, pw_str)
+            auth.signInWithEmailAndPassword(emailStr, pwStr)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                onAuthSuccess(task.getResult().getUser());
+                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
                                 loading.dismissLoading();
                             } else {
                                 Toast.makeText(MainActivity.this, "Erro inesperado. Tente novamente.", Toast.LENGTH_SHORT).show();
@@ -118,33 +119,6 @@ public class MainActivity extends Activity {
         }
 
     }
-
-    private void onAuthSuccess(FirebaseUser user) {
-        String username = usernameFromEmail(user.getEmail());
-
-        // Write new user
-        writeNewUser(user.getUid(), username, user.getEmail());
-
-        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private String usernameFromEmail(String email) {
-        if (email.contains("@")) {
-            return email.split("@")[0];
-        } else {
-            return email;
-        }
-    }
-
-    // [START basic_write]
-    private void writeNewUser(String userId, String name, String email) {
-        User user = new User(name, email);
-
-        db.child("users").child(userId).setValue(user);
-    }
-    // [END basic_write]
 
 
 }

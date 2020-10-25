@@ -9,11 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Constructmanager">
-        <activity android:name=".views.ObraPreparacaoView"></activity>
-        <activity android:name=".forms.NewObraForm" />
-        <activity android:name=".activities.ListaObrasActivity" />
-        <activity android:name=".activities.UpdatePasswordActivity" />
-        <activity android:name=".activities.UpdateEmailActivity" />
+        <activity android:name=".activities.forms.ConstructionExecCancelFormActivity"></activity>
+        <activity android:name=".activities.forms.ConstructionExecReponsabilityFormActivity" />
+        <activity android:name=".activities.forms.ConstructionExecPhotoFormActivity" />
+        <activity android:name=".activities.forms.ConstructionExecBudgetFormActivity" />
+        <activity android:name=".activities.forms.ConstructionExecScheduleFormActivity" />
+        <activity android:name=".activities.forms.ConstructionCancelledFormActivity" />
+        <activity android:name=".activities.views.ConstructionFinishedViewActivity" />
+        <activity android:name=".activities.views.ConstructionCancelledViewActivity" />
+        <activity android:name=".activities.lists.ListPhotosActivity" />
+        <activity android:name=".activities.views.ConstructionExecPhotoViewActivity" />
+        <activity android:name=".activities.lists.ListResponsabilitiesActivity" />
+        <activity android:name=".activities.lists.ListSchedulesActivity" />
+        <activity android:name=".activities.lists.ListBudgetsActivity" />
+        <activity android:name=".activities.views.ConstructionExecMapViewActivity" />
+        <activity android:name=".activities.views.ConstructionExecInfoViewActivity" />
+        <activity android:name=".activities.views.ConstructionExecScheduleViewAcitivity" />
+        <activity android:name=".activities.views.ConstructionExecBudgetViewActivity" />
+        <activity android:name=".activities.views.ConstructionExecViewActivity" />
+        <activity android:name=".activities.views.ConstructionPrepViewActivity" />
+        <activity android:name=".activities.forms.ConstructionPrepFormActivity" />
+        <activity android:name=".activities.lists.ListConstructionsActivity" />
+        <activity android:name=".activities.forms.UpdatePasswordFormActivity" />
+        <activity android:name=".activities.forms.UpdateEmailFormActivity" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
@@ -22,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.forms.SignUpFormActivity" />
     </application>
 
 </manifest>
