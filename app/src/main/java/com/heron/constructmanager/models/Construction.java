@@ -33,25 +33,4 @@ public class Construction {
         this.information = information;
     }
 
-//    public Construction(String title, String address, String type, String stage, String responsibles) {
-//        this.title = title;
-//        this.address = address;
-//        this.type = type;
-//        this.stage = stage;
-//        this.responsibles = responsibles;
-//    }
-
-//    // [START construction_to_map]
-//    @Exclude
-//    public Map<String, Object> toMap() {
-//        HashMap<String, Object> result = new HashMap<>();
-//        result.put("title", title);
-//        result.put("address", address);
-//        result.put("type", type);
-//        result.put("stage", stage);
-//        result.put("responsibles", responsibles);
-//
-//        return result;
-//    }
-//    // [END construction_to_map]
 }

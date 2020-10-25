@@ -1,12 +1,53 @@
 package com.heron.constructmanager.models;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 // [START blog_user_class]
 @IgnoreExtraProperties
 public class User {
 
+    @Exclude
+    public String uid;
+
     public String name;
+
+    @Exclude
+    public String getUid() {
+        return uid;
+    }
+
+    @Exclude
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Exclude
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    @Exclude
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
     public String email;
     boolean admin;
 

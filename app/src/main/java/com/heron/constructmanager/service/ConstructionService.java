@@ -1,15 +1,25 @@
 package com.heron.constructmanager.service;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.Adapter;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.heron.constructmanager.activities.lists.ListConstructionsActivity;
+import com.heron.constructmanager.adapters.ConstructionInformationAdapter;
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.models.Information;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +27,8 @@ public class ConstructionService {
 
     Context context;
     DatabaseReference rootReference;
+    DatabaseReference constructionsReference;
+    FirebaseDatabase db;
     FirebaseAuth auth;
 
     public final String NEW_STAGE = "Avanço de Etapa";
@@ -28,7 +40,8 @@ public class ConstructionService {
     public ConstructionService(Context c) {
         context = c;
         auth = FirebaseAuth.getInstance();
-        rootReference = FirebaseDatabase.getInstance().getReference();
+        db = FirebaseDatabase.getInstance();
+        rootReference = db.getReference();
     }
 
     public void deleteConstruction(String userId, String constructionUid) {

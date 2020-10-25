@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -24,8 +25,10 @@ import com.heron.constructmanager.adapters.ConstructionInformationAdapter;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.models.Construction;
+import com.heron.constructmanager.models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListConstructionsActivity extends AppCompatActivity {
 
@@ -57,6 +60,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
 
         backArrowButton = findViewById(R.id.list_constructions_back_arrow);
         addConstructionButton = findViewById(R.id.list_constructions_add_button);
+//        constructionsReference = db.getReference().child("users").child(user.getUid()).child("constructions");
 
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +87,11 @@ public class ListConstructionsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
     private void readConstructions() {
 
         constructionsReference = db.getReference().child("users").child(user.getUid()).child("constructions");
@@ -105,6 +114,5 @@ public class ListConstructionsActivity extends AppCompatActivity {
                 Toast.makeText(ListConstructionsActivity.this, "Erro inesperado.", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 }

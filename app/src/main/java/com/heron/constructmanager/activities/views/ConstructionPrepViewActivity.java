@@ -9,13 +9,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.HomeActivity;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
+import com.heron.constructmanager.models.User;
 import com.heron.constructmanager.service.ConstructionService;
+import com.heron.constructmanager.service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConstructionPrepViewActivity extends AppCompatActivity {
 
@@ -23,12 +36,24 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
     ImageView backArrowImg, editImg;
     TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;
     String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr;
+    UserService userService;
+
+    FirebaseAuth auth;
+    FirebaseDatabase db;
+    FirebaseUser user;
+
+    ArrayList<User> users;
+    ArrayAdapter<String> adapterUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_construction_prep_view);
         context = this;
+
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        user = auth.getCurrentUser();
 
         titleTextView = findViewById(R.id.construction_prep_view_title_text);
         stageTextView = findViewById(R.id.construction_prep_view_stage_text);
@@ -38,7 +63,9 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
         backArrowImg = findViewById(R.id.construction_prep_view_back_arrow);
         editImg = findViewById(R.id.construction_prep_view_edit);
 
-        if(getIntent().getExtras() != null) {
+        readUsers();
+
+        if (getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
             stageStr = getIntent().getStringExtra("stage");
             addressStr = getIntent().getStringExtra("address");
@@ -70,9 +97,42 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
                 intent.putExtra("type", typeStr);
                 intent.putExtra("responsibles", responsiblesStr);
                 intent.putExtra("constructionUid", constructionUidStr);
+                intent.putStringArrayListExtra("usernamesList", getAllUsernames());
                 context.startActivity(intent);
             }
         });
-
     }
+
+    private void readUsers() {
+        DatabaseReference usersReference = db.getReference("/users/");
+        usersReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                users = new ArrayList<>();
+                User user;
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    user = userSnapshot.getValue(User.class);
+                    user.setUid(userSnapshot.getKey());
+                    System.out.println(user.getEmail());
+                    users.add(user);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    public ArrayList<String> getAllUsernames() {
+        ArrayList<String> usernamesList = new ArrayList<String>();
+        if (users != null && users.size() > 0) {
+            for (User user : users) {
+                usernamesList.add(user.getName());
+            }
+        }
+        return usernamesList;
+    }
+
 }

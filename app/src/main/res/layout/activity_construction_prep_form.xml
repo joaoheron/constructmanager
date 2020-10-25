@@ -108,6 +108,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/construction_prep_type" />
 
+    <com.hootsuite.nachos.NachoTextView
+            android:id="@+id/construction_prep_nacho_res_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:width="210dp"
+            android:hint="@string/resp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/construction_prep_responsibles"
+            />
+
+
     <Button
         android:id="@+id/construction_prep_add_button"
         android:layout_width="match_parent"

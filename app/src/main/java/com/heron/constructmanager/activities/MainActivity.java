@@ -29,7 +29,6 @@ import com.heron.constructmanager.models.User;
 public class MainActivity extends Activity {
 
     private FirebaseAuth auth;
-    private DatabaseReference db;
     private FirebaseUser user;
 
     String emailStr, pwStr;
@@ -54,7 +53,6 @@ public class MainActivity extends Activity {
 
         // Init firebase Auth
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance().getReference();
 
         // Loading animation
         loading = new LoadingAnimation(this);
@@ -108,7 +106,8 @@ public class MainActivity extends Activity {
                             if (task.isSuccessful()) {
                                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                 startActivity(intent);
-                                finish();                                loading.dismissLoading();
+                                finish();
+                                loading.dismissLoading();
                             } else {
                                 Toast.makeText(MainActivity.this, "Erro inesperado. Tente novamente.", Toast.LENGTH_SHORT).show();
                                 loading.dismissLoading();

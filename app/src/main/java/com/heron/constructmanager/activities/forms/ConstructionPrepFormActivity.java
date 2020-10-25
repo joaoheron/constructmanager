@@ -1,34 +1,60 @@
 package com.heron.constructmanager.activities.forms;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.heron.constructmanager.activities.lists.ListConstructionsActivity;
+import com.heron.constructmanager.adapters.ConstructionInformationAdapter;
 import com.heron.constructmanager.animations.LoadingAnimation;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
+import com.heron.constructmanager.models.Construction;
+import com.heron.constructmanager.models.User;
 import com.heron.constructmanager.service.ConstructionService;
+import com.heron.constructmanager.service.UserService;
+import com.hootsuite.nachos.NachoTextView;
+import com.hootsuite.nachos.chip.Chip;
+import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConstructionPrepFormActivity extends AppCompatActivity {
 
+    NachoTextView nachoTextView;
     ImageView backArrowImg, deleteImg, newStageImg, cancelImg;
-
-    DatabaseReference rootReference;
-    FirebaseAuth auth;
-    ConstructionService service;
-
     EditText titleEditText, addressEditText, typeEditText, responsiblesEditText;
     Button addButton;
+
+    List<User> selectedUsersList;
+    List<String> selectedEmailsList;
+
+    ArrayAdapter adapterUsers;
+
+    FirebaseAuth auth;
+    FirebaseUser user;
+    ConstructionService service;
+    UserService userService;
 
     String userIdStr, titleStr, addressStr, stageStr, typeStr, responsiblesStr, constructionUidStr;
 
@@ -41,26 +67,13 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_construction_prep_form);
         constructionUidStr = null;
         stageStr = "Preparação";
-
         service = new ConstructionService(this);
-        // Components
-        titleEditText = findViewById(R.id.construction_prep_title);
-        addressEditText = findViewById(R.id.construction_prep_address);
-        typeEditText = findViewById(R.id.construction_prep_type);
-        responsiblesEditText = findViewById(R.id.construction_prep_responsibles);
-        addButton = findViewById(R.id.construction_prep_add_button);
-        backArrowImg = findViewById(R.id.construction_prep_back_arrow);
-        deleteImg = findViewById(R.id.construction_prep_delete);
-        newStageImg = findViewById(R.id.construction_prep_new_stage);
-        cancelImg = findViewById(R.id.construction_prep_cancel);
-        // Firebase
+        userService = new UserService(this);
+        selectedEmailsList = new ArrayList();
+        selectedUsersList = new ArrayList();
+
         auth = FirebaseAuth.getInstance();
-        rootReference = FirebaseDatabase.getInstance().getReference();
-        userIdStr = auth.getCurrentUser().getUid();
-        // Validate
-        validateInput = new ValidateInput(ConstructionPrepFormActivity.this, titleEditText, addressEditText, typeEditText, responsiblesEditText);
-        // Loading animation
-        loading = new LoadingAnimation(this);
+        user = auth.getCurrentUser();
 
         if(getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
@@ -74,6 +87,35 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             typeEditText.setText(typeStr);
             responsiblesEditText.setText(responsiblesStr);
         }
+
+        // Components
+        titleEditText = findViewById(R.id.construction_prep_title);
+        addressEditText = findViewById(R.id.construction_prep_address);
+        typeEditText = findViewById(R.id.construction_prep_type);
+        responsiblesEditText = findViewById(R.id.construction_prep_responsibles);
+        addButton = findViewById(R.id.construction_prep_add_button);
+        backArrowImg = findViewById(R.id.construction_prep_back_arrow);
+        deleteImg = findViewById(R.id.construction_prep_delete);
+        newStageImg = findViewById(R.id.construction_prep_new_stage);
+        cancelImg = findViewById(R.id.construction_prep_cancel);
+        nachoTextView = findViewById(R.id.construction_prep_nacho_res_text_view);
+
+        // Firebase
+        auth = FirebaseAuth.getInstance();
+        userIdStr = auth.getCurrentUser().getUid();
+        // Validate
+        validateInput = new ValidateInput(ConstructionPrepFormActivity.this, titleEditText, addressEditText, typeEditText, responsiblesEditText);
+        // Loading animation
+        loading = new LoadingAnimation(this);
+
+        userService.readUsers();
+
+//        readUsers();
+//        String[] allUserEmails = allEmailsList.toArray(new String[0]);
+        String[] suggestions = new String[]{"Tortilla Chips", "Melted Cheese", "Salsa", "Guacamole", "Mexico", "Jalapeno"};
+        adapterUsers = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, suggestions);
+        nachoTextView.setAdapter(adapterUsers);
+        setUpNachoTextView();
 
         // Listeners
         backArrowImg.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +132,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
 
                 if (infosVerified()) {
                     getEditTextsContent();
+                    selectedUsersList = userService.getUsersByEmails(selectedEmailsList);
                     service.writeConstructionInfo(userIdStr, titleStr, addressStr, stageStr, typeStr, responsiblesStr, constructionUidStr);
                     loading.dismissLoading();
                     finish();
@@ -181,6 +224,30 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
 
     }
 
+    private void setUpNachoTextView() {
+        nachoTextView.addChipTerminator('\n', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
+        nachoTextView.addChipTerminator(' ', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_TO_TERMINATOR);
+        nachoTextView.enableEditChipOnTouch(false, false);
+        nachoTextView.setOnChipClickListener(new NachoTextView.OnChipClickListener() {
+            @Override
+            public void onChipClick(Chip chip, MotionEvent motionEvent) {
+                System.out.println("Chip chip, MotionEvent motionEvent) {");
+            }
+        });
+    }
+
+    public String[] getAllUserEmails(ArrayList<User> users) {
+        List<String> userEmailsList = new ArrayList<String>();
+        if (users != null && users.size() > 0) {
+            for (User user : users) {
+                userEmailsList.add(user.getName());
+            }
+            return userEmailsList.toArray(new String[0]);
+        }
+        return new String['0'];
+
+    }
+
     public boolean infosVerified() {
         boolean title_verified = validateInput.validateTitle();
         boolean address_verified = validateInput.validateAddress();
@@ -195,6 +262,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         addressStr = addressEditText.getText().toString().trim();
         typeStr = typeEditText.getText().toString().trim();
         responsiblesStr = responsiblesEditText.getText().toString().trim();
+        selectedEmailsList = nachoTextView.getChipValues();
     }
 
 }
