@@ -26,6 +26,7 @@ import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.models.User;
+import com.heron.constructmanager.service.ConstructionService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +43,11 @@ public class ListConstructionsActivity extends AppCompatActivity {
     Button addConstructionButton;
     ImageView backArrowButton;
 
-    DatabaseReference constructionsReference;
-    FirebaseDatabase db;
     FirebaseUser user;
     FirebaseAuth auth;
+    ConstructionService service;
+
+    String userUidStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,12 @@ public class ListConstructionsActivity extends AppCompatActivity {
         context = this;
 
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
         user = auth.getCurrentUser();
+        userUidStr = auth.getCurrentUser().getUid();
+        service = new ConstructionService(this);
 
         backArrowButton = findViewById(R.id.list_constructions_back_arrow);
         addConstructionButton = findViewById(R.id.list_constructions_add_button);
-//        constructionsReference = db.getReference().child("users").child(user.getUid()).child("constructions");
 
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +85,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        readConstructions();
+        adaptConstructionsToView();
 
     }
 
@@ -92,9 +94,9 @@ public class ListConstructionsActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void readConstructions() {
+    private void adaptConstructionsToView() {
+        DatabaseReference constructionsReference = service.getConstructionsReference(userUidStr);
 
-        constructionsReference = db.getReference().child("users").child(user.getUid()).child("constructions");
         constructionsReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

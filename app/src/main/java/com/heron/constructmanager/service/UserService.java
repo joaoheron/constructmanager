@@ -47,23 +47,10 @@ public class UserService {
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, DELETE);
         });
-
-    }
-
-    public List<User> getUsersByEmails(List<String> emails) {
-        List <User> allUsersMatchedEmail = new ArrayList();
-        if (allUsersList.size() > 0 && emails.size() > 0) {
-            for (int i = 0; i < allUsersList.size(); i++) {
-                if (emails.contains(allUsersList.get(i).getEmail())) {
-                    allUsersMatchedEmail.add(allUsersList.get(i));
-                }
-            }
-        }
-        return allUsersMatchedEmail;
     }
 
     public void readUsers() {
-        DatabaseReference usersReference = db.getReference("/users/");
+        usersReference = db.getReference("/users/");
         usersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -81,6 +68,18 @@ public class UserService {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+    }
+
+    public List<User> getUsersByEmails(List<String> emails) {
+        List <User> allUsersMatchedEmail = new ArrayList();
+        if (allUsersList.size() > 0 && emails.size() > 0) {
+            for (int i = 0; i < allUsersList.size(); i++) {
+                if (emails.contains(allUsersList.get(i).getEmail())) {
+                    allUsersMatchedEmail.add(allUsersList.get(i));
+                }
+            }
+        }
+        return allUsersMatchedEmail;
     }
 
     public void showToastMsg(Task task, String action) {

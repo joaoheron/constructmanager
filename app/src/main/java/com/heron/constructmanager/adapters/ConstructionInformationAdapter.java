@@ -20,6 +20,7 @@ import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.activities.views.ConstructionPrepViewActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConstructionInformationAdapter extends RecyclerView.Adapter<ConstructionInformationAdapter.ViewHolder> {
 
@@ -28,11 +29,11 @@ public class ConstructionInformationAdapter extends RecyclerView.Adapter<Constru
     private final String CONCLUIDA = "Concluída";
     private final String CANCELADA = "Cancelada";
 
-    private final ArrayList<Construction> constructionsList;
+    private final List constructionsList;
     private final Context context;
 
 
-    public ConstructionInformationAdapter(ArrayList<Construction> constructionsList, Context context) {
+    public ConstructionInformationAdapter(List constructionsList, Context context) {
         this.constructionsList = constructionsList;
         this.context = context;
     }
@@ -58,7 +59,7 @@ public class ConstructionInformationAdapter extends RecyclerView.Adapter<Constru
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Construction construction = constructionsList.get(position);
+        final Construction construction = (Construction) constructionsList.get(position);
         holder.cardConstructionTitleTextView.setText(construction.getInformation().getTitle());
         holder.cardConstructionTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
