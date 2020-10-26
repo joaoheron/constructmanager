@@ -19,10 +19,9 @@ import com.heron.constructmanager.activities.views.ConstructionFinishedViewActiv
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.activities.views.ConstructionPrepViewActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ConstructionInformationAdapter extends RecyclerView.Adapter<ConstructionInformationAdapter.ViewHolder> {
+public class ConstructionListAdapter extends RecyclerView.Adapter<ConstructionListAdapter.ViewHolder> {
 
     private final String PREPARACAO = "Preparação";
     private final String EXECUCAO = "Execução";
@@ -33,7 +32,7 @@ public class ConstructionInformationAdapter extends RecyclerView.Adapter<Constru
     private final Context context;
 
 
-    public ConstructionInformationAdapter(List constructionsList, Context context) {
+    public ConstructionListAdapter(List constructionsList, Context context) {
         this.constructionsList = constructionsList;
         this.context = context;
     }

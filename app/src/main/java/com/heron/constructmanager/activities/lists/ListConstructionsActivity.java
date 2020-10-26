@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,24 +18,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.heron.constructmanager.adapters.ConstructionInformationAdapter;
+import com.heron.constructmanager.adapters.ConstructionListAdapter;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.models.Construction;
-import com.heron.constructmanager.models.User;
 import com.heron.constructmanager.service.ConstructionService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListConstructionsActivity extends AppCompatActivity {
 
     Context context;
 
     ArrayList<Construction> constructions;
-    ConstructionInformationAdapter adapter;
+    ConstructionListAdapter adapter;
 
     RecyclerView recyclerView;
 
@@ -107,7 +103,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
                     construction.setUid(construction_snap.getKey()); // !!!
                     constructions.add(construction);
                 }
-                adapter = new ConstructionInformationAdapter(constructions, context);
+                adapter = new ConstructionListAdapter(constructions, context);
                 recyclerView.setAdapter(adapter);
             }
 

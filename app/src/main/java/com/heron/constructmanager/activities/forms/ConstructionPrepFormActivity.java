@@ -1,6 +1,5 @@
 package com.heron.constructmanager.activities.forms;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,22 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.heron.constructmanager.activities.lists.ListConstructionsActivity;
-import com.heron.constructmanager.adapters.ConstructionInformationAdapter;
 import com.heron.constructmanager.animations.LoadingAnimation;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
-import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.models.User;
 import com.heron.constructmanager.service.ConstructionService;
 import com.heron.constructmanager.service.UserService;

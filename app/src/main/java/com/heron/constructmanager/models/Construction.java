@@ -3,16 +3,24 @@ package com.heron.constructmanager.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.List;
+
 @IgnoreExtraProperties
 public class Construction {
 
     Information information;
+    List<Responsability> responsabilities;
+
     @Exclude
     String constructionUid;
 
     public Information getInformation(){ return information; }
 
     public void setInformation(Information information){ this.information = information; }
+
+    public List<Responsability> getResponsabilities(){ return responsabilities; }
+
+    public void setResponsabilities(List<Responsability> responsabilities){ this.responsabilities = responsabilities; }
 
     @Exclude
     public String getUid() {
