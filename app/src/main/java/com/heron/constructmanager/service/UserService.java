@@ -40,6 +40,10 @@ public class UserService {
         allEmailsList = new ArrayList<>();
     }
 
+    public DatabaseReference getUsersReference() {
+        return rootReference.child("users");
+    }
+
     public void deleteUser(String userId) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/users/" + userId, null);

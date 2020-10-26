@@ -8,4 +8,7 @@
     <string name="resp">Responsáveis</string>
     <string name="cancelled">Cancelada</string>
     <string name="exec">Execução</string>
+    <string name="deadline">Prazo (dd/mm/YYYY)</string>
+    <string name="desc">Descriçao</string>
+    <string name="title">Título</string>
 </resources>
