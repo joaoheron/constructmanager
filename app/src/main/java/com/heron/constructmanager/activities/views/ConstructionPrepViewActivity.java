@@ -42,7 +42,7 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
     ImageView backArrowImg, editImg;
     TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;
     String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr;
-    List<String> responsiblesEmailList;
+    ArrayList<String> responsiblesEmailList;
 
     FirebaseAuth auth;
     FirebaseDatabase db;
@@ -74,15 +74,15 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
-//            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
+            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
         }
 
         titleTextView.setText(titleStr);
         stageTextView.setText(stageStr);
         addressTextView.setText(addressStr);
         typeTextView.setText(typeStr);
-//        responsiblesStr = join(", ", responsiblesEmailList);
-//        responsiblesTextView.setText(responsiblesStr);
+        responsiblesStr = join(", ", responsiblesEmailList);
+        responsiblesTextView.setText(responsiblesStr);
 
         backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +99,7 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
                 intent.putExtra("address", addressStr);
                 intent.putExtra("stage", stageStr);
                 intent.putExtra("type", typeStr);
+                intent.putStringArrayListExtra("responsibles", responsiblesEmailList);
                 intent.putExtra("constructionUid", constructionUidStr);
                 context.startActivity(intent);
             }

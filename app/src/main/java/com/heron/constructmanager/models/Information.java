@@ -60,12 +60,12 @@ public class Information {
     }
 
     @Exclude
-    public List getResponsibles() {
+    public List<User> getResponsibles() {
         return responsibles;
     }
 
     @Exclude
-    public void setResponsibles(List responsiblesU) {
+    public void setResponsibles(List responsibles) {
         this.responsibles = responsibles;
     }
 

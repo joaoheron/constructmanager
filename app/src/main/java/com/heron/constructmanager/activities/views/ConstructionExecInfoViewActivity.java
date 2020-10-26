@@ -10,18 +10,22 @@ import android.widget.TextView;
 
 import com.heron.constructmanager.R;
 
+import java.util.ArrayList;
+
 public class ConstructionExecInfoViewActivity extends AppCompatActivity {
 
     Context context;
     ImageView backArrowImg;
     TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;
     String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr;
+    ArrayList<String> responsiblesEmailList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_construction_exec_info_view);
         backArrowImg = findViewById(R.id.list_constructions_back_arrow);
+        responsiblesEmailList = new ArrayList<>();
         context = this;
 
         titleTextView = findViewById(R.id.construction_exec_info_view_title_text);
@@ -36,7 +40,7 @@ public class ConstructionExecInfoViewActivity extends AppCompatActivity {
             stageStr = getIntent().getStringExtra("stage");
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
-            responsiblesStr = getIntent().getStringExtra("responsibles");
+            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
         }
 

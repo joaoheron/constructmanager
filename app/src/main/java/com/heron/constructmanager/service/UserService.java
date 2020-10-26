@@ -25,8 +25,8 @@ public class UserService {
     FirebaseDatabase db;
     FirebaseAuth auth;
 
-    List<User> allUsersList;
-    List<String> allEmailsList;
+//    List<User> allUsersList;
+//    List<String> allEmailsList;
 
     public final String WRITE = "Cadastro";
     public final String DELETE = "Remoção";
@@ -36,8 +36,8 @@ public class UserService {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         rootReference = db.getReference();
-        allUsersList = new ArrayList<>();
-        allEmailsList = new ArrayList<>();
+//        allUsersList = new ArrayList<>();
+//        allEmailsList = new ArrayList<>();
     }
 
     public DatabaseReference getUsersReference() {
@@ -53,32 +53,32 @@ public class UserService {
         });
     }
 
-    public void readUsers() {
-        usersReference = db.getReference("/users/");
-        usersReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                allUsersList = new ArrayList<>();
-                User user;
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    user = userSnapshot.getValue(User.class);
-                    user.setUid(userSnapshot.getKey());
-                    allUsersList.add(user);
-                    allEmailsList.add(user.getName());
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-    }
+//    public void readUsers() {
+//        usersReference = db.getReference("/users/");
+//        usersReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                allUsersList = new ArrayList<>();
+//                User user;
+//                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+//                    user = userSnapshot.getValue(User.class);
+//                    user.setUid(userSnapshot.getKey());
+//                    allUsersList.add(user);
+//                    allEmailsList.add(user.getName());
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                System.out.println("The read failed: " + databaseError.getCode());
+//            }
+//        });
+//    }
 
-    public List<User> getUsersByEmails(List<String> emails) {
+    public List<User> getUsersByEmails(List<String> selectedEmails, List<User> allUsersList) {
         List <User> allUsersMatchedEmail = new ArrayList();
-        if (allUsersList.size() > 0 && emails.size() > 0) {
+        if (allUsersList.size() > 0 && selectedEmails.size() > 0) {
             for (int i = 0; i < allUsersList.size(); i++) {
-                if (emails.contains(allUsersList.get(i).getEmail())) {
+                if (selectedEmails.contains(allUsersList.get(i).getEmail())) {
                     allUsersMatchedEmail.add(allUsersList.get(i));
                 }
             }

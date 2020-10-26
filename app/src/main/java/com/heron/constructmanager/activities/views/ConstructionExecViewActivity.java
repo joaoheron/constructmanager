@@ -16,6 +16,9 @@ import com.heron.constructmanager.activities.forms.UpdateEmailFormActivity;
 import com.heron.constructmanager.activities.lists.ListResponsabilitiesActivity;
 import com.heron.constructmanager.models.Construction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConstructionExecViewActivity extends AppCompatActivity {
 
     Context context;
@@ -23,12 +26,14 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
     CardView infoCard, budgetCard, scheduleCard, photoCard, mapCard, responsiblesCard;
     TextView titleTextView, stageTextView, infoTextView, budgetTextView, scheduleTextView, photoTextView, mapTextView, responsiblesTextView;
     String titleStr, stageStr, addressStr, typeStr, responsiblesStr, constructionUidStr;
+    ArrayList<String> responsiblesEmailList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_construction_exec_view);
         context = this;
+        responsiblesEmailList = new ArrayList<>();
 
         backArrowImg = findViewById(R.id.construction_exec_view_back_arrow);
         titleTextView = findViewById(R.id.construction_exec_view_title_text);
@@ -40,19 +45,12 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         mapCard  = findViewById(R.id.construction_exec_map_card);
         responsiblesCard  = findViewById(R.id.construction_exec_responsbile_card);
 
-//        infoTextView = findViewById(R.id.construction_exec_view_info_text);
-//        budgetTextView = findViewById(R.id.construction_exec_view_budget_text);
-//        scheduleTextView = findViewById(R.id.construction_exec_view_schedule_text);
-//        photoTextView = findViewById(R.id.construction_exec_view_photo_text);
-//        mapTextView = findViewById(R.id.construction_exec_view_map_text);
-//        responsiblesTextView = findViewById(R.id.construction_exec_view_responsbiles_text);
-
         if(getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
             stageStr = getIntent().getStringExtra("stage");
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
-            responsiblesStr = getIntent().getStringExtra("responsibles");
+            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
 
             titleTextView.setText(titleStr);
@@ -128,6 +126,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         intent.putExtra("address", address);
         intent.putExtra("stage", stage);
         intent.putExtra("type", type);
+        intent.putStringArrayListExtra("responsibles", responsiblesEmailList);
         intent.putExtra("constructionUid", constructionUid);
         return intent;
     }

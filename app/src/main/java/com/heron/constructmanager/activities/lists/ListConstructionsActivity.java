@@ -23,6 +23,8 @@ import com.heron.constructmanager.adapters.ConstructionListAdapter;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.models.Construction;
+import com.heron.constructmanager.models.Responsability;
+import com.heron.constructmanager.models.User;
 import com.heron.constructmanager.service.ConstructionService;
 
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class ListConstructionsActivity extends AppCompatActivity {
     Context context;
 
     ArrayList<Construction> constructions;
+    ArrayList<User> responsibles;
+
     ConstructionListAdapter adapter;
 
     RecyclerView recyclerView;
@@ -101,6 +105,16 @@ public class ListConstructionsActivity extends AppCompatActivity {
                 for(DataSnapshot construction_snap : snapshot.getChildren()) {
                     construction = construction_snap.getValue(Construction.class);
                     construction.setUid(construction_snap.getKey()); // !!!
+//
+                    responsibles = new ArrayList<>();
+                    User responsible;
+                    for(DataSnapshot responsible_snap : construction_snap.child("information").child("responsibles").getChildren()) {
+                        responsible  = responsible_snap.getValue(User.class);
+                        responsible.setUid(responsible_snap.getKey());
+                        responsibles.add(responsible);
+                    }
+                    construction.getInformation().setResponsibles(responsibles);
+
                     constructions.add(construction);
                 }
                 adapter = new ConstructionListAdapter(constructions, context);

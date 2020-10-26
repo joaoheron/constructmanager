@@ -18,7 +18,9 @@ import com.heron.constructmanager.activities.views.ConstructionExecViewActivity;
 import com.heron.constructmanager.activities.views.ConstructionFinishedViewActivity;
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.activities.views.ConstructionPrepViewActivity;
+import com.heron.constructmanager.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConstructionListAdapter extends RecyclerView.Adapter<ConstructionListAdapter.ViewHolder> {
@@ -85,38 +87,20 @@ public class ConstructionListAdapter extends RecyclerView.Adapter<ConstructionLi
     }
 
     private Intent putExtrasConstruction(Intent intent, Construction construction) {
+        ArrayList<String> responsiblesEmails = new ArrayList<String>();
+
+        for (User responsible: construction.getInformation().getResponsibles()) {
+            responsiblesEmails.add(responsible.getEmail());
+        }
+
         intent.putExtra("title", construction.getInformation().getTitle());
         intent.putExtra("address", construction.getInformation().getAddress());
         intent.putExtra("stage", construction.getInformation().getStage());
         intent.putExtra("type", construction.getInformation().getType());
         intent.putExtra("constructionUid", construction.getUid());
+        intent.putStringArrayListExtra("responsibles", responsiblesEmails);
+
         return intent;
     }
 
-//    private void putExtrasConstructionExec(Intent intent, Construction construction) {
-//        intent.putExtra("title", construction.getInformation().getTitle());
-//        intent.putExtra("address", construction.getInformation().getAddress());
-//        intent.putExtra("stage", construction.getInformation().getStage());
-//        intent.putExtra("type", construction.getInformation().getType());
-//        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
-//        intent.putExtra("constructionUid", construction.getUid());
-//    }
-//
-//    private void putExtrasConstructionCancelled(Intent intent, Construction construction) {
-//        intent.putExtra("title", construction.getInformation().getTitle());
-//        intent.putExtra("address", construction.getInformation().getAddress());
-//        intent.putExtra("stage", construction.getInformation().getStage());
-//        intent.putExtra("type", construction.getInformation().getType());
-//        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
-//        intent.putExtra("constructionUid", construction.getUid());
-//    }
-//
-//    private void putExtrasConstructionFinished(Intent intent, Construction construction) {
-//        intent.putExtra("title", construction.getInformation().getTitle());
-//        intent.putExtra("address", construction.getInformation().getAddress());
-//        intent.putExtra("stage", construction.getInformation().getStage());
-//        intent.putExtra("type", construction.getInformation().getType());
-//        intent.putExtra("responsibles", construction.getInformation().getResponsibles());
-//        intent.putExtra("constructionUid", construction.getUid());
-//    }
 }
