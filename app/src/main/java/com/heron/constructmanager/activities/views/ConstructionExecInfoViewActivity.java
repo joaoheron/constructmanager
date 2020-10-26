@@ -2,6 +2,7 @@ package com.heron.constructmanager.activities.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.heron.constructmanager.R;
 
 import java.util.ArrayList;
 
+import static java.lang.String.join;
+
 public class ConstructionExecInfoViewActivity extends AppCompatActivity {
 
     Context context;
@@ -20,6 +23,7 @@ public class ConstructionExecInfoViewActivity extends AppCompatActivity {
     String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr;
     ArrayList<String> responsiblesEmailList;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,7 @@ public class ConstructionExecInfoViewActivity extends AppCompatActivity {
         stageTextView.setText(stageStr);
         addressTextView.setText(addressStr);
         typeTextView.setText(typeStr);
+        responsiblesStr = join(", ", responsiblesEmailList);
         responsiblesTextView.setText(responsiblesStr);
 
         backArrowImg.setOnClickListener(new View.OnClickListener() {

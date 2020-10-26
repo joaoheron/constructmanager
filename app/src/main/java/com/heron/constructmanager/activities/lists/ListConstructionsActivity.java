@@ -105,7 +105,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
                 for(DataSnapshot construction_snap : snapshot.getChildren()) {
                     construction = construction_snap.getValue(Construction.class);
                     construction.setUid(construction_snap.getKey()); // !!!
-//
+
                     responsibles = new ArrayList<>();
                     User responsible;
                     for(DataSnapshot responsible_snap : construction_snap.child("information").child("responsibles").getChildren()) {
@@ -114,7 +114,6 @@ public class ListConstructionsActivity extends AppCompatActivity {
                         responsibles.add(responsible);
                     }
                     construction.getInformation().setResponsibles(responsibles);
-
                     constructions.add(construction);
                 }
                 adapter = new ConstructionListAdapter(constructions, context);

@@ -5,7 +5,7 @@
     <string name="schedule">Cronograma</string>
     <string name="photo">Fotografias</string>
     <string name="map">Mapa</string>
-    <string name="resp">Responsáveis</string>
+    <string name="resp">Responsabilidades</string>
     <string name="cancelled">Cancelada</string>
     <string name="exec">Execução</string>
     <string name="deadline">Prazo (dd/mm/YYYY)</string>

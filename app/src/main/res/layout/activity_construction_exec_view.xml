@@ -383,7 +383,7 @@
                 tools:ignore="VectorDrawableCompat" />
 
             <TextView
-                android:id="@+id/construction_exec_view_responsbiles_text"
+                android:id="@+id/construction_exec_view_responsabilities_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
