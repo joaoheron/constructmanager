@@ -84,16 +84,14 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         nachoTextView = findViewById(R.id.construction_prep_nacho_res_text_view);
 
         if(getIntent().getExtras() != null) {
+            constructionUidStr = getIntent().getStringExtra("constructionUid");
             titleStr = getIntent().getStringExtra("title");
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
-            // SE FOR NULO, É ADD, SE NAO FOR NULO É EDIT
-            constructionUidStr = getIntent().getStringExtra("constructionUid");
-            titleEditText.setText(titleStr);
-
-            addressEditText.setText(addressStr);
-            typeEditText.setText(typeStr);
         }
+        titleEditText.setText(titleStr);
+        addressEditText.setText(addressStr);
+        typeEditText.setText(typeStr);
 
         // Validate
         validateInput = new ValidateInput(ConstructionPrepFormActivity.this, titleEditText, addressEditText, typeEditText, nachoTextView);
@@ -107,7 +105,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
                     User user = childSnapshot.getValue(User.class);
-                    user.setUid(childSnapshot.getKey()); // @@@@@@ IMPROTYANTE
+                    user.setUid(childSnapshot.getKey());
                     String email = childSnapshot.child("email").getValue(String.class);
                     allUsersList.add(user);
                     allEmailsList.add(email);

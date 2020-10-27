@@ -11,4 +11,5 @@
     <string name="deadline">Prazo (dd/mm/YYYY)</string>
     <string name="desc">Descriçao</string>
     <string name="title">Título</string>
+    <string name="open">Aberta</string>
 </resources>

@@ -20,8 +20,9 @@ import java.util.List;
 
 public class ResponsabilityListAdapter extends RecyclerView.Adapter<ResponsabilityListAdapter.ViewHolder> {
 
-    private final String SOLVED = "Resolvida";
-    private final String OPEN = "Aberta";
+    private final String SOLVED = "Resolvido";
+    private final String OPEN = "Aberto";
+
     private final List responsabilitiesList;
     private final String constructionUid;
     private final Context context;

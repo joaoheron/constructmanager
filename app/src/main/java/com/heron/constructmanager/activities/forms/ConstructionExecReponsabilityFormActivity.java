@@ -60,7 +60,7 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
         spinner = findViewById(R.id.responsability_form_responsible_spinner);
         backArrowImg = findViewById(R.id.responsability_form_back_arrow);
         titleEditText = findViewById(R.id.responsability_form_title);
-        descEditText = findViewById(R.id.responsability_form_title);
+        descEditText = findViewById(R.id.responsability_form_desc);
         deadlineEditText = findViewById(R.id.responsability_form_deadline);
         addButton = findViewById(R.id.responsability_form_add_button);
         emailsList = new ArrayList<>();
@@ -71,13 +71,17 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
             // SHOULD ALWAYS GET THESE EXTRAS
             constructionUidStr = getIntent().getStringExtra("constructionUid");
             // WILL GET THESE EXTRAS ONLY IF EDIT
+            stateStr = (getIntent().getStringExtra("state") != null) ? getIntent().getStringExtra("state") : stateStr;
             responsabilityUidStr = getIntent().getStringExtra("responsabilityUid");
             responsibleEmailStr = getIntent().getStringExtra("responsibleEmail");
             titleStr = getIntent().getStringExtra("title");
             descStr = getIntent().getStringExtra("desc");
             deadlineStr = getIntent().getStringExtra("deadline");
-            stateStr = getIntent().getStringExtra("state");
         }
+        titleEditText.setText(titleStr);
+        descEditText.setText(descStr);
+        deadlineEditText.setText(deadlineStr);
+
         validateInput = new ValidateInput(ConstructionExecReponsabilityFormActivity.this, titleEditText, descEditText, deadlineEditText, spinner);
 
         // Listeners
@@ -110,20 +114,15 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                loading.loadingAnimationDialog();
                 if (infosVerified()) {
                     getEditTextsContent();
                     responsabilityService.writeResponsability(constructionUidStr, responsabilityUidStr, titleStr, descStr, deadlineStr, stateStr, responsibleEmailStr);
-//                    loading.dismissLoading();
                     finish();
                 }
-                else {
-//                    loading.dismissLoading();
-                }
-            } });
+            }
+        });
 
     }
-
 
     public boolean infosVerified() {
         boolean titleVerified = validateInput.validateTitle();

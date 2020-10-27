@@ -11,13 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.heron.constructmanager.R;
-import com.heron.constructmanager.activities.HomeActivity;
-import com.heron.constructmanager.activities.forms.UpdateEmailFormActivity;
 import com.heron.constructmanager.activities.lists.ListResponsabilitiesActivity;
-import com.heron.constructmanager.models.Construction;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ConstructionExecViewActivity extends AppCompatActivity {
 

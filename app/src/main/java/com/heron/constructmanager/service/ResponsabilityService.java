@@ -29,8 +29,8 @@ public class ResponsabilityService {
     FirebaseAuth auth;
 
 
-    public final String OPEN = "Aberta";
-    public final String SOLVED = "Resolvida";
+    public final String OPEN = "Aberto";
+    public final String SOLVED = "Resolvido";
     public final String WRITE = "Cadastro";
 
 
@@ -45,7 +45,6 @@ public class ResponsabilityService {
         DatabaseReference constructionReference = rootReference.child("constructions").child(constructionUid);
         if (responsabilityUid == null) {
             responsabilityUid = constructionReference.child("responsabilities").push().getKey();
-//            responsabilityUid = rootReference.child("constructions").child(constructionUid).child("responsabilities").push().getKey();
         }
 
         Responsability responsability = new Responsability(constructionUid, title, desc, deadline, state, responsibleEmail);

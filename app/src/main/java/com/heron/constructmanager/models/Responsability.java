@@ -94,7 +94,7 @@ public class Responsability {
         result.put("constructionUid", constructionUid);
         result.put("responsibleEmail", responsibleEmail);
         result.put("title", title);
-        result.put("desc", title);
+        result.put("desc", desc);
         result.put("deadline", deadline);
         result.put("state", state);
 
