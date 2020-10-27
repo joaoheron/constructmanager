@@ -85,8 +85,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adaptConstructionsToView();
-
+        adaptConstructionsToView(userUidStr);
     }
 
     @Override
@@ -94,8 +93,10 @@ public class ListConstructionsActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void adaptConstructionsToView() {
-        DatabaseReference constructionsReference = service.getConstructionsReference(userUidStr);
+    // ADAPT CONSTRUCTIONS SHOWN BASED ON USER LOGGED IN
+
+    private void adaptConstructionsToView(String userUid) {
+        DatabaseReference constructionsReference = service.getConstructionsReference();
 
         constructionsReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,17 +105,19 @@ public class ListConstructionsActivity extends AppCompatActivity {
                 Construction construction;
                 for(DataSnapshot construction_snap : snapshot.getChildren()) {
                     construction = construction_snap.getValue(Construction.class);
-                    construction.setUid(construction_snap.getKey()); // !!!
+                    construction.setUid(construction_snap.getKey());
 
                     responsibles = new ArrayList<>();
                     User responsible;
                     for(DataSnapshot responsible_snap : construction_snap.child("information").child("responsibles").getChildren()) {
-                        responsible  = responsible_snap.getValue(User.class);
-                        responsible.setUid(responsible_snap.getKey());
+                        responsible = responsible_snap.getValue(User.class);
+                        responsible.setUid(responsible_snap.child("uid").getValue(String.class));
                         responsibles.add(responsible);
                     }
                     construction.getInformation().setResponsibles(responsibles);
-                    constructions.add(construction);
+                    if (service.displayConstructionToUser(userUid, construction)){
+                        constructions.add(construction);
+                    }
                 }
                 adapter = new ConstructionListAdapter(constructions, context);
                 recyclerView.setAdapter(adapter);

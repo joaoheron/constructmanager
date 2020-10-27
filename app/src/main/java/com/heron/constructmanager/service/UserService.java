@@ -25,9 +25,6 @@ public class UserService {
     FirebaseDatabase db;
     FirebaseAuth auth;
 
-//    List<User> allUsersList;
-//    List<String> allEmailsList;
-
     public final String WRITE = "Cadastro";
     public final String DELETE = "Remoção";
 
@@ -36,8 +33,6 @@ public class UserService {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         rootReference = db.getReference();
-//        allUsersList = new ArrayList<>();
-//        allEmailsList = new ArrayList<>();
     }
 
     public DatabaseReference getUsersReference() {
@@ -52,27 +47,6 @@ public class UserService {
             showToastMsg(task, DELETE);
         });
     }
-
-//    public void readUsers() {
-//        usersReference = db.getReference("/users/");
-//        usersReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                allUsersList = new ArrayList<>();
-//                User user;
-//                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-//                    user = userSnapshot.getValue(User.class);
-//                    user.setUid(userSnapshot.getKey());
-//                    allUsersList.add(user);
-//                    allEmailsList.add(user.getName());
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                System.out.println("The read failed: " + databaseError.getCode());
-//            }
-//        });
-//    }
 
     public List<User> getUsersByEmails(List<String> selectedEmails, List<User> allUsersList) {
         List <User> allUsersMatchedEmail = new ArrayList();

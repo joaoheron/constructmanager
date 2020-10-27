@@ -41,9 +41,9 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
     Button addButton;
 
     List<User> selectedUsersList;
+    List<User> allUsersList;
     List<String> selectedEmailsList;
     List<String> allEmailsList;
-    List<User> allUsersList;
 
     FirebaseAuth auth;
     FirebaseUser user;

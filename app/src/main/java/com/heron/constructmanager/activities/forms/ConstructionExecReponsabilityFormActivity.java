@@ -31,7 +31,7 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
 
     Spinner spinner;
     ImageView backArrowImg, deleteImg, checkImg;
-    EditText titleEditText, descEditText, scheduleEditText;
+    EditText titleEditText, descEditText, deadlineEditText;
     Button addButton;
 
     List<User> usersList;
@@ -41,7 +41,7 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
     FirebaseUser user;
     UserService userService;
 
-    String userIdStr, constructionUidStr, titleStr, descStr, scheduleStr;
+    String userIdStr, constructionUidStr, titleStr, descStr, responsibleEmailStr, deadlineStr, stateStr;
 
     ValidateInput validateInput;
     LoadingAnimation loading;
@@ -50,11 +50,36 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_construction_exec_reponsability_form);
-
-        userService = new UserService(this);
+        deleteImg = findViewById(R.id.responsability_form_delete);
+        checkImg = findViewById(R.id.responsability_form_solve_img);
         spinner = findViewById(R.id.responsability_form_responsible_spinner);
         backArrowImg = findViewById(R.id.responsability_form_back_arrow);
+        titleEditText = findViewById(R.id.responsability_form_title);
+        descEditText = findViewById(R.id.responsability_form_title);
+        deadlineEditText = findViewById(R.id.responsability_form_deadline);
+        addButton = findViewById(R.id.responsability_form_add_button);
         emailsList = new ArrayList<>();
+        userService = new UserService(this);
+//
+//        intent.putExtra("constructionUid", responsability.getConstructionUid());
+//        intent.putExtra("responsibleEmail", responsability.getResponsibleEmail());
+//        intent.putExtra("title", responsability.getTitle());
+//        intent.putExtra("desc", responsability.getDesc());
+//        intent.putExtra("deadline", responsability.getDeadline());
+//        intent.putExtra("state", responsability.getState());
+
+        if(getIntent().getExtras() != null) {
+            // SHOULD ALWAYS GET THESE EXTRAS
+
+            // WILL GET THESE EXTRAS ONLY IF EDIT
+            titleStr = getIntent().getStringExtra("title");
+            responsibleEmailStr = getIntent().getStringExtra("email");
+            descStr = getIntent().getStringExtra("desc");
+            descStr = getIntent().getStringExtra("desc");
+            constructionUidStr = getIntent().getStringExtra("constructionUid");
+
+        }
+
 
         // Listeners
         DatabaseReference usersReference = userService.getUsersReference();

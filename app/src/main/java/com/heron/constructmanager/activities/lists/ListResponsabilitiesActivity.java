@@ -33,6 +33,7 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
     Context context;
 
     ArrayList<Responsability> responsabilities;
+    ArrayList<String> responsiblesEmailList;
     ResponsabilityListAdapter adapter;
 
     RecyclerView recyclerView;
@@ -50,11 +51,13 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_responsabilities);
         responsabilities = new ArrayList<>();
+        responsiblesEmailList = new ArrayList<>();
         context = this;
 
         if(getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
             stageStr = getIntent().getStringExtra("stage");
+            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
         }
 
@@ -62,7 +65,7 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
         user = auth.getCurrentUser();
         userUidStr = auth.getCurrentUser().getUid();
 
-        responsabilityService = new ResponsabilityService(this); // TODO passar o construction uid? NAO ! pasar o cUid e o Uuid no metodo direto
+        responsabilityService = new ResponsabilityService(this);
         backArrowButton = findViewById(R.id.list_responsabilities_back_arrow);
         addConstructionButton = findViewById(R.id.list_responsabilities_add_button);
 
@@ -97,7 +100,7 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
     }
 
     private void adaptResponsabilitiesToView() {
-        DatabaseReference responsabilitiesReference = responsabilityService.getResponsabilitiesReference(userUidStr, constructionUidStr);
+        DatabaseReference responsabilitiesReference = responsabilityService.getResponsabilitiesReference(constructionUidStr);
 
         responsabilitiesReference.addValueEventListener(new ValueEventListener() {
             @Override

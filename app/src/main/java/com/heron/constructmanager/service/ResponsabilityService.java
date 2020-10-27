@@ -45,25 +45,24 @@ public class ResponsabilityService {
         allResponsiblesEmailsList = new ArrayList<>();
     }
 
-    // TODO remove construction/ node e keep only user/userid/construction
-
-    public void writeResponsability(String constructionUid, String userUid, String responsible, String deadline, String state, String responsabilityUid, List<User> responsibles) {
+    public void writeResponsability(String constructionUid, String responsibleEmail, String title, String desc, String deadline, String state, String responsabilityUid) {
         // Create new post at /users/$user_id/$construction_id and at /constructions/$construction_id simultaneously
         if (responsabilityUid == null) {
             responsabilityUid = rootReference.child("constructions").child(constructionUid).child("responsabilities").push().getKey();
         }
-        Responsability responsability = new Responsability(constructionUid, userUid, responsible, deadline, state);
+
+        Responsability responsability = new Responsability(constructionUid, responsibleEmail, title, desc, deadline, state);
         Map<String, Object> postValues = responsability.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid + "/responsabilities/" + responsabilityUid, postValues);
-        childUpdates.put("/users/" + userUid + "/constructions/" + constructionUid + "/responsabilities/" + responsabilityUid, postValues);
-
-        for (User user: responsibles) {
-            if (!user.getUid().equals(userUid)) {
-                childUpdates.put("/users/" + user.getUid() + "/constructions/" + constructionUid + "/responsabilities/" + responsabilityUid, postValues);
-            }
-        }
+//        childUpdates.put("/users/" + userUid + "/constructions/" + constructionUid + "/responsabilities/" + responsabilityUid, postValues);
+//
+//        for (User user: responsibles) {
+//            if (!user.getUid().equals(userUid)) {
+//                childUpdates.put("/users/" + user.getUid() + "/constructions/" + constructionUid + "/responsabilities/" + responsabilityUid, postValues);
+//            }
+//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, WRITE);
@@ -72,8 +71,8 @@ public class ResponsabilityService {
 
     //  @@@@@@@@@@ GET REFERENCES @@@@@@@@@@
 
-    public DatabaseReference getResponsabilitiesReference(String userUid, String constructionUid) {
-        return db.getReference().child("users").child(userUid).child("constructions").child(constructionUid).child("responsabilities");
+    public DatabaseReference getResponsabilitiesReference(String constructionUid) {
+        return db.getReference().child("constructions").child(constructionUid).child("responsabilities");
     }
 
     public void showToastMsg(Task task, String action) {
@@ -84,7 +83,5 @@ public class ResponsabilityService {
         }
 
     }
-
-
 
 }

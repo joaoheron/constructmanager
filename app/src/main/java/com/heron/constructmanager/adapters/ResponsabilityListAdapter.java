@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,7 +52,7 @@ public class ResponsabilityListAdapter extends RecyclerView.Adapter<Responsabili
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Responsability responsability = (Responsability) responsabilitiesList.get(position);
-        holder.cardResponsabilityTitleTextView.setText(responsability.getResponsabilityTitle());
+        holder.cardResponsabilityTitleTextView.setText(responsability.getTitle());
         holder.cardResponsabilityTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,12 +76,11 @@ public class ResponsabilityListAdapter extends RecyclerView.Adapter<Responsabili
 
     private Intent putExtrasResponsability(Intent intent, Responsability responsability) {
         intent.putExtra("constructionUid", responsability.getConstructionUid());
-        intent.putExtra("responsibleUid", responsability.getResponsibleUid());
-        intent.putExtra("responsibleName", responsability.getResponsibleName());
-        intent.putExtra("responsabilityTitle", responsability.getResponsabilityTitle());
+        intent.putExtra("responsibleEmail", responsability.getResponsibleEmail());
+        intent.putExtra("title", responsability.getTitle());
         intent.putExtra("desc", responsability.getDesc());
         intent.putExtra("deadline", responsability.getDeadline());
-        intent.putExtra("responsabilityUid", responsability.getResponsabilityUid());
+        intent.putExtra("state", responsability.getState());
         return intent;
     }
 

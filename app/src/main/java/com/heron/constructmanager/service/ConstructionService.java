@@ -1,6 +1,7 @@
 package com.heron.constructmanager.service;
 
 import android.content.Context;
+import android.net.wifi.aware.PublishConfig;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
@@ -53,13 +54,13 @@ public class ConstructionService {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
-        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
+//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
-        for (User responsible: responsibles) {
-            if (!responsible.getUid().equals(userId)) {
-                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
-            }
-        }
+//        for (User responsible: responsibles) {
+//            if (!responsible.getUid().equals(userId)) {
+//                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
+//            }
+//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, WRITE);
@@ -69,13 +70,13 @@ public class ConstructionService {
     public void deleteConstruction(String userId, String constructionUid, List<User> responsibles) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid, null);
-        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid, null);
+//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid, null);
 
-        for (User responsible: responsibles) {
-            if (!responsible.getUid().equals(userId)) {
-                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", null);
-            }
-        }
+//        for (User responsible: responsibles) {
+//            if (!responsible.getUid().equals(userId)) {
+//                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", null);
+//            }
+//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, DELETE);
@@ -94,13 +95,13 @@ public class ConstructionService {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
-        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
+//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
-        for (User responsible: responsibles) {
-            if (!responsible.getUid().equals(userId)) {
-                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
-            }
-        }
+//        for (User responsible: responsibles) {
+//            if (!responsible.getUid().equals(userId)) {
+//                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
+//            }
+//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, CANCEL);
@@ -116,13 +117,13 @@ public class ConstructionService {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
-        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
+//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
 
-        for (User responsible: responsibles) {
-            if (!responsible.getUid().equals(userId)) {
-                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
-            }
-        }
+//        for (User responsible: responsibles) {
+//            if (!responsible.getUid().equals(userId)) {
+//                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
+//            }
+//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, NEW_STAGE);
@@ -131,9 +132,23 @@ public class ConstructionService {
 
     //  @@@@@@@@@@ GET REFERENCES @@@@@@@@@@
 
-    public DatabaseReference getConstructionsReference(String userUid) {
-        return db.getReference().child("users").child(userUid).child("constructions");
+//    public DatabaseReference getConstructionsReference(String userUid) {
+//        return db.getReference().child("users").child(userUid).child("constructions");
+//    }
+
+    public DatabaseReference getConstructionsReference() {
+        return db.getReference().child("constructions");
     }
+
+    public boolean displayConstructionToUser(String userUid, Construction construction) {
+        for (int i = 0; i < construction.getInformation().getResponsibles().size(); i++) {
+            if (construction.getInformation().getResponsibles().get(i).getUid().equals(userUid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     //  @@@@@@@@@@ TOAST MESSAGES @@@@@@@@@@
 

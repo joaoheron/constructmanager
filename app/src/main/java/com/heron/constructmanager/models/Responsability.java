@@ -9,19 +9,18 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class Responsability {
     public String constructionUid;
-    public String responsibleUid;
-    public String responsabilityTitle;
+    public String responsibleEmail;
+    public String title;
     public String desc;
-    public String responsibleName;
     public String deadline;
     public String state;
 
-    public String getResponsabilityTitle() {
-        return responsabilityTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setResponsabilityTitle(String responsabilityTitle) {
-        this.responsabilityTitle = responsabilityTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDesc() {
@@ -53,20 +52,13 @@ public class Responsability {
         this.constructionUid = constructionUid;
     }
 
-    public String getResponsibleUid() {
-        return responsibleUid;
+
+    public String getResponsibleEmail() {
+        return responsibleEmail;
     }
 
-    public void setResponsibleUid(String responsibleUid) {
-        this.responsibleUid = responsibleUid;
-    }
-
-    public String getResponsibleName() {
-        return responsibleName;
-    }
-
-    public void setResponsibleName(String responsibleName) {
-        this.responsibleName = responsibleName;
+    public void setResponsibleEmail(String responsibleEmail) {
+        this.responsibleEmail = responsibleEmail;
     }
 
     public String getDeadline() {
@@ -89,10 +81,11 @@ public class Responsability {
         // Default constructor required for calls to DataSnapshot.getValue(Responsability.class)
     }
 
-    public Responsability(String constructionUid, String userUid, String responsible, String deadline, String state) {
+    public Responsability(String constructionUid, String responsibleEmail, String title, String desc, String deadline, String state) {
         this.constructionUid = constructionUid;
-        this.responsibleUid = userUid;
-        this.responsibleName = responsible;
+        this.responsibleEmail = responsibleEmail;
+        this.title = title;
+        this.desc = desc;
         this.deadline = deadline;
         this.state = state;
     }
@@ -102,10 +95,9 @@ public class Responsability {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("constructionUid", constructionUid);
-        result.put("responsibleUid", responsibleUid);
-        result.put("responsibleName", responsibleName);
-        result.put("responsabilityTitle", responsabilityTitle);
-        result.put("desc", responsabilityTitle);
+        result.put("responsibleEmail", responsibleEmail);
+        result.put("title", title);
+        result.put("desc", title);
         result.put("deadline", deadline);
         result.put("state", state);
 

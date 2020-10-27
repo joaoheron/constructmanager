@@ -7,17 +7,18 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class User {
 
-    @Exclude
+//    @Exclude
     public String uid;
-
     public String name;
+    public String email;
+    boolean admin;
 
-    @Exclude
+//    @Exclude
     public String getUid() {
         return uid;
     }
 
-    @Exclude
+//    @Exclude
     public void setUid(String uid) {
         this.uid = uid;
     }
@@ -47,9 +48,6 @@ public class User {
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
-
-    public String email;
-    boolean admin;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
