@@ -31,15 +31,12 @@ public class Responsability {
         this.desc = desc;
     }
 
-    @Exclude
     public String responsabilityUid;
 
-    @Exclude
     public String getResponsabilityUid() {
         return responsabilityUid;
     }
 
-    @Exclude
     public void setResponsabilityUid(String responsabilityUid) {
         this.responsabilityUid = responsabilityUid;
     }
@@ -81,7 +78,7 @@ public class Responsability {
         // Default constructor required for calls to DataSnapshot.getValue(Responsability.class)
     }
 
-    public Responsability(String constructionUid, String responsibleEmail, String title, String desc, String deadline, String state) {
+    public Responsability(String constructionUid, String title, String desc, String deadline, String state,  String responsibleEmail) {
         this.constructionUid = constructionUid;
         this.responsibleEmail = responsibleEmail;
         this.title = title;

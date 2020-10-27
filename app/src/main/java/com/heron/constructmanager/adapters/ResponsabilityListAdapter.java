@@ -23,12 +23,14 @@ public class ResponsabilityListAdapter extends RecyclerView.Adapter<Responsabili
     private final String SOLVED = "Resolvida";
     private final String OPEN = "Aberta";
     private final List responsabilitiesList;
+    private final String constructionUid;
     private final Context context;
 
 
-    public ResponsabilityListAdapter(List responsabilitiesList, Context context) {
+    public ResponsabilityListAdapter(List responsabilitiesList, Context context, String constructionUid) {
         this.responsabilitiesList = responsabilitiesList;
         this.context = context;
+        this.constructionUid = constructionUid;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -75,7 +77,8 @@ public class ResponsabilityListAdapter extends RecyclerView.Adapter<Responsabili
     }
 
     private Intent putExtrasResponsability(Intent intent, Responsability responsability) {
-        intent.putExtra("constructionUid", responsability.getConstructionUid());
+        intent.putExtra("constructionUid", constructionUid);
+        intent.putExtra("responsabilityUid", responsability.getResponsabilityUid());
         intent.putExtra("responsibleEmail", responsability.getResponsibleEmail());
         intent.putExtra("title", responsability.getTitle());
         intent.putExtra("desc", responsability.getDesc());

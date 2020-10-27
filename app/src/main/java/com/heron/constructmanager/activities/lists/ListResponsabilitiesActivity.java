@@ -37,7 +37,7 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
     ResponsabilityListAdapter adapter;
 
     RecyclerView recyclerView;
-    Button addConstructionButton;
+    Button addResponsabilityButton;
     ImageView backArrowButton;
 
     FirebaseUser user;
@@ -55,9 +55,6 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
         context = this;
 
         if(getIntent().getExtras() != null) {
-            titleStr = getIntent().getStringExtra("title");
-            stageStr = getIntent().getStringExtra("stage");
-            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
         }
 
@@ -67,7 +64,7 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
 
         responsabilityService = new ResponsabilityService(this);
         backArrowButton = findViewById(R.id.list_responsabilities_back_arrow);
-        addConstructionButton = findViewById(R.id.list_responsabilities_add_button);
+        addResponsabilityButton = findViewById(R.id.list_responsabilities_add_button);
 
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +73,11 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
             }
         });
 
-        addConstructionButton.setOnClickListener(new View.OnClickListener() {
+        addResponsabilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ListResponsabilitiesActivity.this, ConstructionExecReponsabilityFormActivity.class);
+                intent.putExtra("constructionUid", constructionUidStr);
                 startActivity(intent);
             }
         });
@@ -90,7 +88,7 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adaptResponsabilitiesToView();
+        adaptResponsabilitiesToView(constructionUidStr);
 
     }
 
@@ -99,7 +97,7 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void adaptResponsabilitiesToView() {
+    private void adaptResponsabilitiesToView(String constructionUidStr) {
         DatabaseReference responsabilitiesReference = responsabilityService.getResponsabilitiesReference(constructionUidStr);
 
         responsabilitiesReference.addValueEventListener(new ValueEventListener() {
@@ -109,10 +107,10 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
                 Responsability responsability;
                 for(DataSnapshot resp_snap : snapshot.getChildren()) {
                     responsability = resp_snap.getValue(Responsability.class);
-                    responsability.setResponsabilityUid(resp_snap.getKey()); // !!!
+                    responsability.setResponsabilityUid(resp_snap.getKey());
                     responsabilities.add(responsability);
                 }
-                adapter = new ResponsabilityListAdapter(responsabilities, context);
+                adapter = new ResponsabilityListAdapter(responsabilities, context, constructionUidStr);
                 recyclerView.setAdapter(adapter);
             }
 

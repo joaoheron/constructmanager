@@ -126,8 +126,8 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         intent.putExtra("address", address);
         intent.putExtra("stage", stage);
         intent.putExtra("type", type);
-        intent.putStringArrayListExtra("responsibles", responsiblesEmailList);
         intent.putExtra("constructionUid", constructionUid);
+        intent.putStringArrayListExtra("responsibles", responsiblesEmailList);
         return intent;
     }
 }

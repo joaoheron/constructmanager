@@ -9,6 +9,7 @@ import java.util.List;
 public class Construction {
 
     Information information;
+    @Exclude
     List<Responsability> responsabilities;
 
     @Exclude
@@ -18,8 +19,10 @@ public class Construction {
 
     public void setInformation(Information information){ this.information = information; }
 
+    @Exclude
     public List<Responsability> getResponsabilities(){ return responsabilities; }
 
+    @Exclude
     public void setResponsabilities(List<Responsability> responsabilities){ this.responsabilities = responsabilities; }
 
     @Exclude

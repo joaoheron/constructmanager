@@ -2,6 +2,7 @@ package com.heron.constructmanager.activities.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,8 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 import com.heron.constructmanager.animations.LoadingAnimation;
+import com.heron.constructmanager.models.Responsability;
 import com.heron.constructmanager.models.User;
 import com.heron.constructmanager.service.ConstructionService;
+import com.heron.constructmanager.service.ResponsabilityService;
 import com.heron.constructmanager.service.UserService;
 import com.hootsuite.nachos.NachoTextView;
 
@@ -40,8 +43,9 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
     FirebaseAuth auth;
     FirebaseUser user;
     UserService userService;
+    ResponsabilityService responsabilityService;
 
-    String userIdStr, constructionUidStr, titleStr, descStr, responsibleEmailStr, deadlineStr, stateStr;
+    String constructionUidStr, titleStr, descStr, responsibleEmailStr, deadlineStr, stateStr, responsabilityUidStr;
 
     ValidateInput validateInput;
     LoadingAnimation loading;
@@ -49,6 +53,7 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        stateStr = "Aberto";
         setContentView(R.layout.activity_construction_exec_reponsability_form);
         deleteImg = findViewById(R.id.responsability_form_delete);
         checkImg = findViewById(R.id.responsability_form_solve_img);
@@ -60,26 +65,20 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
         addButton = findViewById(R.id.responsability_form_add_button);
         emailsList = new ArrayList<>();
         userService = new UserService(this);
-//
-//        intent.putExtra("constructionUid", responsability.getConstructionUid());
-//        intent.putExtra("responsibleEmail", responsability.getResponsibleEmail());
-//        intent.putExtra("title", responsability.getTitle());
-//        intent.putExtra("desc", responsability.getDesc());
-//        intent.putExtra("deadline", responsability.getDeadline());
-//        intent.putExtra("state", responsability.getState());
+        responsabilityService = new ResponsabilityService(this);
 
         if(getIntent().getExtras() != null) {
             // SHOULD ALWAYS GET THESE EXTRAS
-
-            // WILL GET THESE EXTRAS ONLY IF EDIT
-            titleStr = getIntent().getStringExtra("title");
-            responsibleEmailStr = getIntent().getStringExtra("email");
-            descStr = getIntent().getStringExtra("desc");
-            descStr = getIntent().getStringExtra("desc");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
-
+            // WILL GET THESE EXTRAS ONLY IF EDIT
+            responsabilityUidStr = getIntent().getStringExtra("responsabilityUid");
+            responsibleEmailStr = getIntent().getStringExtra("responsibleEmail");
+            titleStr = getIntent().getStringExtra("title");
+            descStr = getIntent().getStringExtra("desc");
+            deadlineStr = getIntent().getStringExtra("deadline");
+            stateStr = getIntent().getStringExtra("state");
         }
-
+        validateInput = new ValidateInput(ConstructionExecReponsabilityFormActivity.this, titleEditText, descEditText, deadlineEditText, spinner);
 
         // Listeners
         DatabaseReference usersReference = userService.getUsersReference();
@@ -108,6 +107,37 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
             }
         });
 
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                loading.loadingAnimationDialog();
+                if (infosVerified()) {
+                    getEditTextsContent();
+                    responsabilityService.writeResponsability(constructionUidStr, responsabilityUidStr, titleStr, descStr, deadlineStr, stateStr, responsibleEmailStr);
+//                    loading.dismissLoading();
+                    finish();
+                }
+                else {
+//                    loading.dismissLoading();
+                }
+            } });
+
+    }
+
+
+    public boolean infosVerified() {
+        boolean titleVerified = validateInput.validateTitle();
+        boolean descVerified = validateInput.validateDesc();
+        boolean deadlineVerified = validateInput.validateDeadline();
+        boolean spinnerVerified  = validateInput.validateSpinner();
+        return titleVerified && descVerified && deadlineVerified && spinnerVerified;
+    }
+
+    public void getEditTextsContent() {
+        titleStr = titleEditText.getText().toString().trim();
+        descStr = descEditText.getText().toString().trim();
+        deadlineStr = deadlineEditText.getText().toString().trim();
+        responsibleEmailStr = spinner.getSelectedItem().toString().trim();
     }
 
 }

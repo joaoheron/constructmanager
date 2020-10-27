@@ -66,7 +66,6 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         selectedEmailsList = new ArrayList();
         allEmailsList = new ArrayList();
         allUsersList = new ArrayList();
-
         selectedUsersList = new ArrayList();
 
         auth = FirebaseAuth.getInstance();
@@ -88,26 +87,25 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             titleStr = getIntent().getStringExtra("title");
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
-//            selectedEmailsList = getIntent().getStringArrayListExtra("responsibles"); TODO achar maneira de preencher os chips nas edições
+            // SE FOR NULO, É ADD, SE NAO FOR NULO É EDIT
             constructionUidStr = getIntent().getStringExtra("constructionUid");
-
             titleEditText.setText(titleStr);
+
             addressEditText.setText(addressStr);
             typeEditText.setText(typeStr);
         }
 
         // Validate
-        validateInput = new ValidateInput(ConstructionPrepFormActivity.this, titleEditText, addressEditText, typeEditText, null);
+        validateInput = new ValidateInput(ConstructionPrepFormActivity.this, titleEditText, addressEditText, typeEditText, nachoTextView);
         // Loading animation
         loading = new LoadingAnimation(this);
         setUpNachoTextView();
-
+        // TODO achar maneira de preencher os chips nas edições
         DatabaseReference usersReference = userService.getUsersReference();
         usersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-                    // AKI SEU BURRO @@@@@@@@@@@@@
                     User user = childSnapshot.getValue(User.class);
                     user.setUid(childSnapshot.getKey()); // @@@@@@ IMPROTYANTE
                     String email = childSnapshot.child("email").getValue(String.class);
@@ -138,7 +136,6 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loading.loadingAnimationDialog();
-
                 if (infosVerified()) {
                     getEditTextsContent();
                     selectedUsersList = userService.getUsersByEmails(selectedEmailsList, allUsersList);
@@ -264,8 +261,9 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         boolean title_verified = validateInput.validateTitle();
         boolean address_verified = validateInput.validateAddress();
         boolean type_verified = validateInput.validateType();
+        boolean nachoVerified = validateInput.validateNachoTextView();
 
-        return title_verified && address_verified && type_verified;
+        return title_verified && address_verified && type_verified && nachoVerified;
     }
 
     public void getEditTextsContent() {

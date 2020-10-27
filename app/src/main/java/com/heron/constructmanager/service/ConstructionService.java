@@ -149,7 +149,6 @@ public class ConstructionService {
         return false;
     }
 
-
     //  @@@@@@@@@@ TOAST MESSAGES @@@@@@@@@@
 
     public void showToastMsg(Task task, String action) {

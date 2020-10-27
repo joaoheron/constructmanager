@@ -3,44 +3,108 @@ package com.heron.constructmanager;
 import android.content.Context;
 import android.util.Patterns;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+import com.hootsuite.nachos.NachoTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ValidateInput {
 
-    private Context context;
-    private EditText email, password, repeat_password, title, address, type, responsibles;
-    private String emailStr, pwStr, repeatPwStr, titleStr, addressStr, typeStr, responsiblesStr;
+    Context context;
+    EditText emailEditText, passwordEditText, repeatPasswordEditText, titleEditText, addressEditText, typeEditText, responsiblesEditText, descEditText, deadlineEditText;
+    NachoTextView nachoTextView ;
+    Spinner spinner;
+    String emailStr, pwStr, repeatPwStr, titleStr, addressStr, typeStr, responsiblesStr, spinnerStr, descStr, stateStr, deadlinelineStr;
 
     public ValidateInput(Context c, EditText e) {
-        context = c;
-        email = e;
+        this.context = c;
+        this.emailEditText = e;
     }
 
     public ValidateInput(Context c, EditText e, EditText p) {
-        context = c;
-        email = e;
-        password = p;
+        this.context = c;
+        this.emailEditText = e;
+        this.passwordEditText = p;
     }
 
     public ValidateInput(Context c, EditText e, EditText p, EditText rp){
-        context = c;
-        email = e;
-        password = p;
-        repeat_password = rp;
+        this.context = c;
+        this.emailEditText = e;
+        this.passwordEditText = p;
+        this.repeatPasswordEditText = rp;
     }
 
     public ValidateInput(Context c, EditText t, EditText a, EditText ty, EditText r){
         context = c;
-        title = t;
-        address = a;
-        type = ty;
-        responsibles = r;
+        titleEditText = t;
+        addressEditText = a;
+        typeEditText = ty;
     }
 
+    public ValidateInput(Context c, EditText t, EditText d, EditText dl, Spinner spinner){
+        this.context = c;
+        this.titleEditText = t;
+        this.descEditText = d;
+        this.deadlineEditText = dl;
+        this.spinner = spinner;
+    }
+
+    public ValidateInput(Context c, EditText titleEditText, EditText addressEditText, EditText typeEditText, NachoTextView nachoTextView) {
+        this.context = c;
+        this.titleEditText = titleEditText;
+        this.addressEditText = addressEditText;
+        this.typeEditText = typeEditText;
+        this.nachoTextView = nachoTextView;
+    }
+
+    public boolean validateNachoTextView(){
+        List<String> values = new ArrayList();
+        values = nachoTextView.getChipValues();
+        if (values == null || values.size() == 0) {
+            Toast.makeText(context, "Preencha o TextView.", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validateSpinner(){
+        Object obj = spinner.getSelectedItem();
+        if (obj == null) {
+            Toast.makeText(context, "Preencha o dropdown.", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validateDeadline() {
+        deadlinelineStr = deadlineEditText.getText().toString().trim();
+        if (deadlinelineStr.isEmpty()) {
+            Toast.makeText(context, "Preencha o Prazo.", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validateDesc() {
+        descStr = descEditText.getText().toString().trim();
+        if (descStr.isEmpty()) {
+            Toast.makeText(context, "Preencha a descrição.", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     public boolean validateTitle() {
-        titleStr = title.getText().toString().trim();
+        titleStr = titleEditText.getText().toString().trim();
         if (titleStr.isEmpty()) {
-            Toast.makeText(context, "Preencha o title.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Preencha o Título.", Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
@@ -48,7 +112,7 @@ public class ValidateInput {
     }
 
     public boolean validateAddress() {
-        addressStr = address.getText().toString().trim();
+        addressStr = addressEditText.getText().toString().trim();
         if (addressStr.isEmpty()) {
             Toast.makeText(context, "Preencha o endereço.", Toast.LENGTH_LONG).show();
             return false;
@@ -58,9 +122,9 @@ public class ValidateInput {
 
     }
     public boolean validateType() {
-        typeStr = title.getText().toString().trim();
+        typeStr = titleEditText.getText().toString().trim();
         if (typeStr.isEmpty()) {
-            Toast.makeText(context, "Preencha o type de construction.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Preencha o tipo de construção.", Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
@@ -68,7 +132,7 @@ public class ValidateInput {
 
     }
     public boolean validateResponsibles() {
-        responsiblesStr = responsibles.getText().toString().trim();
+        responsiblesStr = responsiblesEditText.getText().toString().trim();
         if (responsiblesStr.isEmpty()) {
             Toast.makeText(context, "Selecione algum responsável pela construction.", Toast.LENGTH_LONG).show();
             return false;
@@ -78,7 +142,7 @@ public class ValidateInput {
     }
 
     public boolean validateEmail() {
-        emailStr = email.getText().toString().trim();
+        emailStr = emailEditText.getText().toString().trim();
         if (emailStr.isEmpty()) {
             Toast.makeText(context, "Preencha seu e-mail.", Toast.LENGTH_LONG).show();
             return false;
@@ -91,7 +155,7 @@ public class ValidateInput {
     }
 
     public boolean validatePassword() {
-        pwStr = password.getText().toString();
+        pwStr = passwordEditText.getText().toString();
 
         if (pwStr.isEmpty()) {
             Toast.makeText(context, "Preencha sua senha", Toast.LENGTH_LONG).show();
@@ -105,7 +169,7 @@ public class ValidateInput {
     }
 
     public boolean validateRepeatPassword() {
-        repeatPwStr = repeat_password.getText().toString().trim();
+        repeatPwStr = repeatPasswordEditText.getText().toString().trim();
         if (repeatPwStr.isEmpty()) {
             Toast.makeText(context, "Preencha sua senha novamente", Toast.LENGTH_LONG).show();
             return false;
