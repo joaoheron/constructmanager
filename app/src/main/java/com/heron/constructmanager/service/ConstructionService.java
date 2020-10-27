@@ -54,13 +54,6 @@ public class ConstructionService {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
-//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
-
-//        for (User responsible: responsibles) {
-//            if (!responsible.getUid().equals(userId)) {
-//                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
-//            }
-//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, WRITE);
@@ -70,13 +63,6 @@ public class ConstructionService {
     public void deleteConstruction(String userId, String constructionUid, List<User> responsibles) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid, null);
-//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid, null);
-
-//        for (User responsible: responsibles) {
-//            if (!responsible.getUid().equals(userId)) {
-//                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", null);
-//            }
-//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, DELETE);
@@ -95,13 +81,6 @@ public class ConstructionService {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
-//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
-
-//        for (User responsible: responsibles) {
-//            if (!responsible.getUid().equals(userId)) {
-//                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
-//            }
-//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, CANCEL);
@@ -117,13 +96,6 @@ public class ConstructionService {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
-//        childUpdates.put("/users/" + userId + "/constructions/" + constructionUid + "/information", postValues);
-
-//        for (User responsible: responsibles) {
-//            if (!responsible.getUid().equals(userId)) {
-//                childUpdates.put("/users/" + responsible.getUid() + "/constructions/" + constructionUid + "/information", postValues);
-//            }
-//        }
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, NEW_STAGE);

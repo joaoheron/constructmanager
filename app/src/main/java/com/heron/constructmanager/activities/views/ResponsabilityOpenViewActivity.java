@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.heron.constructmanager.R;
-import com.heron.constructmanager.activities.forms.ConstructionExecReponsabilityFormActivity;
+import com.heron.constructmanager.activities.forms.ReponsabilityFormActivity;
 
 public class ResponsabilityOpenViewActivity extends AppCompatActivity {
 
@@ -65,7 +65,7 @@ public class ResponsabilityOpenViewActivity extends AppCompatActivity {
         editImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ConstructionExecReponsabilityFormActivity.class);
+                Intent intent = new Intent(context, ReponsabilityFormActivity.class);
                 intent.putExtra("constructionUid", constructionUidStr);
                 intent.putExtra("responsabilityUid", responsabilityUidStr);
                 intent.putExtra("title", titleStr);

@@ -1,4 +1,4 @@
-package com.heron.constructmanager.activities.views;
+package com.heron.constructmanager.activities.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.heron.constructmanager.R;
 
-public class ConstructionExecBudgetViewActivity extends AppCompatActivity {
+public class PhotoFormActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_construction_exec_budget_view);
+        setContentView(R.layout.activity_photo_form);
     }
 }

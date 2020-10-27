@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import static java.lang.String.join;
 
-public class ConstructionExecInfoViewActivity extends AppCompatActivity {
+public class InfoViewActivity extends AppCompatActivity {
 
     Context context;
     ImageView backArrowImg;
@@ -27,7 +27,7 @@ public class ConstructionExecInfoViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_construction_exec_info_view);
+        setContentView(R.layout.activity_info_view);
         backArrowImg = findViewById(R.id.list_constructions_back_arrow);
         responsiblesEmailList = new ArrayList<>();
         context = this;

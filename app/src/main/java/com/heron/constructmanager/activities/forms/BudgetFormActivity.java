@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.heron.constructmanager.R;
 
-public class ConstructionExecPhotoFormActivity extends AppCompatActivity {
+public class BudgetFormActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_construction_exec_photo_form);
+        setContentView(R.layout.activity_budget_form);
     }
 }

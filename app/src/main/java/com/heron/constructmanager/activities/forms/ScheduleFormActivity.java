@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.heron.constructmanager.R;
 
-public class ConstructionExecCancelFormActivity extends AppCompatActivity {
+public class ScheduleFormActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_construction_exec_cancel_form);
+        setContentView(R.layout.activity_schedule_form);
     }
 }

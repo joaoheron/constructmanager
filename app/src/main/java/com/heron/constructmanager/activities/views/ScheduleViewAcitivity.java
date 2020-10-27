@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.heron.constructmanager.R;
 
-public class ConstructionExecMapViewActivity extends AppCompatActivity {
+public class ScheduleViewAcitivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_construction_exec_map_view);
+        setContentView(R.layout.activity_schedule_view);
     }
 }

@@ -56,7 +56,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         infoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConstructionExecViewActivity.this, ConstructionExecInfoViewActivity.class);
+                Intent intent = new Intent(ConstructionExecViewActivity.this, InfoViewActivity.class);
                 intent = putExtrasConstruction(intent, titleStr, addressStr, stageStr, typeStr, constructionUidStr);
                 startActivity(intent);
             }
@@ -65,7 +65,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         budgetCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConstructionExecViewActivity.this, ConstructionExecBudgetViewActivity.class);
+                Intent intent = new Intent(ConstructionExecViewActivity.this, BudgetViewActivity.class);
                 intent = putExtrasConstruction(intent, titleStr, addressStr, stageStr, typeStr, constructionUidStr);
                 startActivity(intent);
             }
@@ -74,7 +74,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         scheduleCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConstructionExecViewActivity.this, ConstructionExecScheduleViewAcitivity.class);
+                Intent intent = new Intent(ConstructionExecViewActivity.this, ScheduleViewAcitivity.class);
                 intent = putExtrasConstruction(intent, titleStr, addressStr, stageStr, typeStr, constructionUidStr);
                 startActivity(intent);
             }
@@ -83,7 +83,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         photoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConstructionExecViewActivity.this, ConstructionExecPhotoViewActivity.class);
+                Intent intent = new Intent(ConstructionExecViewActivity.this, PhotoViewActivity.class);
                 intent = putExtrasConstruction(intent, titleStr, addressStr, stageStr, typeStr, constructionUidStr);
                 startActivity(intent);
             }
@@ -92,7 +92,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         mapCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConstructionExecViewActivity.this, ConstructionExecMapViewActivity.class);
+                Intent intent = new Intent(ConstructionExecViewActivity.this, MapViewActivity.class);
                 intent = putExtrasConstruction(intent, titleStr, addressStr, stageStr, typeStr, constructionUidStr);
                 startActivity(intent);
             }

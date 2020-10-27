@@ -20,8 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.heron.constructmanager.R;
-import com.heron.constructmanager.activities.forms.ConstructionExecReponsabilityFormActivity;
-import com.heron.constructmanager.adapters.ConstructionListAdapter;
+import com.heron.constructmanager.activities.forms.ReponsabilityFormActivity;
 import com.heron.constructmanager.adapters.ResponsabilityListAdapter;
 import com.heron.constructmanager.models.Responsability;
 import com.heron.constructmanager.service.ResponsabilityService;
@@ -76,7 +75,7 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
         addResponsabilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListResponsabilitiesActivity.this, ConstructionExecReponsabilityFormActivity.class);
+                Intent intent = new Intent(ListResponsabilitiesActivity.this, ReponsabilityFormActivity.class);
                 intent.putExtra("constructionUid", constructionUidStr);
                 startActivity(intent);
             }

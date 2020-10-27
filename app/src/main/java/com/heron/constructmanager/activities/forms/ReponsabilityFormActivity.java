@@ -2,7 +2,6 @@ package com.heron.constructmanager.activities.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,20 +19,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 import com.heron.constructmanager.animations.LoadingAnimation;
-import com.heron.constructmanager.models.Responsability;
 import com.heron.constructmanager.models.User;
-import com.heron.constructmanager.service.ConstructionService;
 import com.heron.constructmanager.service.ResponsabilityService;
 import com.heron.constructmanager.service.UserService;
-import com.hootsuite.nachos.NachoTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity {
+public class ReponsabilityFormActivity extends AppCompatActivity {
 
     Spinner spinner;
-    ImageView backArrowImg, deleteImg, checkImg;
+    ImageView backArrowImg, deleteImg, solveImg;
     EditText titleEditText, descEditText, deadlineEditText;
     Button addButton;
 
@@ -54,9 +50,9 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         stateStr = "Aberto";
-        setContentView(R.layout.activity_construction_exec_reponsability_form);
+        setContentView(R.layout.activity_reponsability_form);
         deleteImg = findViewById(R.id.responsability_form_delete);
-        checkImg = findViewById(R.id.responsability_form_solve_img);
+        solveImg = findViewById(R.id.responsability_form_solve_img);
         spinner = findViewById(R.id.responsability_form_responsible_spinner);
         backArrowImg = findViewById(R.id.responsability_form_back_arrow);
         titleEditText = findViewById(R.id.responsability_form_title);
@@ -82,7 +78,7 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
         descEditText.setText(descStr);
         deadlineEditText.setText(deadlineStr);
 
-        validateInput = new ValidateInput(ConstructionExecReponsabilityFormActivity.this, titleEditText, descEditText, deadlineEditText, spinner);
+        validateInput = new ValidateInput(ReponsabilityFormActivity.this, titleEditText, descEditText, deadlineEditText, spinner);
 
         // Listeners
         DatabaseReference usersReference = userService.getUsersReference();
@@ -93,7 +89,7 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
                     String email = childSnapshot.child("email").getValue(String.class);
                     emailsList.add(email);
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ConstructionExecReponsabilityFormActivity.this, android.R.layout.simple_spinner_item, emailsList);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ReponsabilityFormActivity.this, android.R.layout.simple_spinner_item, emailsList);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 spinner.setAdapter(arrayAdapter);
             }
@@ -122,6 +118,16 @@ public class ConstructionExecReponsabilityFormActivity extends AppCompatActivity
             }
         });
 
+        solveImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (infosVerified()) {
+                    getEditTextsContent();
+                    responsabilityService.solveResponsability(constructionUidStr, responsabilityUidStr);
+                    finish();
+                }
+            }
+        });
     }
 
     public boolean infosVerified() {

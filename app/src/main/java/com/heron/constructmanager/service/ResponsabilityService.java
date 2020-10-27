@@ -58,6 +58,13 @@ public class ResponsabilityService {
         });
     }
 
+    public void solveResponsability(String constructionUid, String responsabilityUid) {
+        DatabaseReference responsabilityReference = rootReference.child("constructions").child(constructionUid).child("responsabilities").child(responsabilityUid);
+        responsabilityReference.child("state").setValue(SOLVED).addOnCompleteListener(task -> {
+            showToastMsg(task, SOLVED);
+        });
+    }
+
     //  @@@@@@@@@@ GET REFERENCES @@@@@@@@@@
 
     public DatabaseReference getResponsabilitiesReference(String constructionUid) {
