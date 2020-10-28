@@ -33,18 +33,14 @@ public class ReponsabilityFormActivity extends AppCompatActivity {
     EditText titleEditText, descEditText, deadlineEditText;
     Button addButton;
 
-    List<User> usersList;
     List<String> emailsList;
 
-    FirebaseAuth auth;
-    FirebaseUser user;
     UserService userService;
     ResponsabilityService responsabilityService;
 
     String constructionUidStr, titleStr, descStr, responsibleEmailStr, deadlineStr, stateStr, responsabilityUidStr;
 
     ValidateInput validateInput;
-    LoadingAnimation loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

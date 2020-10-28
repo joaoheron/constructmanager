@@ -5,6 +5,8 @@ import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.heron.constructmanager.activities.forms.ScheduleFormActivity;
 import com.hootsuite.nachos.NachoTextView;
 
 import java.util.ArrayList;
@@ -34,6 +36,12 @@ public class ValidateInput {
         this.emailEditText = e;
         this.passwordEditText = p;
         this.repeatPasswordEditText = rp;
+    }
+
+    public ValidateInput(ScheduleFormActivity c, EditText title, EditText deadline){
+        this.context = c;
+        this.titleEditText = title;
+        this.deadlineEditText = deadline;
     }
 
     public ValidateInput(Context c, EditText t, EditText a, EditText ty, EditText r){

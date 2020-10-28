@@ -14,6 +14,7 @@ public class Responsability {
     public String desc;
     public String deadline;
     public String state;
+    public String responsabilityUid;
 
     public String getTitle() {
         return title;
@@ -31,8 +32,6 @@ public class Responsability {
         this.desc = desc;
     }
 
-    public String responsabilityUid;
-
     public String getResponsabilityUid() {
         return responsabilityUid;
     }
@@ -48,7 +47,6 @@ public class Responsability {
     public void setConstructionUid(String constructionUid) {
         this.constructionUid = constructionUid;
     }
-
 
     public String getResponsibleEmail() {
         return responsibleEmail;
@@ -87,7 +85,6 @@ public class Responsability {
         this.state = state;
     }
 
-    // [START info_to_map]
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();

@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.models.Information;
 import com.heron.constructmanager.models.Responsability;
+import com.heron.constructmanager.models.Schedule;
 import com.heron.constructmanager.models.User;
 
 import java.util.ArrayList;
@@ -20,52 +21,44 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ResponsabilityService {
+public class ScheduleService {
 
     Context context;
     DatabaseReference rootReference;
     FirebaseDatabase db;
     FirebaseAuth auth;
-
+    String WRITE = "Cadastro";
 
     public final String OPEN = "Aberto";
     public final String SOLVED = "Resolvido";
-    public final String WRITE = "Cadastro";
+    public final String LATE = "Atrasado";
 
 
-    public ResponsabilityService(Context c) {
+    public ScheduleService(Context c) {
         context = c;
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         rootReference = db.getReference();
     }
-
-    public void writeResponsability(String constructionUid, String responsabilityUid, String title, String desc, String deadline, String state, String responsibleEmail) {
-        DatabaseReference constructionReference = rootReference.child("constructions").child(constructionUid);
-        if (responsabilityUid == null) {
-            responsabilityUid = constructionReference.child("responsabilities").push().getKey();
+    public void writeSchedule(String constructionUid, String title, String deadline, String state, String scheduleUid) {
+        DatabaseReference schedulesReference = rootReference.child("constructions").child(constructionUid).child("schedules");
+        if (scheduleUid == null) {
+            scheduleUid = schedulesReference.push().getKey();
         }
 
-        Responsability responsability = new Responsability(constructionUid, title, desc, deadline, state, responsibleEmail);
-        Map<String, Object> postValues = responsability.toMap();
+        Schedule schedule = new Schedule(constructionUid, title, deadline, state);
+        Map<String, Object> postValues = schedule.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/responsabilities/" + responsabilityUid, postValues);
+        childUpdates.put(scheduleUid, postValues);
 
-        constructionReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
+        schedulesReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
             showToastMsg(task, WRITE);
         });
     }
 
-    public void solveResponsability(String constructionUid, String responsabilityUid) {
-        DatabaseReference responsabilityReference = rootReference.child("constructions").child(constructionUid).child("responsabilities").child(responsabilityUid);
-        responsabilityReference.child("state").setValue(SOLVED).addOnCompleteListener(task -> {
-            showToastMsg(task, SOLVED);
-        });
-    }
-
-    public DatabaseReference getResponsabilitiesReference(String constructionUid) {
-        return db.getReference().child("constructions").child(constructionUid).child("responsabilities");
+    public DatabaseReference getSchedulesReference(String constructionUid) {
+        return db.getReference().child("constructions").child(constructionUid).child("schedules");
     }
 
     public void showToastMsg(Task task, String action) {

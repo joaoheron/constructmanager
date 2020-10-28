@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.lists.ListResponsabilitiesActivity;
+import com.heron.constructmanager.activities.lists.ListSchedulesActivity;
 
 import java.util.ArrayList;
 
@@ -19,9 +20,9 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
 
     Context context;
     ImageView backArrowImg;
-    CardView infoCard, budgetCard, scheduleCard, photoCard, mapCard, responsiblesCard;
+    CardView infoCard, budgetCard, scheduleCard, photoCard, mapCard, responsabilitiesCard;
     TextView titleTextView, stageTextView, infoTextView, budgetTextView, scheduleTextView, photoTextView, mapTextView, responsiblesTextView;
-    String titleStr, stageStr, addressStr, typeStr, responsiblesStr, constructionUidStr;
+    String titleStr, stageStr, addressStr, typeStr, constructionUidStr;
     ArrayList<String> responsiblesEmailList;
 
     @Override
@@ -39,7 +40,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         scheduleCard  = findViewById(R.id.construction_exec_schedule_card);
         photoCard  = findViewById(R.id.construction_exec_photo_card);
         mapCard  = findViewById(R.id.construction_exec_map_card);
-        responsiblesCard  = findViewById(R.id.construction_exec_responsbile_card);
+        responsabilitiesCard  = findViewById(R.id.construction_exec_responsabilities_card);
 
         if(getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
@@ -74,7 +75,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         scheduleCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConstructionExecViewActivity.this, ScheduleViewAcitivity.class);
+                Intent intent = new Intent(ConstructionExecViewActivity.this, ListSchedulesActivity.class);
                 intent = putExtrasConstruction(intent, titleStr, addressStr, stageStr, typeStr, constructionUidStr);
                 startActivity(intent);
             }
@@ -98,7 +99,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
             }
         });
 
-        responsiblesCard.setOnClickListener(new View.OnClickListener() {
+        responsabilitiesCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConstructionExecViewActivity.this, ListResponsabilitiesActivity.class);
