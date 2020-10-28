@@ -7,7 +7,7 @@
     tools:context=".activities.views.ScheduleViewAcitivity">
 
     <ImageView
-        android:id="@+id/schedule_open_view_back_arrow"
+        android:id="@+id/schedule_view_back_arrow"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
@@ -18,21 +18,8 @@
         app:srcCompat="@drawable/ic_left_arrow"
         tools:ignore="VectorDrawableCompat" />
 
-    <ImageView
-        android:id="@+id/schedule_open_view_edit"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        app:tint="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_time_off"
-        tools:ignore="VectorDrawableCompat" />
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/schedule_open_view_title_card"
+        android:id="@+id/schedule_view_title_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -55,7 +42,7 @@
             app:layout_constraintHorizontal_bias="1.0">
 
             <TextView
-                android:id="@+id/schedule_open_view_title_text"
+                android:id="@+id/schedule_view_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -73,7 +60,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/schedule_open_view_state_card"
+        android:id="@+id/schedule_view_state_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -86,7 +73,7 @@
         app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/schedule_open_view_title_card" >
+        app:layout_constraintTop_toBottomOf="@+id/schedule_view_title_card" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -94,13 +81,13 @@
             app:layout_constraintHorizontal_bias="1.0">
 
             <TextView
-                android:id="@+id/schedule_open_view_state_text"
+                android:id="@+id/schedule_view_state_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/open"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,11 +97,10 @@
 
     </androidx.cardview.widget.CardView>
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/schedule_open_desc_card"
+        android:id="@+id/schedule_deadline_card"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
@@ -122,8 +108,7 @@
         android:layout_marginRight="16dp"
         android:minHeight="50dp"
         app:cardElevation="6dp"
-        app:layout_constraintTop_toBottomOf="@+id/schedule_open_view_state_card"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/schedule_view_state_card">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -131,7 +116,7 @@
             app:layout_constraintHorizontal_bias="1.0">
 
             <TextView
-                android:id="@+id/schedule_open_view_desc_text"
+                android:id="@+id/schedule_view_deadline_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -147,41 +132,37 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
+    <TextView
+        android:id="@+id/schedule_view_delay_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Atrasos"
+        android:textColor="@color/colorPrimary"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_deadline_card" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_schedule_delays_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/schedule_open_deadline_card"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:minHeight="50dp"
-        app:cardElevation="6dp"
-        app:layout_constraintTop_toBottomOf="@+id/schedule_open_desc_card"
-        >
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_view_delay_label" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_bias="1.0">
-
-            <TextView
-                android:id="@+id/schedule_open_view_deadline_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
+    <ImageView
+        android:id="@+id/list_schedule_add_delay_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_deadline_card"
+        app:srcCompat="@drawable/ic_button_add"
+        tools:ignore="VectorDrawableCompat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

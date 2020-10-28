@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Constructmanager">
-        <activity android:name=".activities.views.ResponsabilitySolvedViewActivity"></activity>
+        <activity android:name=".activities.DelayFormActivity"></activity>
+        <activity android:name=".activities.views.ResponsabilitySolvedViewActivity" />
         <activity android:name=".activities.views.ResponsabilityOpenViewActivity" />
         <activity android:name=".activities.forms.ReponsabilityFormActivity" />
         <activity android:name=".activities.forms.PhotoFormActivity" />
