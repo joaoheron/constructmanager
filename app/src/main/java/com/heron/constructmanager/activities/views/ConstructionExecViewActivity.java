@@ -1,9 +1,12 @@
 package com.heron.constructmanager.activities.views;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,17 +18,19 @@ import com.heron.constructmanager.activities.lists.ListBudgetsActivity;
 import com.heron.constructmanager.activities.lists.ListPhotosActivity;
 import com.heron.constructmanager.activities.lists.ListResponsabilitiesActivity;
 import com.heron.constructmanager.activities.lists.ListSchedulesActivity;
+import com.heron.constructmanager.service.ConstructionService;
 
 import java.util.ArrayList;
 
 public class ConstructionExecViewActivity extends AppCompatActivity {
 
     Context context;
-    ImageView backArrowImg;
+    ImageView backArrowImg, deleteImg, newStageImg, cancelImg;
     CardView infoCard, budgetCard, scheduleCard, photoCard, mapCard, responsabilitiesCard;
     TextView titleTextView, stageTextView, infoTextView, budgetTextView, scheduleTextView, photoTextView, mapTextView, responsiblesTextView;
     String titleStr, stageStr, addressStr, typeStr, constructionUidStr;
     ArrayList<String> responsiblesEmailList;
+    ConstructionService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_construction_exec_view);
         context = this;
         responsiblesEmailList = new ArrayList<>();
+        service = new ConstructionService(this);
 
         backArrowImg = findViewById(R.id.construction_exec_view_back_arrow);
         titleTextView = findViewById(R.id.construction_exec_view_title_text);
@@ -43,6 +49,9 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         photoCard  = findViewById(R.id.construction_exec_photo_card);
         mapCard  = findViewById(R.id.construction_exec_map_card);
         responsabilitiesCard  = findViewById(R.id.construction_exec_responsabilities_card);
+        deleteImg = findViewById(R.id.construction_exec_view_delete);
+        newStageImg = findViewById(R.id.construction_exec_view_new_stage);
+        cancelImg = findViewById(R.id.construction_exec_view_cancel);
 
         if(getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
@@ -115,6 +124,78 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionExecViewActivity.this);
+                builder.setTitle("Deletar obra");
+                builder.setMessage("Tem certeza que deseja deletar a obra?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.deleteConstruction(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        cancelImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionExecViewActivity.this);
+                builder.setTitle("Cancelar obra");
+                builder.setMessage("Tem certeza que deseja cancelar a obra?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.cancelConstruction(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        newStageImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionExecViewActivity.this);
+                builder.setTitle("Avançar etapa");
+                builder.setMessage("Tem certeza que deseja avançar a etapa da obra para \"Concluída\"?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.advanceStageToFinished(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
 

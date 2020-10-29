@@ -39,10 +39,12 @@ import static java.lang.String.join;
 public class ConstructionPrepViewActivity extends AppCompatActivity {
 
     Context context;
-    ImageView backArrowImg, editImg;
+    ImageView backArrowImg, deleteImg, newStageImg, cancelImg, editImg;
     TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;
-    String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr;
+    String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr, userUidStr;
     ArrayList<String> responsiblesEmailList;
+
+    ConstructionService service;
 
     FirebaseAuth auth;
     FirebaseDatabase db;
@@ -55,10 +57,12 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_construction_prep_view);
         context = this;
         responsiblesEmailList = new ArrayList<>();
+        service = new ConstructionService(this);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         user = auth.getCurrentUser();
+        userUidStr = user.getUid();
 
         titleTextView = findViewById(R.id.construction_prep_view_title_text);
         stageTextView = findViewById(R.id.construction_prep_view_stage_text);
@@ -67,6 +71,9 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
         responsiblesTextView = findViewById(R.id.construction_prep_view_responsibles_text);
         backArrowImg = findViewById(R.id.construction_prep_view_back_arrow);
         editImg = findViewById(R.id.construction_prep_view_edit);
+        deleteImg = findViewById(R.id.construction_prep_view_delete);
+        newStageImg = findViewById(R.id.construction_prep_view_new_stage);
+        cancelImg = findViewById(R.id.construction_prep_view_cancel);
 
         if (getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
@@ -104,6 +111,79 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
                 context.startActivity(intent);
             }
         });
+
+        deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepViewActivity.this);
+                builder.setTitle("Deletar obra");
+                builder.setMessage("Tem certeza que deseja deletar a obra?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.deleteConstruction(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        cancelImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepViewActivity.this);
+                builder.setTitle("Cancelar obra");
+                builder.setMessage("Tem certeza que deseja cancelar a obra?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.cancelConstruction(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        newStageImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepViewActivity.this);
+                builder.setTitle("Avançar etapa");
+                builder.setMessage("Tem certeza que deseja avançar a etapa da obra para \"Em execução\"?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.advanceStageToExec(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
     }
 
 

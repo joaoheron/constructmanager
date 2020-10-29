@@ -78,9 +78,6 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         typeEditText = findViewById(R.id.construction_prep_type);
         addButton = findViewById(R.id.construction_prep_add_button);
         backArrowImg = findViewById(R.id.construction_prep_back_arrow);
-        deleteImg = findViewById(R.id.construction_prep_delete);
-        newStageImg = findViewById(R.id.construction_prep_new_stage);
-        cancelImg = findViewById(R.id.construction_prep_cancel);
         nachoTextView = findViewById(R.id.construction_prep_nacho_res_text_view);
 
         if(getIntent().getExtras() != null) {
@@ -89,6 +86,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
         }
+
         titleEditText.setText(titleStr);
         addressEditText.setText(addressStr);
         typeEditText.setText(typeStr);
@@ -98,6 +96,7 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         // Loading animation
         loading = new LoadingAnimation(this);
         setUpNachoTextView();
+
         // TODO achar maneira de preencher os chips nas edições
         DatabaseReference usersReference = userService.getUsersReference();
         usersReference.addValueEventListener(new ValueEventListener() {
@@ -147,87 +146,87 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
             }
         });
 
-        deleteImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepFormActivity.this);
-                builder.setTitle("Deletar obra");
-                builder.setMessage("Tem certeza que deseja deletar a obra?");
-                AlertDialog dialog = builder.create();
-                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selectedUsersList = userService.getUsersByEmails(selectedEmailsList, allUsersList);
-                        service.deleteConstruction(userIdStr, constructionUidStr, selectedUsersList);
-                        finish();
-                    }
-                });
-                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
-        });
-
-        cancelImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (infosVerified()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepFormActivity.this);
-                    builder.setTitle("Cancelar obra");
-                    builder.setMessage("Tem certeza que deseja cancelar a obra?");
-                    AlertDialog dialog = builder.create();
-                    dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            getEditTextsContent();
-                            selectedUsersList = userService.getUsersByEmails(selectedEmailsList, allUsersList);
-                            service.cancelConstruction(userIdStr, titleStr, addressStr, typeStr, selectedUsersList, constructionUidStr);
-                            finish();
-                        }
-                    });
-                    dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
-                }
-            }
-        });
-
-        newStageImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (infosVerified()) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepFormActivity.this);
-                    builder.setTitle("Avançar etapa");
-                    builder.setMessage("Tem certeza que deseja avançar a etapa da obra para \"Em execução\"?");
-                    AlertDialog dialog = builder.create();
-                    dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            getEditTextsContent();
-                            selectedUsersList = userService.getUsersByEmails(selectedEmailsList, allUsersList);
-                            service.advanceStageToExec(userIdStr, titleStr, addressStr, typeStr, selectedUsersList, constructionUidStr);
-                            finish();
-                        }
-                    });
-                    dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
-
-                }
-            }
-        });
+//        deleteImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepFormActivity.this);
+//                builder.setTitle("Deletar obra");
+//                builder.setMessage("Tem certeza que deseja deletar a obra?");
+//                AlertDialog dialog = builder.create();
+//                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        selectedUsersList = userService.getUsersByEmails(selectedEmailsList, allUsersList);
+//                        service.deleteConstruction(userIdStr, constructionUidStr);
+//                        finish();
+//                    }
+//                });
+//                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                dialog.show();
+//            }
+//        });
+//
+//        cancelImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (infosVerified()) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepFormActivity.this);
+//                    builder.setTitle("Cancelar obra");
+//                    builder.setMessage("Tem certeza que deseja cancelar a obra?");
+//                    AlertDialog dialog = builder.create();
+//                    dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            getEditTextsContent();
+//                            selectedUsersList = userService.getUsersByEmails(selectedEmailsList, allUsersList);
+//                            service.cancelConstruction(userIdStr, titleStr, addressStr, typeStr, selectedUsersList, constructionUidStr);
+//                            finish();
+//                        }
+//                    });
+//                    dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//                    dialog.show();
+//                }
+//            }
+//        });
+//
+//        newStageImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (infosVerified()) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepFormActivity.this);
+//                    builder.setTitle("Avançar etapa");
+//                    builder.setMessage("Tem certeza que deseja avançar a etapa da obra para \"Em execução\"?");
+//                    AlertDialog dialog = builder.create();
+//                    dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            getEditTextsContent();
+//                            selectedUsersList = userService.getUsersByEmails(selectedEmailsList, allUsersList);
+//                            service.advanceStageToExec(userIdStr, titleStr, addressStr, typeStr, selectedUsersList, constructionUidStr);
+//                            finish();
+//                        }
+//                    });
+//                    dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//                    dialog.show();
+//
+//                }
+//            }
+//        });
 
     }
 
@@ -260,7 +259,6 @@ public class ConstructionPrepFormActivity extends AppCompatActivity {
         boolean address_verified = validateInput.validateAddress();
         boolean type_verified = validateInput.validateType();
         boolean nachoVerified = validateInput.validateNachoTextView();
-
         return title_verified && address_verified && type_verified && nachoVerified;
     }
 

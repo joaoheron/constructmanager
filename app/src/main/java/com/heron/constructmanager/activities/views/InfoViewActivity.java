@@ -1,15 +1,19 @@
 package com.heron.constructmanager.activities.views;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.heron.constructmanager.R;
+import com.heron.constructmanager.service.ConstructionService;
 
 import java.util.ArrayList;
 
@@ -34,7 +38,6 @@ public class InfoViewActivity extends AppCompatActivity {
         addressTextView = findViewById(R.id.construction_exec_info_view_address_text);
         typeTextView = findViewById(R.id.construction_exec_info_view_type_text);
         responsiblesTextView = findViewById(R.id.construction_exec_info_view_responsibles_text);
-        backArrowImg = findViewById(R.id.construction_exec_info_view_back_arrow);
         responsiblesEmailList = new ArrayList<>();
         context = this;
 

@@ -60,7 +60,7 @@ public class ConstructionService {
         });
     }
 
-    public void deleteConstruction(String userId, String constructionUid, List<User> responsibles) {
+    public void deleteConstruction(String constructionUid) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/constructions/" + constructionUid, null);
 
@@ -72,41 +72,34 @@ public class ConstructionService {
 
     //  @@@@@@@@@@ STAGE ACTIONS @@@@@@@@@@
 
-    public void cancelConstruction(String userId, String title, String address, String type, List<User> responsibles, String constructionUid) {
+    public void cancelConstruction(String constructionUid) {
         String stage = "Cancelada";
 
-        Information information = new Information(title, address, type, stage, responsibles);
-        Construction construction = new Construction(information);
-        Map<String, Object> postValues = construction.getInformation().toMap();
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
-
-        rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
+        DatabaseReference informationReference = rootReference.child("constructions").child(constructionUid).child("information");
+        informationReference.child("stage").setValue(stage).addOnCompleteListener(task -> {
             showToastMsg(task, CANCEL);
         });
     }
 
-    public void advanceStageToExec(String userId, String title, String address, String type, List<User> responsibles, String constructionUid) {
+    public void advanceStageToExec(String constructionUid) {
         String stage = "Execução";
 
-        Information information = new Information(title, address, type, stage, responsibles);
-        Construction construction = new Construction(information);
-        Map<String, Object> postValues = construction.getInformation().toMap();
+        DatabaseReference informationReference = rootReference.child("constructions").child(constructionUid).child("information");
+        informationReference.child("stage").setValue(stage).addOnCompleteListener(task -> {
+            showToastMsg(task, NEW_STAGE);
+        });
+    }
 
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
+    public void advanceStageToFinished(String constructionUid) {
+        String stage = "Concluída";
 
-        rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
+        DatabaseReference informationReference = rootReference.child("constructions").child(constructionUid).child("information");
+        informationReference.child("stage").setValue(stage).addOnCompleteListener(task -> {
             showToastMsg(task, NEW_STAGE);
         });
     }
 
     //  @@@@@@@@@@ GET REFERENCES @@@@@@@@@@
-
-//    public DatabaseReference getConstructionsReference(String userUid) {
-//        return db.getReference().child("users").child(userUid).child("constructions");
-//    }
 
     public DatabaseReference getConstructionsReference() {
         return db.getReference().child("constructions");
