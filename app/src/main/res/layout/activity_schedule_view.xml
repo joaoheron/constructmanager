@@ -18,6 +18,33 @@
         app:srcCompat="@drawable/ic_left_arrow"
         tools:ignore="VectorDrawableCompat" />
 
+    <ImageView
+        android:id="@+id/schedule_view_responsabilities_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:tint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_responsibles"
+        tools:ignore="VectorDrawableCompat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/schedule_view_email_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toStartOf="@+id/schedule_view_responsabilities_img"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/colorPrimary"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_email"
+        tools:ignore="VectorDrawableCompat" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/schedule_view_title_card"
         android:layout_width="match_parent"
@@ -167,5 +194,6 @@
         app:layout_constraintTop_toBottomOf="@+id/schedule_deadline_card"
         app:srcCompat="@drawable/ic_button_add"
         tools:ignore="VectorDrawableCompat" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

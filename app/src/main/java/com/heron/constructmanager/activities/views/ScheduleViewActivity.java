@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.DelayFormActivity;
+import com.heron.constructmanager.activities.lists.ListResponsabilitiesActivity;
 import com.heron.constructmanager.activities.lists.ListSchedulesActivity;
 import com.heron.constructmanager.adapters.DelayListAdapter;
 import com.heron.constructmanager.adapters.ScheduleListAdapter;
@@ -41,7 +42,7 @@ import java.util.Date;
 public class ScheduleViewActivity extends AppCompatActivity {
 
     Context context;
-    ImageView backArrowImg, addDelayImg;
+    ImageView backArrowImg, addDelayImg, emailImg, responsabilitiesImg;
     TextView titleTextView, stateTextView, deadlineTextView, delayLabelTextView;
     CardView stateCard;
     RecyclerView recyclerView;
@@ -73,9 +74,10 @@ public class ScheduleViewActivity extends AppCompatActivity {
         deadlineTextView = findViewById(R.id.schedule_view_deadline_text);
         stateCard = findViewById(R.id.schedule_view_state_card);
         delayLabelTextView = findViewById(R.id.schedule_view_delay_label);
-
         backArrowImg = findViewById(R.id.schedule_view_back_arrow);
         addDelayImg = findViewById(R.id.schedule_view_add_delay_button);
+        emailImg = findViewById(R.id.schedule_view_email_button);
+        responsabilitiesImg = findViewById(R.id.schedule_view_responsabilities_img);
         recyclerView = findViewById(R.id.schedule_view_delays_recycler_view);
 
         if (getIntent().getExtras() != null) {
@@ -99,6 +101,7 @@ public class ScheduleViewActivity extends AppCompatActivity {
             showInfoDelayDialog();
             recyclerView.setVisibility(View.VISIBLE);
             addDelayImg.setVisibility(View.VISIBLE);
+            emailImg.setVisibility(View.VISIBLE);
             delayLabelTextView.setVisibility(View.VISIBLE);
             stateCard.setBackgroundColor(ContextCompat.getColor(this, R.color.lightred));
             stateTextView.setText("Atrasado");
@@ -117,6 +120,15 @@ public class ScheduleViewActivity extends AppCompatActivity {
                 Intent intent = new Intent(ScheduleViewActivity.this, DelayFormActivity.class);
                 intent.putExtra("constructionUid", constructionUidStr);
                 intent.putExtra("scheduleUid", scheduleUidStr);
+                startActivity(intent);
+            }
+        });
+
+        responsabilitiesImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ScheduleViewActivity.this, ListResponsabilitiesActivity.class);
+                intent.putExtra("constructionUid", constructionUidStr);
                 startActivity(intent);
             }
         });
