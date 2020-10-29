@@ -6,10 +6,14 @@
     <string name="photo">Fotografias</string>
     <string name="map">Mapa</string>
     <string name="resp">Responsabilidades</string>
+    <string name="responsibles">Responsáveis</string>
     <string name="cancelled">Cancelada</string>
     <string name="exec">Execução</string>
     <string name="deadline">Prazo (dd/mm/YYYY)</string>
     <string name="desc">Descriçao</string>
     <string name="title">Título</string>
     <string name="open">Aberto</string>
+    <string name="late_schedule">Atrasado</string>
+    <string name="reason">Motivo</string>
+    <string name="aditional_info">Informações adicionais</string>
 </resources>
