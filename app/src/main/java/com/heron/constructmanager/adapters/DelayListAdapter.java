@@ -79,6 +79,7 @@ public class DelayListAdapter extends RecyclerView.Adapter<DelayListAdapter.View
         intent.putExtra("isCompensable", delay.isCompensable());
         intent.putExtra("isConcurrent", delay.isConcurrent());
         intent.putExtra("isCritical", delay.isCritical());
+        intent.putExtra("days", delay.getDays());
         intent.putExtra("aditionalInfo", delay.getAditionalInfo());
         return intent;
     }

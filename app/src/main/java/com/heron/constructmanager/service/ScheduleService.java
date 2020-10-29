@@ -59,13 +59,13 @@ public class ScheduleService {
         });
     }
 
-    public void writeDelay(String constructionUid, String scheduleUid, String title, String reason, boolean isExcusable, boolean isCompensable, boolean isConcurrent, boolean isCritical, String aditionalInfo, String delayUid) {
+    public void writeDelay(String constructionUid, String scheduleUid, String title, String reason, boolean isExcusable, boolean isCompensable, boolean isConcurrent, boolean isCritical, int days, String aditionalInfo, String delayUid) {
         DatabaseReference delaysReference = rootReference.child("constructions").child(constructionUid).child("schedules").child(scheduleUid).child("delays");
         if (delayUid == null) {
             delayUid = delaysReference.push().getKey();
         }
 
-        Delay delay = new Delay(constructionUid, scheduleUid, title, reason, isExcusable, isCompensable, isConcurrent, isCritical, aditionalInfo);
+        Delay delay = new Delay(constructionUid, scheduleUid, title, reason, isExcusable, isCompensable, isConcurrent, isCritical, days, aditionalInfo);
         Map<String, Object> postValues = delay.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();

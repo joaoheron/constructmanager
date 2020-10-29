@@ -16,4 +16,5 @@
     <string name="late_schedule">Atrasado</string>
     <string name="reason">Motivo</string>
     <string name="aditional_info">Informações adicionais</string>
+    <string name="delay_days">Dias de atraso estimado</string>
 </resources>

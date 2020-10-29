@@ -159,7 +159,7 @@ public class ScheduleViewActivity extends AppCompatActivity {
     public void showInfoDelayDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleViewActivity.this);
         builder.setTitle("Atenção");
-        builder.setMessage("O cronograma atual está atrasado.\nGerencie os motivos e atribua as resoluções clicando no botão de adicionar.");
+        builder.setMessage("O cronograma atual está atrasado.\nClique no ícone de E-mail para notificar os responsáveis via email;\n\nClique no ícone de Responsabilidades para atribuir as resoluções do cronograma;\n\nClique no ícone de Adicionar para cadastrar e classificar os motivos do atraso.");
         AlertDialog dialog = builder.create();
         dialog.setButton(Dialog.BUTTON_POSITIVE, "Entendi", new DialogInterface.OnClickListener() {
             @Override

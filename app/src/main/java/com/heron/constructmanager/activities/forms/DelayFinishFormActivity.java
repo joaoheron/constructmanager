@@ -15,19 +15,21 @@ import com.heron.constructmanager.service.ScheduleService;
 public class DelayFinishFormActivity extends AppCompatActivity {
 
     ImageView backArrowImg;
-    EditText aditionalInfoEditText;
+    EditText aditionalInfoEditText, daysEditText;
     Button addButton;
 
     ScheduleService service;
 
     String constructionUidStr, scheduleUidStr, titleStr, reasonStr, aditionalInfoStr, delayUidStr;
     boolean isExcusable, isCompensable, isConcurrent, isCritical;
+    int days;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delay_finish_form);
         aditionalInfoEditText = findViewById(R.id.delay_finish_form_aditional_info);
+        daysEditText = findViewById(R.id.delay_finish_form_days);
         addButton = findViewById(R.id.delay_finish_form_add_button);
         backArrowImg = findViewById(R.id.delay_finish_form_back_arrow);
         service = new ScheduleService(this);
@@ -63,6 +65,7 @@ public class DelayFinishFormActivity extends AppCompatActivity {
 
     public void getComponentsContent() {
         aditionalInfoStr = aditionalInfoEditText.getText().toString().trim();
+        days = Integer.valueOf(aditionalInfoEditText.getText().toString().trim());
     }
 
 }

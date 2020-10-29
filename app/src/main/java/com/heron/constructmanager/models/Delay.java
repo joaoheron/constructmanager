@@ -17,13 +17,14 @@ public class Delay {
     boolean isConcurrent;
     boolean isCritical;
     String aditionalInfo;
+    int days;
 
     @Exclude
     String delayUid;
 
     public Delay() {}
 
-    public Delay(String constructionUid, String scheduleUid, String title, String reason, boolean isExcusable, boolean isCompensable, boolean isConcurrent, boolean isCritical, String aditionalInfo){
+    public Delay(String constructionUid, String scheduleUid, String title, String reason, boolean isExcusable, boolean isCompensable, boolean isConcurrent, boolean isCritical, int days, String aditionalInfo){
         this.constructionUid  = constructionUid;
         this.scheduleUid = scheduleUid;
         this.title = title;
@@ -32,7 +33,16 @@ public class Delay {
         this.isCompensable = isCompensable;
         this.isConcurrent = isConcurrent;
         this.isCritical = isCritical;
+        this.days = days;
         this.aditionalInfo = aditionalInfo;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(String days) {
+        this.days = days;
     }
 
     public String getConstructionUid() {
@@ -128,6 +138,7 @@ public class Delay {
         result.put("isCompensable", isCompensable);
         result.put("isConcurrent", isConcurrent);
         result.put("isCritical", isCritical);
+        result.put("days", days);
         result.put("aditionalInfo", aditionalInfo);
         return result;
     }
