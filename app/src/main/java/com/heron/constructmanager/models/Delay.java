@@ -14,20 +14,25 @@ public class Delay {
     String reason;
     boolean isExcusable;
     boolean isCompensable;
+    boolean isConcurrent;
     boolean isCritical;
+    String aditionalInfo;
+
     @Exclude
     String delayUid;
 
     public Delay() {}
 
-    public Delay(String constructionUid, String scheduleUid, String title, String reason, boolean isExcusable, boolean isCompensable, boolean isCritical){
+    public Delay(String constructionUid, String scheduleUid, String title, String reason, boolean isExcusable, boolean isCompensable, boolean isConcurrent, boolean isCritical, String aditionalInfo){
         this.constructionUid  = constructionUid;
         this.scheduleUid = scheduleUid;
         this.title = title;
         this.reason = reason;
         this.isExcusable = isExcusable;
         this.isCompensable = isCompensable;
+        this.isConcurrent = isConcurrent;
         this.isCritical = isCritical;
+        this.aditionalInfo = aditionalInfo;
     }
 
     public String getConstructionUid() {
@@ -36,6 +41,22 @@ public class Delay {
 
     public void setConstructionUid(String constructionUid) {
         this.constructionUid = constructionUid;
+    }
+
+    public boolean isConcurrent() {
+        return isConcurrent;
+    }
+
+    public void setConcurrent(boolean isConcurrent) {
+        this.isConcurrent = isConcurrent;
+    }
+
+    public String getAditionalInfo() {
+        return aditionalInfo;
+    }
+
+    public void setAditionalInfo(String aditionalInfo) {
+        this.aditionalInfo = aditionalInfo;
     }
 
     public String getScheduleUid() {
@@ -105,8 +126,9 @@ public class Delay {
         result.put("reason", reason);
         result.put("isExcusable", isExcusable);
         result.put("isCompensable", isCompensable);
+        result.put("isConcurrent", isConcurrent);
         result.put("isCritical", isCritical);
-
+        result.put("aditionalInfo", aditionalInfo);
         return result;
     }
 

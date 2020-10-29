@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.views.ScheduleViewAcitivity">
+    tools:context=".activities.views.ScheduleViewActivity">
 
     <ImageView
         android:id="@+id/schedule_view_back_arrow"
@@ -138,6 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Atrasos"
+        android:visibility="invisible"
         android:textColor="@color/colorPrimary"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,21 +146,23 @@
         app:layout_constraintTop_toBottomOf="@+id/schedule_deadline_card" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_schedule_delays_recycler_view"
+        android:id="@+id/schedule_view_delays_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/schedule_view_delay_label" />
 
     <ImageView
-        android:id="@+id/list_schedule_add_delay_button"
+        android:id="@+id/schedule_view_add_delay_button"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/schedule_deadline_card"
         app:srcCompat="@drawable/ic_button_add"

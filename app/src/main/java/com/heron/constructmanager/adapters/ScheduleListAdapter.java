@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.heron.constructmanager.R;
-import com.heron.constructmanager.activities.views.ScheduleViewAcitivity;
+import com.heron.constructmanager.activities.views.ScheduleViewActivity;
 import com.heron.constructmanager.models.Schedule;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
             @Override
             public void onClick(View view) {
                 Intent intent;
-                intent = new Intent(context, ScheduleViewAcitivity.class);
+                intent = new Intent(context, ScheduleViewActivity.class);
                 intent = putExtrasSchedule(intent, schedule);
                 context.startActivity(intent);
             }
@@ -68,7 +68,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
             @Override
             public void onClick(View view) {
                 Intent intent;
-                intent = new Intent(context, ScheduleViewAcitivity.class);
+                intent = new Intent(context, ScheduleViewActivity.class);
                 intent = putExtrasSchedule(intent, schedule);
                 context.startActivity(intent);
             }

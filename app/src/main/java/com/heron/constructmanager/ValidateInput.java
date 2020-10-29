@@ -6,7 +6,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.heron.constructmanager.activities.MainActivity;
+import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
+import com.heron.constructmanager.activities.forms.DelayFormActivity;
+import com.heron.constructmanager.activities.forms.ReponsabilityFormActivity;
 import com.heron.constructmanager.activities.forms.ScheduleFormActivity;
+import com.heron.constructmanager.activities.forms.SignUpFormActivity;
+import com.heron.constructmanager.activities.forms.UpdateEmailFormActivity;
 import com.hootsuite.nachos.NachoTextView;
 
 import java.util.ArrayList;
@@ -15,23 +21,23 @@ import java.util.List;
 public class ValidateInput {
 
     Context context;
-    EditText emailEditText, passwordEditText, repeatPasswordEditText, titleEditText, addressEditText, typeEditText, responsiblesEditText, descEditText, deadlineEditText;
+    EditText emailEditText, passwordEditText, repeatPasswordEditText, titleEditText, addressEditText, typeEditText, responsiblesEditText, descEditText, deadlineEditText, reasonEditText;
     NachoTextView nachoTextView ;
     Spinner spinner;
-    String emailStr, pwStr, repeatPwStr, titleStr, addressStr, typeStr, responsiblesStr, spinnerStr, descStr, stateStr, deadlinelineStr;
+    String emailStr, pwStr, repeatPwStr, titleStr, addressStr, typeStr, responsiblesStr, descStr, deadlinelineStr, reasonStr;
 
-    public ValidateInput(Context c, EditText e) {
+    public ValidateInput(UpdateEmailFormActivity c, EditText e) {
         this.context = c;
         this.emailEditText = e;
     }
 
-    public ValidateInput(Context c, EditText e, EditText p) {
+    public ValidateInput(MainActivity c, EditText e, EditText p) {
         this.context = c;
         this.emailEditText = e;
         this.passwordEditText = p;
     }
 
-    public ValidateInput(Context c, EditText e, EditText p, EditText rp){
+    public ValidateInput(SignUpFormActivity c, EditText e, EditText p, EditText rp){
         this.context = c;
         this.emailEditText = e;
         this.passwordEditText = p;
@@ -44,14 +50,15 @@ public class ValidateInput {
         this.deadlineEditText = deadline;
     }
 
-    public ValidateInput(Context c, EditText t, EditText a, EditText ty, EditText r){
-        context = c;
-        titleEditText = t;
-        addressEditText = a;
-        typeEditText = ty;
+
+    public ValidateInput(DelayFormActivity c, EditText title, EditText reason){
+        this.context = c;
+        this.titleEditText = title;
+        this.reasonEditText = reason;
     }
 
-    public ValidateInput(Context c, EditText t, EditText d, EditText dl, Spinner spinner){
+
+    public ValidateInput(ReponsabilityFormActivity c, EditText t, EditText d, EditText dl, Spinner spinner){
         this.context = c;
         this.titleEditText = t;
         this.descEditText = d;
@@ -59,13 +66,14 @@ public class ValidateInput {
         this.spinner = spinner;
     }
 
-    public ValidateInput(Context c, EditText titleEditText, EditText addressEditText, EditText typeEditText, NachoTextView nachoTextView) {
+    public ValidateInput(ConstructionPrepFormActivity c, EditText titleEditText, EditText addressEditText, EditText typeEditText, NachoTextView nachoTextView) {
         this.context = c;
         this.titleEditText = titleEditText;
         this.addressEditText = addressEditText;
         this.typeEditText = typeEditText;
         this.nachoTextView = nachoTextView;
     }
+
 
     public boolean validateNachoTextView(){
         List<String> values = new ArrayList();
@@ -113,6 +121,16 @@ public class ValidateInput {
         titleStr = titleEditText.getText().toString().trim();
         if (titleStr.isEmpty()) {
             Toast.makeText(context, "Preencha o Título.", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validateReason() {
+        reasonStr = reasonEditText.getText().toString().trim();
+        if (reasonStr.isEmpty()) {
+            Toast.makeText(context, "Preencha o Motivo.", Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;

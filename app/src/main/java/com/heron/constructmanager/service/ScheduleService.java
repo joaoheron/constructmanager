@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.heron.constructmanager.models.Construction;
+import com.heron.constructmanager.models.Delay;
 import com.heron.constructmanager.models.Information;
 import com.heron.constructmanager.models.Responsability;
 import com.heron.constructmanager.models.Schedule;
@@ -40,6 +41,7 @@ public class ScheduleService {
         db = FirebaseDatabase.getInstance();
         rootReference = db.getReference();
     }
+
     public void writeSchedule(String constructionUid, String title, String deadline, String state, String scheduleUid) {
         DatabaseReference schedulesReference = rootReference.child("constructions").child(constructionUid).child("schedules");
         if (scheduleUid == null) {
@@ -57,8 +59,29 @@ public class ScheduleService {
         });
     }
 
+    public void writeDelay(String constructionUid, String scheduleUid, String title, String reason, boolean isExcusable, boolean isCompensable, boolean isConcurrent, boolean isCritical, String aditionalInfo, String delayUid) {
+        DatabaseReference delaysReference = rootReference.child("constructions").child(constructionUid).child("schedules").child(scheduleUid).child("delays");
+        if (delayUid == null) {
+            delayUid = delaysReference.push().getKey();
+        }
+
+        Delay delay = new Delay(constructionUid, scheduleUid, title, reason, isExcusable, isCompensable, isConcurrent, isCritical, aditionalInfo);
+        Map<String, Object> postValues = delay.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(delayUid, postValues);
+
+        delaysReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
+            showToastMsg(task, WRITE);
+        });
+    }
+
     public DatabaseReference getSchedulesReference(String constructionUid) {
         return db.getReference().child("constructions").child(constructionUid).child("schedules");
+    }
+
+    public DatabaseReference getDelaysReference(String constructionUid, String scheduleUid) {
+        return db.getReference().child("constructions").child(constructionUid).child("schedules").child(scheduleUid).child("delays");
     }
 
     public void showToastMsg(Task task, String action) {
