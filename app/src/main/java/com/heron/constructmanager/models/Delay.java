@@ -41,7 +41,7 @@ public class Delay {
         return days;
     }
 
-    public void setDays(String days) {
+    public void setDays(int days) {
         this.days = days;
     }
 

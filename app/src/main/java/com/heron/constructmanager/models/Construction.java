@@ -13,9 +13,20 @@ public class Construction {
     List<Responsability> responsabilities;
     @Exclude
     List<Schedule> schedules;
-
+    @Exclude
+    List<Budget> budgets;
     @Exclude
     String constructionUid;
+
+    @Exclude
+    public List<Budget> getBudgets() {
+        return budgets;
+    }
+
+    @Exclude
+    public void setBudgets(List<Budget> budgets) {
+        this.budgets = budgets;
+    }
 
     public Information getInformation(){ return information; }
 

@@ -56,7 +56,7 @@ public class DelayFinishFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getComponentsContent();
-                service.writeDelay(constructionUidStr, scheduleUidStr, titleStr, reasonStr,isExcusable, isCompensable, isConcurrent, isCritical, aditionalInfoStr, delayUidStr);
+                service.writeDelay(constructionUidStr, scheduleUidStr, titleStr, reasonStr,isExcusable, isCompensable, isConcurrent, isCritical, days, aditionalInfoStr, delayUidStr);
                 finish();
             }
         });

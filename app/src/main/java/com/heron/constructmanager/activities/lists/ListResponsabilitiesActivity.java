@@ -43,14 +43,17 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
     FirebaseAuth auth;
     ResponsabilityService responsabilityService;
 
-    String userUidStr, constructionUidStr, titleStr, stageStr;
+    String constructionUidStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_responsabilities);
+        backArrowButton = findViewById(R.id.list_responsabilities_back_arrow);
+        addResponsabilityButton = findViewById(R.id.list_responsabilities_add_button);
         responsabilities = new ArrayList<>();
         responsiblesEmailList = new ArrayList<>();
+        responsabilityService = new ResponsabilityService(this);
         context = this;
 
         if(getIntent().getExtras() != null) {
@@ -59,11 +62,6 @@ public class ListResponsabilitiesActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        userUidStr = auth.getCurrentUser().getUid();
-
-        responsabilityService = new ResponsabilityService(this);
-        backArrowButton = findViewById(R.id.list_responsabilities_back_arrow);
-        addResponsabilityButton = findViewById(R.id.list_responsabilities_add_button);
 
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override

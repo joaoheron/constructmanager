@@ -19,18 +19,10 @@ public class ResponsabilityOpenViewActivity extends AppCompatActivity {
     TextView titleTextView, stateTextView, descTextView, deadlineTextView, responsibleEmailTextView;
     String constructionUidStr, responsabilityUidStr, titleStr, stateStr, descStr, deadlineStr, responsibleEmailStr;
 
-    FirebaseAuth auth;
-    FirebaseUser user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_responsability_open_view);
-
-        context = this;
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-
         titleTextView = findViewById(R.id.responsability_open_view_title_text);
         stateTextView = findViewById(R.id.responsability_open_view_state_text);
         descTextView = findViewById(R.id.responsability_open_view_desc_text);
@@ -38,6 +30,7 @@ public class ResponsabilityOpenViewActivity extends AppCompatActivity {
         responsibleEmailTextView = findViewById(R.id.responsability_open_view_responsible_email_text);
         backArrowImg = findViewById(R.id.responsability_open_view_back_arrow);
         editImg = findViewById(R.id.responsability_open_view_edit);
+        context = this;
 
         if (getIntent().getExtras() != null) {
             constructionUidStr = getIntent().getStringExtra("constructionUid");

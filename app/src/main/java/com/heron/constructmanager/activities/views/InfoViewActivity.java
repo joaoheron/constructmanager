@@ -29,15 +29,14 @@ public class InfoViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_view);
         backArrowImg = findViewById(R.id.list_constructions_back_arrow);
-        responsiblesEmailList = new ArrayList<>();
-        context = this;
-
         titleTextView = findViewById(R.id.construction_exec_info_view_title_text);
         stageTextView = findViewById(R.id.construction_exec_info_view_stage_text);
         addressTextView = findViewById(R.id.construction_exec_info_view_address_text);
         typeTextView = findViewById(R.id.construction_exec_info_view_type_text);
         responsiblesTextView = findViewById(R.id.construction_exec_info_view_responsibles_text);
         backArrowImg = findViewById(R.id.construction_exec_info_view_back_arrow);
+        responsiblesEmailList = new ArrayList<>();
+        context = this;
 
         if(getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");

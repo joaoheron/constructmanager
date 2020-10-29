@@ -7,6 +7,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.heron.constructmanager.activities.MainActivity;
+import com.heron.constructmanager.activities.forms.BudgetFormActivity;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.activities.forms.DelayFormActivity;
 import com.heron.constructmanager.activities.forms.ReponsabilityFormActivity;
@@ -21,10 +22,11 @@ import java.util.List;
 public class ValidateInput {
 
     Context context;
-    EditText emailEditText, passwordEditText, repeatPasswordEditText, titleEditText, addressEditText, typeEditText, responsiblesEditText, descEditText, deadlineEditText, reasonEditText;
+    EditText emailEditText, passwordEditText, repeatPasswordEditText, titleEditText, addressEditText, typeEditText, responsiblesEditText, descEditText, deadlineEditText, reasonEditText, valueEditText;
     NachoTextView nachoTextView ;
     Spinner spinner;
     String emailStr, pwStr, repeatPwStr, titleStr, addressStr, typeStr, responsiblesStr, descStr, deadlinelineStr, reasonStr;
+    float value;
 
     public ValidateInput(UpdateEmailFormActivity c, EditText e) {
         this.context = c;
@@ -42,6 +44,14 @@ public class ValidateInput {
         this.emailEditText = e;
         this.passwordEditText = p;
         this.repeatPasswordEditText = rp;
+    }
+
+
+    public ValidateInput(BudgetFormActivity c, EditText title, EditText desc, EditText value) {
+        this.context = c;
+        this.titleEditText = title;
+        this.descEditText = desc;
+        this.valueEditText = value;
     }
 
     public ValidateInput(ScheduleFormActivity c, EditText title, EditText deadline){
@@ -74,7 +84,6 @@ public class ValidateInput {
         this.nachoTextView = nachoTextView;
     }
 
-
     public boolean validateNachoTextView(){
         List<String> values = new ArrayList();
         values = nachoTextView.getChipValues();
@@ -104,6 +113,20 @@ public class ValidateInput {
         } else {
             return true;
         }
+    }
+
+    public boolean validateValue() {
+        try {
+            value = Float.parseFloat(valueEditText.getText().toString().trim());
+        } catch (Exception e) {
+            Toast.makeText(context, "O valor deve ser composto apenas de números.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (valueEditText.getText().toString().trim().isEmpty()) {
+            Toast.makeText(context, "Preencha o valor.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     public boolean validateDesc() {

@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.heron.constructmanager.R;
+import com.heron.constructmanager.activities.lists.ListBudgetsActivity;
+import com.heron.constructmanager.activities.lists.ListPhotosActivity;
 import com.heron.constructmanager.activities.lists.ListResponsabilitiesActivity;
 import com.heron.constructmanager.activities.lists.ListSchedulesActivity;
 
@@ -66,7 +68,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         budgetCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConstructionExecViewActivity.this, BudgetViewActivity.class);
+                Intent intent = new Intent(ConstructionExecViewActivity.this, ListBudgetsActivity.class);
                 intent = putExtrasConstruction(intent, titleStr, addressStr, stageStr, typeStr, constructionUidStr);
                 startActivity(intent);
             }
@@ -84,7 +86,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
         photoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConstructionExecViewActivity.this, PhotoViewActivity.class);
+                Intent intent = new Intent(ConstructionExecViewActivity.this, ListPhotosActivity.class);
                 intent = putExtrasConstruction(intent, titleStr, addressStr, stageStr, typeStr, constructionUidStr);
                 startActivity(intent);
             }

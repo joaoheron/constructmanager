@@ -13,8 +13,9 @@
     <string name="desc">Descriçao</string>
     <string name="title">Título</string>
     <string name="open">Aberto</string>
-    <string name="late_schedule">Atrasado</string>
+    <string name="on_schedule">Dentro do prazo</string>
     <string name="reason">Motivo</string>
     <string name="aditional_info">Informações adicionais</string>
     <string name="delay_days">Dias de atraso estimado</string>
+    <string name="value">Valor</string>
 </resources>

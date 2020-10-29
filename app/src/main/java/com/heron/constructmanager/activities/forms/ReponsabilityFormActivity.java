@@ -29,7 +29,7 @@ import java.util.List;
 public class ReponsabilityFormActivity extends AppCompatActivity {
 
     Spinner spinner;
-    ImageView backArrowImg, deleteImg, solveImg;
+    ImageView backArrowImg, solveImg;
     EditText titleEditText, descEditText, deadlineEditText;
     Button addButton;
 
@@ -47,7 +47,6 @@ public class ReponsabilityFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         stateStr = "Aberto";
         setContentView(R.layout.activity_reponsability_form);
-        deleteImg = findViewById(R.id.responsability_form_delete);
         solveImg = findViewById(R.id.responsability_form_solve_img);
         spinner = findViewById(R.id.responsability_form_responsible_spinner);
         backArrowImg = findViewById(R.id.responsability_form_back_arrow);

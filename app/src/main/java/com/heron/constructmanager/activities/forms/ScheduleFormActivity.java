@@ -32,12 +32,12 @@ public class ScheduleFormActivity extends AppCompatActivity {
     ScheduleService scheduleService;
     ValidateInput validateInput;
 
-    String constructionUidStr, titleStr, descStr, responsibleEmailStr, deadlineStr, stateStr, scheduleUidStr;
+    String constructionUidStr, titleStr, deadlineStr, stateStr, scheduleUidStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stateStr = "Aberto";
+        stateStr = "Dentro do prazo";
         setContentView(R.layout.activity_schedule_form);
         backArrowImg = findViewById(R.id.schedule_form_back_arrow);
         titleEditText = findViewById(R.id.schedule_form_title);

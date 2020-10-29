@@ -2,22 +2,12 @@ package com.heron.constructmanager.service;
 
 import android.content.Context;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.heron.constructmanager.models.Construction;
-import com.heron.constructmanager.models.Information;
 import com.heron.constructmanager.models.Responsability;
-import com.heron.constructmanager.models.User;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ResponsabilityService {
