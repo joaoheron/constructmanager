@@ -8,9 +8,12 @@ import androidx.annotation.NonNull;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,21 +29,24 @@ import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 import com.heron.constructmanager.activities.HomeActivity;
 import com.heron.constructmanager.models.User;
+import com.heron.constructmanager.service.UserService;
 
 public class SignUpFormActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private DatabaseReference db;
     private FirebaseUser user;
+    UserService service;
 
     String emailStr, pwStr;
+    boolean admin;
 
     EditText signUpEmailEditText, signUpPwEditText, signUpRepeatPwEditText;
     ImageView backArrowImg;
     Button signUpButton;
+    Spinner spinner;
 
     ValidateInput valiteInput;
-    LoadingAnimation loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +57,21 @@ public class SignUpFormActivity extends AppCompatActivity {
         signUpPwEditText = findViewById(R.id.sign_up_password);
         signUpRepeatPwEditText = findViewById(R.id.sign_up_repeat_password);
         backArrowImg = findViewById(R.id.sign_up_back_arrow);
+        spinner = findViewById(R.id.responsability_form_responsible_spinner);
         signUpButton = findViewById(R.id.sign_up_button);
+        spinner = findViewById(R.id.sign_up_admin_spinner);
 
         // Firebase Auth
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference();
-
-        // Animation
-        loading = new LoadingAnimation(this);
+        service = new UserService(this);
 
         // Listeners
         valiteInput = new ValidateInput(SignUpFormActivity.this, signUpEmailEditText, signUpPwEditText, signUpRepeatPwEditText);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.usertypes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         backArrowImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,11 +87,10 @@ public class SignUpFormActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     public void signUpNewAcc() {
-        loading.loadingAnimationDialog();
-
         boolean emailVerified = valiteInput.validateEmail();
         boolean pwVerified = valiteInput.validatePassword();
         boolean repeatPwVerified = valiteInput.validateRepeatPassword();
@@ -90,6 +99,7 @@ public class SignUpFormActivity extends AppCompatActivity {
 
             emailStr = signUpEmailEditText.getText().toString().trim();
             pwStr = signUpPwEditText.getText().toString().trim();
+            admin = (spinner.getSelectedItem().toString().trim().equals("Contratante") ? true : false);
 
             auth.createUserWithEmailAndPassword(emailStr, pwStr)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -97,24 +107,17 @@ public class SignUpFormActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 user = auth.getCurrentUser();
-                                onCompleteSuccess(user);
-                                loading.dismissLoading();
+                                onCompleteSuccess(user, admin);
                             } else {
                                 Toast.makeText(SignUpFormActivity.this, "Erro inesperado. Tente novamente.", Toast.LENGTH_SHORT).show();
-                                loading.dismissLoading();
                             }
                         }
                     });
-        } else {
-            loading.dismissLoading();
         }
     }
 
-    private void onCompleteSuccess(FirebaseUser user) {
-        String username = usernameFromEmail(user.getEmail());
-
-        // Write new user
-        writeNewUser(user.getUid(), username, user.getEmail());
+    private void onCompleteSuccess(FirebaseUser user, boolean admin) {
+        service.writeNewUser(user.getUid(), usernameFromEmail(user.getEmail()), user.getEmail(), admin);
 
         Intent intent = new Intent(SignUpFormActivity.this, HomeActivity.class);
         startActivity(intent);
@@ -128,13 +131,5 @@ public class SignUpFormActivity extends AppCompatActivity {
             return email;
         }
     }
-
-    // [START basic_write]
-    private void writeNewUser(String userId, String name, String email) {
-        User user = new User(name, email);
-        db.child("users").child(userId).setValue(user);
-    }
-    // [END basic_write]
-
 
 }

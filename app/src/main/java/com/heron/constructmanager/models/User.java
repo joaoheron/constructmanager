@@ -39,12 +39,10 @@ public class User {
         this.email = email;
     }
 
-    @Exclude
     public boolean isAdmin() {
         return admin;
     }
 
-    @Exclude
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }

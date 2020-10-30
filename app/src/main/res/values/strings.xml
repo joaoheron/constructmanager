@@ -19,4 +19,9 @@
     <string name="delay_days">Dias de atraso estimado</string>
     <string name="value">Valor</string>
     <string name="finished">Concluída</string>
+    <string name="add">Cadastrar</string>
+    <string-array name="usertypes">
+        <item>Contratante</item>
+        <item>Executor</item>
+    </string-array>
 </resources>

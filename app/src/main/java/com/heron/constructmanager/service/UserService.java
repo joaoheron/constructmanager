@@ -35,6 +35,13 @@ public class UserService {
         rootReference = db.getReference();
     }
 
+    public void writeNewUser(String userUid, String name, String email, boolean admin) {
+        User user = new User(name, email, admin);
+        rootReference.child("users").child(userUid).setValue(user).addOnCompleteListener(task -> {
+            showToastMsg(task, WRITE);
+        });;
+    }
+
     public DatabaseReference getUsersReference() {
         return rootReference.child("users");
     }
