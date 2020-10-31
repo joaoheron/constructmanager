@@ -12,6 +12,7 @@ public class Schedule {
     String constructionUid;
     String title;
     String deadline;
+    String finishDate;
     String state;
     @Exclude
     List<Delay> delays;
@@ -36,6 +37,7 @@ public class Schedule {
         result.put("title", title);
         result.put("deadline", deadline);
         result.put("state", state);
+        result.put("finishDate", finishDate);
 
         return result;
     }
@@ -62,6 +64,14 @@ public class Schedule {
 
     public void setDeadline(String deadline) {
         this.deadline = deadline;
+    }
+
+    public String getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(String finishDate) {
+        this.finishDate = finishDate;
     }
 
     public String getState() {

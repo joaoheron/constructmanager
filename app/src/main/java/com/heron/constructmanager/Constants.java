@@ -27,8 +27,15 @@ public class Constants {
     public static final String PREP = "Preparação";
 
     // Schedule States
-    public static final String OPEN = "Aberto";
-    public static final String SOLVED = "Resolvido";
+    public static final String ON_SCHEDULE = "Dentro do prazo";
     public static final String LATE = "Atrasado";
+    public static final String SOLVED = "Resolvido";
+
+    // Responsability states
+    public static final String OPEN = "Aberto";
+//    public static final String SOLVED = "Resolvido";
+
+
+
 
 }

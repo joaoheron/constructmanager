@@ -1,7 +1,11 @@
 package com.heron.constructmanager.activities.views;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,11 +15,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.ReponsabilityFormActivity;
+import com.heron.constructmanager.service.ResponsabilityService;
 
 public class ResponsabilityOpenViewActivity extends AppCompatActivity {
 
     Context context;
-    ImageView backArrowImg, editImg;
+    ImageView backArrowImg, editImg, solveImg;
+    ResponsabilityService responsabilityService;
     TextView titleTextView, stateTextView, descTextView, deadlineTextView, responsibleEmailTextView;
     String constructionUidStr, responsabilityUidStr, titleStr, stateStr, descStr, deadlineStr, responsibleEmailStr;
 
@@ -30,7 +36,9 @@ public class ResponsabilityOpenViewActivity extends AppCompatActivity {
         responsibleEmailTextView = findViewById(R.id.responsability_open_view_responsible_email_text);
         backArrowImg = findViewById(R.id.responsability_open_view_back_arrow);
         editImg = findViewById(R.id.responsability_open_view_edit);
+        solveImg = findViewById(R.id.responsability_open_view_solve_img);
         context = this;
+        responsabilityService = new ResponsabilityService(this);
 
         if (getIntent().getExtras() != null) {
             constructionUidStr = getIntent().getStringExtra("constructionUid");
@@ -54,6 +62,31 @@ public class ResponsabilityOpenViewActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        solveImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ResponsabilityOpenViewActivity.this);
+                builder.setTitle("Resolver responsabilidade");
+                builder.setMessage("A responsabilidade foi resolvida e finalizada?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        responsabilityService.solveResponsability(constructionUidStr, responsabilityUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
 
         editImg.setOnClickListener(new View.OnClickListener() {
             @Override

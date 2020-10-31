@@ -69,7 +69,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
         updatePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

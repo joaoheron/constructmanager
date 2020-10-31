@@ -19,7 +19,9 @@ import com.heron.constructmanager.models.Responsability;
 import com.heron.constructmanager.models.Schedule;
 import com.heron.constructmanager.models.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +57,15 @@ public class ScheduleService {
         });
     }
 
+    public void solveSchedule(String constructionUid, String scheduleUid) {
+        DatabaseReference scheduleReference = rootReference.child("constructions").child(constructionUid).child("schedules").child(scheduleUid);
+
+        scheduleReference.child("finishDate").setValue(getTodayStringDate());
+        scheduleReference.child("state").setValue(Constants.SOLVED).addOnCompleteListener(task -> {
+            Utils.showToastMsg(context, task, Constants.SOLVED);
+        });
+    }
+
     public void writeDelay(String constructionUid, String scheduleUid, String title, String reason, boolean isExcusable, boolean isCompensable, boolean isConcurrent, boolean isCritical, int days, String aditionalInfo, String delayUid) {
         DatabaseReference delaysReference = rootReference.child("constructions").child(constructionUid).child("schedules").child(scheduleUid).child("delays");
         if (delayUid == null) {
@@ -78,6 +89,12 @@ public class ScheduleService {
 
     public DatabaseReference getDelaysReference(String constructionUid, String scheduleUid) {
         return db.getReference().child("constructions").child(constructionUid).child("schedules").child(scheduleUid).child("delays");
+    }
+
+    public String getTodayStringDate(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return formatter.format(date);
     }
 
 }

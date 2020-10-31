@@ -86,6 +86,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
         intent.putExtra("title", schedule.getTitle());
         intent.putExtra("deadline", schedule.getDeadline());
         intent.putExtra("state", schedule.getState());
+        intent.putExtra("finishDate", schedule.getFinishDate());
         return intent;
     }
 

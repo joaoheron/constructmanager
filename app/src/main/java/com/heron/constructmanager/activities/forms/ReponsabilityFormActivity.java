@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.heron.constructmanager.Constants;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 import com.heron.constructmanager.animations.LoadingAnimation;
@@ -29,7 +30,7 @@ import java.util.List;
 public class ReponsabilityFormActivity extends AppCompatActivity {
 
     Spinner spinner;
-    ImageView backArrowImg, solveImg;
+    ImageView backArrowImg;
     EditText titleEditText, descEditText, deadlineEditText;
     Button addButton;
 
@@ -45,9 +46,8 @@ public class ReponsabilityFormActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stateStr = "Aberto";
+        stateStr = Constants.OPEN;
         setContentView(R.layout.activity_reponsability_form);
-        solveImg = findViewById(R.id.responsability_form_solve_img);
         spinner = findViewById(R.id.responsability_form_responsible_spinner);
         backArrowImg = findViewById(R.id.responsability_form_back_arrow);
         titleEditText = findViewById(R.id.responsability_form_title);
@@ -113,16 +113,6 @@ public class ReponsabilityFormActivity extends AppCompatActivity {
             }
         });
 
-        solveImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (infosVerified()) {
-                    getEditTextsContent();
-                    responsabilityService.solveResponsability(constructionUidStr, responsabilityUidStr);
-                    finish();
-                }
-            }
-        });
     }
 
     public boolean infosVerified() {

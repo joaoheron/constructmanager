@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.heron.constructmanager.Constants;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.DelayFormActivity;
 import com.heron.constructmanager.activities.lists.ListResponsabilitiesActivity;
@@ -42,9 +43,9 @@ import java.util.Date;
 public class ScheduleViewActivity extends AppCompatActivity {
 
     Context context;
-    ImageView backArrowImg, addDelayImg, emailImg, responsabilitiesImg;
-    TextView titleTextView, stateTextView, deadlineTextView, delayLabelTextView;
-    CardView stateCard;
+    ImageView backArrowImg, addDelayImg, emailImg, responsabilitiesImg, solveImg;
+    TextView titleTextView, stateTextView, deadlineTextView, delayLabelTextView, finishDateTextView;
+    CardView stateCard, finishDateCard;
     RecyclerView recyclerView;
 
     LinearLayoutManager linearLayoutManager;
@@ -52,7 +53,7 @@ public class ScheduleViewActivity extends AppCompatActivity {
     ArrayList<Delay> delays;
     DelayListAdapter adapter;
 
-    String constructionUidStr, scheduleUidStr, titleStr, stateStr, deadlineStr;
+    String constructionUidStr, scheduleUidStr, titleStr, stateStr, deadlineStr, finishDateStr;
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -73,10 +74,13 @@ public class ScheduleViewActivity extends AppCompatActivity {
         stateTextView = findViewById(R.id.schedule_view_state_text);
         deadlineTextView = findViewById(R.id.schedule_view_deadline_text);
         stateCard = findViewById(R.id.schedule_view_state_card);
+        finishDateCard = findViewById(R.id.schedule_view_finish_date_card);
         delayLabelTextView = findViewById(R.id.schedule_view_delay_label);
+        finishDateTextView = findViewById(R.id.schedule_view_finish_date_text);
         backArrowImg = findViewById(R.id.schedule_view_back_arrow);
         addDelayImg = findViewById(R.id.schedule_view_add_delay_button);
         emailImg = findViewById(R.id.schedule_view_email_button);
+        solveImg = findViewById(R.id.schedule_view_solve_img);
         responsabilitiesImg = findViewById(R.id.schedule_view_responsabilities_img);
         recyclerView = findViewById(R.id.schedule_view_delays_recycler_view);
 
@@ -86,25 +90,33 @@ public class ScheduleViewActivity extends AppCompatActivity {
             titleStr = getIntent().getStringExtra("title");
             stateStr = getIntent().getStringExtra("state");
             deadlineStr = getIntent().getStringExtra("deadline");
+            finishDateStr = getIntent().getStringExtra("finishDate");
         }
 
         titleTextView.setText(titleStr);
         stateTextView.setText(stateStr);
         deadlineTextView.setText(deadlineStr);
-
+        finishDateTextView.setText(finishDateStr);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         adaptDelaysToView(constructionUidStr, scheduleUidStr);
 
-        if (delayExists(deadlineStr, null)) {
+        if (stateStr != null && stateStr.equals(Constants.SOLVED)) {
+            delayLabelTextView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+            finishDateCard.setVisibility(View.VISIBLE);
+            solveImg.setVisibility(View.INVISIBLE);
+            stateCard.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
+        }
+        else if (delayExists(deadlineStr, null)) {
             showInfoDelayDialog();
             recyclerView.setVisibility(View.VISIBLE);
             addDelayImg.setVisibility(View.VISIBLE);
             emailImg.setVisibility(View.VISIBLE);
             delayLabelTextView.setVisibility(View.VISIBLE);
             stateCard.setBackgroundColor(ContextCompat.getColor(this, R.color.lightred));
-            stateTextView.setText("Atrasado");
+            stateTextView.setText(Constants.LATE);
         }
 
         backArrowImg.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +142,30 @@ public class ScheduleViewActivity extends AppCompatActivity {
                 Intent intent = new Intent(ScheduleViewActivity.this, ListResponsabilitiesActivity.class);
                 intent.putExtra("constructionUid", constructionUidStr);
                 startActivity(intent);
+            }
+        });
+
+        solveImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleViewActivity.this);
+                builder.setTitle("Finalizar cronograma");
+                builder.setMessage("Todas etapas do cronograma foram resolvidas?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        scheduleService.solveSchedule(constructionUidStr, scheduleUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
 
