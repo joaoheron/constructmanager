@@ -16,6 +16,19 @@ public class Responsability {
     public String state;
     public String responsabilityUid;
 
+    public Responsability() {
+        // Default constructor required for calls to DataSnapshot.getValue(Responsability.class)
+    }
+
+    public Responsability(String constructionUid, String title, String desc, String deadline, String state,  String responsibleEmail) {
+        this.constructionUid = constructionUid;
+        this.responsibleEmail = responsibleEmail;
+        this.title = title;
+        this.desc = desc;
+        this.deadline = deadline;
+        this.state = state;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -69,19 +82,6 @@ public class Responsability {
     }
 
     public void setState(String state) {
-        this.state = state;
-    }
-
-    public Responsability() {
-        // Default constructor required for calls to DataSnapshot.getValue(Responsability.class)
-    }
-
-    public Responsability(String constructionUid, String title, String desc, String deadline, String state,  String responsibleEmail) {
-        this.constructionUid = constructionUid;
-        this.responsibleEmail = responsibleEmail;
-        this.title = title;
-        this.desc = desc;
-        this.deadline = deadline;
         this.state = state;
     }
 

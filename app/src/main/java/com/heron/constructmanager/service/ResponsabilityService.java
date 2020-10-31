@@ -6,6 +6,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.heron.constructmanager.Constants;
+import com.heron.constructmanager.Utils;
 import com.heron.constructmanager.models.Responsability;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,12 +18,6 @@ public class ResponsabilityService {
     DatabaseReference rootReference;
     FirebaseDatabase db;
     FirebaseAuth auth;
-
-
-    public final String OPEN = "Aberto";
-    public final String SOLVED = "Resolvido";
-    public final String WRITE = "Cadastro";
-
 
     public ResponsabilityService(Context c) {
         context = c;
@@ -43,28 +39,19 @@ public class ResponsabilityService {
         childUpdates.put("/responsabilities/" + responsabilityUid, postValues);
 
         constructionReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
-            showToastMsg(task, WRITE);
+            Utils.showToastMsg(context, task, Constants.WRITE);
         });
     }
 
     public void solveResponsability(String constructionUid, String responsabilityUid) {
         DatabaseReference responsabilityReference = rootReference.child("constructions").child(constructionUid).child("responsabilities").child(responsabilityUid);
-        responsabilityReference.child("state").setValue(SOLVED).addOnCompleteListener(task -> {
-            showToastMsg(task, SOLVED);
+        responsabilityReference.child("state").setValue(Constants.SOLVED).addOnCompleteListener(task -> {
+            Utils.showToastMsg(context, task, Constants.SOLVED);
         });
     }
 
     public DatabaseReference getResponsabilitiesReference(String constructionUid) {
         return db.getReference().child("constructions").child(constructionUid).child("responsabilities");
-    }
-
-    public void showToastMsg(Task task, String action) {
-        if(task.isSuccessful()){
-            Toast.makeText(context, action + " efetuado com sucesso.", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(context, "Erro tentar realizar " + action + " !", Toast.LENGTH_LONG).show();
-        }
-
     }
 
 }

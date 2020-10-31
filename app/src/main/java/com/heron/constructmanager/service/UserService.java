@@ -10,6 +10,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.heron.constructmanager.Constants;
+import com.heron.constructmanager.Utils;
 import com.heron.constructmanager.models.User;
 
 import java.util.ArrayList;
@@ -21,12 +23,8 @@ public class UserService {
 
     Context context;
     DatabaseReference rootReference;
-    DatabaseReference usersReference;
     FirebaseDatabase db;
     FirebaseAuth auth;
-
-    public final String WRITE = "Cadastro";
-    public final String DELETE = "Remoção";
 
     public UserService(Context c) {
         context = c;
@@ -35,10 +33,10 @@ public class UserService {
         rootReference = db.getReference();
     }
 
-    public void writeNewUser(String userUid, String name, String email, boolean admin) {
-        User user = new User(name, email, admin);
+    public void writeNewUser(String userUid, String name, String email, boolean admin, boolean isEmailVerified) {
+        User user = new User(name, email, admin, isEmailVerified);
         rootReference.child("users").child(userUid).setValue(user).addOnCompleteListener(task -> {
-            showToastMsg(task, WRITE);
+            Utils.showToastMsg(context, task, Constants.WRITE);
         });;
     }
 
@@ -51,7 +49,14 @@ public class UserService {
         childUpdates.put("/users/" + userId, null);
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
-            showToastMsg(task, DELETE);
+            Utils.showToastMsg(context, task, Constants.DELETE);
+        });
+    }
+
+    public void setUserEmailVerified(String userUid) {
+        DatabaseReference userReference = rootReference.child("users").child(userUid);
+        userReference.child("isEmailVerified").setValue(true).addOnCompleteListener(task -> {
+            Utils.showToastMsg(context, task, Constants.UPDATE);
         });
     }
 
@@ -67,13 +72,6 @@ public class UserService {
         return allUsersMatchedEmail;
     }
 
-    public void showToastMsg(Task task, String action) {
-        if(task.isSuccessful()){
-            Toast.makeText(context, action + " efetuado com sucesso.", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(context, "Erro tentar realizar " + action + " !", Toast.LENGTH_LONG).show();
-        }
-    }
 }
 
 

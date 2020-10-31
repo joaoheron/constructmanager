@@ -18,7 +18,6 @@ public class Delay {
     boolean isCritical;
     String aditionalInfo;
     int days;
-
     @Exclude
     String delayUid;
 

@@ -10,6 +10,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.heron.constructmanager.Constants;
+import com.heron.constructmanager.Utils;
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.models.Delay;
 import com.heron.constructmanager.models.Information;
@@ -28,12 +30,6 @@ public class ScheduleService {
     DatabaseReference rootReference;
     FirebaseDatabase db;
     FirebaseAuth auth;
-    String WRITE = "Cadastro";
-
-    public final String OPEN = "Aberto";
-    public final String SOLVED = "Resolvido";
-    public final String LATE = "Atrasado";
-
 
     public ScheduleService(Context c) {
         context = c;
@@ -55,7 +51,7 @@ public class ScheduleService {
         childUpdates.put(scheduleUid, postValues);
 
         schedulesReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
-            showToastMsg(task, WRITE);
+            Utils.showToastMsg(context, task, Constants.WRITE);
         });
     }
 
@@ -72,7 +68,7 @@ public class ScheduleService {
         childUpdates.put(delayUid, postValues);
 
         delaysReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
-            showToastMsg(task, WRITE);
+            Utils.showToastMsg(context, task, Constants.WRITE);
         });
     }
 
@@ -82,15 +78,6 @@ public class ScheduleService {
 
     public DatabaseReference getDelaysReference(String constructionUid, String scheduleUid) {
         return db.getReference().child("constructions").child(constructionUid).child("schedules").child(scheduleUid).child("delays");
-    }
-
-    public void showToastMsg(Task task, String action) {
-        if(task.isSuccessful()){
-            Toast.makeText(context, action + " efetuado com sucesso.", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(context, "Erro tentar realizar " + action + " !", Toast.LENGTH_LONG).show();
-        }
-
     }
 
 }

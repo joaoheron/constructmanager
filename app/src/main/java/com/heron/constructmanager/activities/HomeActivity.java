@@ -11,19 +11,23 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.heron.constructmanager.Constants;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.UpdateEmailFormActivity;
 import com.heron.constructmanager.activities.forms.UpdatePasswordFormActivity;
 import com.heron.constructmanager.activities.lists.ListConstructionsActivity;
+import com.heron.constructmanager.service.UserService;
 
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseUser user;
 
+    UserService userService;
     String emailStr, idStr;
 
     Button updateEmaiilButton, updatePasswordButton, logoutButton, constructionsButton;
@@ -47,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         // Db operations
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
+        userService = new UserService(this);
 
         constructionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +83,18 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 auth.signOut();
                 finish();
+            }
+        });
+
+        verifiedAccountText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user.isEmailVerified()) {
+                    Toast.makeText(HomeActivity.this, Constants.EMAIL_ALREADY_VERIFIED, Toast.LENGTH_LONG).show();
+                } else {
+                    user.sendEmailVerification();
+                    Toast.makeText(HomeActivity.this, Constants.EMAIL_VERIF_SEND, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -117,8 +134,10 @@ public class HomeActivity extends AppCompatActivity {
     public void checkAcccountVerification() {
         boolean verified = user.isEmailVerified();
         if (verified) {
-            verifiedAccountText.setText("Conta verificada");
+            verifiedAccountText.setText(Constants.ACC_VERIFIED);
             verifiedAccountText.setTextColor(getResources().getColor(R.color.green));
+            constructionsButton.setVisibility(View.VISIBLE);
+            userService.setUserEmailVerified(user.getUid());
         }
     }
 
@@ -126,10 +145,8 @@ public class HomeActivity extends AppCompatActivity {
         if (user != null) {
             emailStr = user.getEmail();
             idStr = user.getUid();
-            // Set email and id
             emailText.setText(emailStr);
             idText.setText(idStr);
-            // Set account verification
             checkAcccountVerification();
         }
     }

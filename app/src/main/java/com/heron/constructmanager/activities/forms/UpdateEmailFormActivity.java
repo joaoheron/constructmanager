@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.heron.constructmanager.Constants;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 
@@ -66,9 +66,9 @@ public class UpdateEmailFormActivity extends AppCompatActivity {
                 if (email_verified && user != null) {
                     newEmailStr = newEmailEditText.getText().toString().trim();
                     user.updateEmail(newEmailStr);
-                    Toast.makeText(UpdateEmailFormActivity.this, "E-mail atualizado com sucesso.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateEmailFormActivity.this, Constants.EMAIL_UPDATED, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(UpdateEmailFormActivity.this, "E-mail inválido.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateEmailFormActivity.this, Constants.EMAIL_INVALID, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -77,10 +77,10 @@ public class UpdateEmailFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (user.isEmailVerified()) {
-                    Toast.makeText(UpdateEmailFormActivity.this, "E-mail já foi verificado.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateEmailFormActivity.this, Constants.EMAIL_ALREADY_VERIFIED, Toast.LENGTH_LONG).show();
                 } else {
                     user.sendEmailVerification();
-                    Toast.makeText(UpdateEmailFormActivity.this, "E-mail de verificação enviado.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateEmailFormActivity.this, Constants.EMAIL_VERIF_SEND, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -93,7 +93,7 @@ public class UpdateEmailFormActivity extends AppCompatActivity {
             currentEmailEditText.setEnabled(false);
         }
         else {
-            Toast.makeText(this, "Faça login para continuar.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Constants.PLEASE_LOGIN, Toast.LENGTH_LONG).show();
         }
     }
 

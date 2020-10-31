@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.heron.constructmanager.Constants;
 import com.heron.constructmanager.activities.MainActivity;
 import com.heron.constructmanager.animations.LoadingAnimation;
 import com.heron.constructmanager.R;
@@ -99,25 +100,25 @@ public class SignUpFormActivity extends AppCompatActivity {
 
             emailStr = signUpEmailEditText.getText().toString().trim();
             pwStr = signUpPwEditText.getText().toString().trim();
-            admin = (spinner.getSelectedItem().toString().trim().equals("Contratante") ? true : false);
+            admin = (spinner.getSelectedItem().toString().trim().equals(Constants.CONTRACTOR));
 
             auth.createUserWithEmailAndPassword(emailStr, pwStr)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                user = auth.getCurrentUser();
-                                onCompleteSuccess(user, admin);
-                            } else {
-                                Toast.makeText(SignUpFormActivity.this, "Erro inesperado. Tente novamente.", Toast.LENGTH_SHORT).show();
-                            }
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            user = auth.getCurrentUser();
+                            onCompleteSuccess(user, admin);
+                        } else {
+                            Toast.makeText(SignUpFormActivity.this, Constants.UNEXPECTED_ERROR, Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }
+                });
         }
     }
 
     private void onCompleteSuccess(FirebaseUser user, boolean admin) {
-        service.writeNewUser(user.getUid(), usernameFromEmail(user.getEmail()), user.getEmail(), admin);
+        service.writeNewUser(user.getUid(), usernameFromEmail(user.getEmail()), user.getEmail(), admin, false);
 
         Intent intent = new Intent(SignUpFormActivity.this, HomeActivity.class);
         startActivity(intent);

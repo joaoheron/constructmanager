@@ -3,22 +3,20 @@ package com.heron.constructmanager.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-// [START blog_user_class]
 @IgnoreExtraProperties
 public class User {
 
-//    @Exclude
+    @Exclude
     public String uid;
     public String name;
     public String email;
     boolean admin;
+    boolean isEmailVerified;
 
-//    @Exclude
     public String getUid() {
         return uid;
     }
 
-//    @Exclude
     public void setUid(String uid) {
         this.uid = uid;
     }
@@ -47,6 +45,14 @@ public class User {
         this.admin = admin;
     }
 
+    public boolean isEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setEmailVerified(boolean isEmailVerified) {
+        this.isEmailVerified = isEmailVerified;
+    }
+
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
@@ -55,12 +61,14 @@ public class User {
         this.name = name;
         this.email = email;
         this.admin = false;
+        this.isEmailVerified = false;
     }
 
-    public User(String name, String email, boolean admin) {
+    public User(String name, String email, boolean admin, boolean isEmailVerified) {
         this.name = name;
         this.email = email;
         this.admin = admin;
+        this.isEmailVerified = isEmailVerified;
     }
 
 }

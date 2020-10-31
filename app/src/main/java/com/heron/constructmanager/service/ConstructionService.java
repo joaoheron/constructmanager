@@ -8,6 +8,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.heron.constructmanager.Constants;
+import com.heron.constructmanager.Utils;
 import com.heron.constructmanager.models.Construction;
 import com.heron.constructmanager.models.Information;
 import com.heron.constructmanager.models.User;
@@ -21,17 +23,9 @@ public class ConstructionService {
 
     Context context;
     DatabaseReference rootReference;
-    DatabaseReference constructionsReference;
     FirebaseDatabase db;
     FirebaseAuth auth;
-
     List constructionsList;
-
-    public final String NEW_STAGE = "Avanço de Etapa";
-    public final String WRITE = "Cadastro";
-    public final String DELETE = "Remoção";
-    public final String CANCEL = "Cancelamento";
-
 
     public ConstructionService(Context c) {
         context = c;
@@ -41,10 +35,7 @@ public class ConstructionService {
         constructionsList = new ArrayList<>();
     }
 
-    //  @@@@@@@@@@ WRITE, EDIT AND DELETE @@@@@@@@@@
-
     public void writeConstructionInfo(String userId, String title, String address, String stage, String type, List<User> responsibles, String constructionUid) {
-        // Create new post at /users/$user_id/$construction_id and at /constructions/$construction_id simultaneously
         if (constructionUid == null) {
             constructionUid = rootReference.child("constructions").push().getKey();
         }
@@ -56,7 +47,7 @@ public class ConstructionService {
         childUpdates.put("/constructions/" + constructionUid + "/information", postValues);
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
-            showToastMsg(task, WRITE);
+            Utils.showToastMsg(context, task, Constants.WRITE);
         });
     }
 
@@ -65,41 +56,37 @@ public class ConstructionService {
         childUpdates.put("/constructions/" + constructionUid, null);
 
         rootReference.updateChildren(childUpdates).addOnCompleteListener(task -> {
-            showToastMsg(task, DELETE);
+            Utils.showToastMsg(context, task, Constants.DELETE);
         });
 
     }
 
-    //  @@@@@@@@@@ STAGE ACTIONS @@@@@@@@@@
-
     public void cancelConstruction(String constructionUid) {
-        String stage = "Cancelada";
+        String stage = Constants.CANCELLED;
 
         DatabaseReference informationReference = rootReference.child("constructions").child(constructionUid).child("information");
         informationReference.child("stage").setValue(stage).addOnCompleteListener(task -> {
-            showToastMsg(task, CANCEL);
+            Utils.showToastMsg(context, task, Constants.CANCEL);
         });
     }
 
     public void advanceStageToExec(String constructionUid) {
-        String stage = "Execução";
+        String stage = Constants.EXEC;
 
         DatabaseReference informationReference = rootReference.child("constructions").child(constructionUid).child("information");
         informationReference.child("stage").setValue(stage).addOnCompleteListener(task -> {
-            showToastMsg(task, NEW_STAGE);
+            Utils.showToastMsg(context, task, Constants.NEW_STAGE);
         });
     }
 
     public void advanceStageToFinished(String constructionUid) {
-        String stage = "Concluída";
+        String stage = Constants.FINISHED;
 
         DatabaseReference informationReference = rootReference.child("constructions").child(constructionUid).child("information");
         informationReference.child("stage").setValue(stage).addOnCompleteListener(task -> {
-            showToastMsg(task, NEW_STAGE);
+            Utils.showToastMsg(context, task, Constants.NEW_STAGE);
         });
     }
-
-    //  @@@@@@@@@@ GET REFERENCES @@@@@@@@@@
 
     public DatabaseReference getConstructionsReference() {
         return db.getReference().child("constructions");
@@ -114,13 +101,4 @@ public class ConstructionService {
         return false;
     }
 
-    //  @@@@@@@@@@ TOAST MESSAGES @@@@@@@@@@
-
-    public void showToastMsg(Task task, String action) {
-        if(task.isSuccessful()){
-            Toast.makeText(context, action + " efetuado com sucesso.", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(context, "Erro tentar realizar " + action + " !", Toast.LENGTH_LONG).show();
-        }
-    }
 }
