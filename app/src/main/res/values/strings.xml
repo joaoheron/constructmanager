@@ -5,7 +5,23 @@
     <string name="schedule">Cronograma</string>
     <string name="photo">Fotografias</string>
     <string name="map">Mapa</string>
-    <string name="resp">Responsáveis</string>
+    <string name="resp">Responsabilidades</string>
+    <string name="responsibles">Responsáveis</string>
     <string name="cancelled">Cancelada</string>
     <string name="exec">Execução</string>
+    <string name="deadline">Prazo (dd/mm/YYYY)</string>
+    <string name="desc">Descriçao</string>
+    <string name="title">Título</string>
+    <string name="open">Aberto</string>
+    <string name="on_schedule">Dentro do prazo</string>
+    <string name="reason">Motivo</string>
+    <string name="aditional_info">Informações adicionais</string>
+    <string name="delay_days">Dias de atraso estimado</string>
+    <string name="value">Valor</string>
+    <string name="finished">Concluída</string>
+    <string name="add">Cadastrar</string>
+    <string-array name="usertypes">
+        <item>Contratante</item>
+        <item>Executor</item>
+    </string-array>
 </resources>

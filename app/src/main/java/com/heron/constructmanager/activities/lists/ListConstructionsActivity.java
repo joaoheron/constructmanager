@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,33 +18,36 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.heron.constructmanager.adapters.ConstructionInformationAdapter;
+import com.heron.constructmanager.adapters.ConstructionListAdapter;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.models.Construction;
+import com.heron.constructmanager.models.Responsability;
 import com.heron.constructmanager.models.User;
+import com.heron.constructmanager.service.ConstructionService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListConstructionsActivity extends AppCompatActivity {
 
     Context context;
 
     ArrayList<Construction> constructions;
-    ConstructionInformationAdapter adapter;
+    ArrayList<User> responsibles;
+
+    ConstructionListAdapter adapter;
 
     RecyclerView recyclerView;
 
     Button addConstructionButton;
     ImageView backArrowButton;
 
-    DatabaseReference constructionsReference;
-    FirebaseDatabase db;
     FirebaseUser user;
     FirebaseAuth auth;
+    ConstructionService service;
+
+    String userUidStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,12 @@ public class ListConstructionsActivity extends AppCompatActivity {
         context = this;
 
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
         user = auth.getCurrentUser();
+        userUidStr = auth.getCurrentUser().getUid();
+        service = new ConstructionService(this);
 
         backArrowButton = findViewById(R.id.list_constructions_back_arrow);
         addConstructionButton = findViewById(R.id.list_constructions_add_button);
-//        constructionsReference = db.getReference().child("users").child(user.getUid()).child("constructions");
 
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +85,7 @@ public class ListConstructionsActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        readConstructions();
-
+        adaptConstructionsToView(userUidStr);
     }
 
     @Override
@@ -92,9 +93,11 @@ public class ListConstructionsActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void readConstructions() {
+    // ADAPT CONSTRUCTIONS SHOWN BASED ON USER LOGGED IN
 
-        constructionsReference = db.getReference().child("users").child(user.getUid()).child("constructions");
+    private void adaptConstructionsToView(String userUid) {
+        DatabaseReference constructionsReference = service.getConstructionsReference();
+
         constructionsReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -102,10 +105,21 @@ public class ListConstructionsActivity extends AppCompatActivity {
                 Construction construction;
                 for(DataSnapshot construction_snap : snapshot.getChildren()) {
                     construction = construction_snap.getValue(Construction.class);
-                    construction.setUid(construction_snap.getKey()); // !!!
-                    constructions.add(construction);
+                    construction.setUid(construction_snap.getKey());
+
+                    responsibles = new ArrayList<>();
+                    User responsible;
+                    for(DataSnapshot responsible_snap : construction_snap.child("information").child("responsibles").getChildren()) {
+                        responsible = responsible_snap.getValue(User.class);
+                        responsible.setUid(responsible_snap.child("uid").getValue(String.class));
+                        responsibles.add(responsible);
+                    }
+                    construction.getInformation().setResponsibles(responsibles);
+                    if (service.displayConstructionToUser(userUid, construction)){
+                        constructions.add(construction);
+                    }
                 }
-                adapter = new ConstructionInformationAdapter(constructions, context);
+                adapter = new ConstructionListAdapter(constructions, context);
                 recyclerView.setAdapter(adapter);
             }
 

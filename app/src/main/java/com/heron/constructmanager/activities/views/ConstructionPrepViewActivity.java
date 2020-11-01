@@ -1,12 +1,15 @@
 package com.heron.constructmanager.activities.views;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,27 +32,37 @@ import com.heron.constructmanager.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.lang.String.join;
 
 public class ConstructionPrepViewActivity extends AppCompatActivity {
 
     Context context;
-    ImageView backArrowImg, editImg;
+    ImageView backArrowImg, deleteImg, newStageImg, cancelImg, editImg;
     TextView titleTextView, stageTextView, addressTextView, responsiblesTextView, typeTextView;
-    String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr;
+    String titleStr, stageStr, addressStr, responsiblesStr, typeStr, constructionUidStr, userUidStr;
+    ArrayList<String> responsiblesEmailList;
+
+    ConstructionService service;
 
     FirebaseAuth auth;
     FirebaseDatabase db;
     FirebaseUser user;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_construction_prep_view);
         context = this;
+        responsiblesEmailList = new ArrayList<>();
+        service = new ConstructionService(this);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         user = auth.getCurrentUser();
+        userUidStr = user.getUid();
 
         titleTextView = findViewById(R.id.construction_prep_view_title_text);
         stageTextView = findViewById(R.id.construction_prep_view_stage_text);
@@ -58,20 +71,24 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
         responsiblesTextView = findViewById(R.id.construction_prep_view_responsibles_text);
         backArrowImg = findViewById(R.id.construction_prep_view_back_arrow);
         editImg = findViewById(R.id.construction_prep_view_edit);
+        deleteImg = findViewById(R.id.construction_prep_view_delete);
+        newStageImg = findViewById(R.id.construction_prep_view_new_stage);
+        cancelImg = findViewById(R.id.construction_prep_view_cancel);
 
         if (getIntent().getExtras() != null) {
             titleStr = getIntent().getStringExtra("title");
             stageStr = getIntent().getStringExtra("stage");
             addressStr = getIntent().getStringExtra("address");
             typeStr = getIntent().getStringExtra("type");
-            responsiblesStr = getIntent().getStringExtra("responsibles");
             constructionUidStr = getIntent().getStringExtra("constructionUid");
+            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
         }
 
         titleTextView.setText(titleStr);
         stageTextView.setText(stageStr);
         addressTextView.setText(addressStr);
         typeTextView.setText(typeStr);
+        responsiblesStr = join(", ", responsiblesEmailList);
         responsiblesTextView.setText(responsiblesStr);
 
         backArrowImg.setOnClickListener(new View.OnClickListener() {
@@ -89,11 +106,84 @@ public class ConstructionPrepViewActivity extends AppCompatActivity {
                 intent.putExtra("address", addressStr);
                 intent.putExtra("stage", stageStr);
                 intent.putExtra("type", typeStr);
-                intent.putExtra("responsibles", responsiblesStr);
+                intent.putStringArrayListExtra("responsibles", responsiblesEmailList);
                 intent.putExtra("constructionUid", constructionUidStr);
                 context.startActivity(intent);
             }
         });
+
+        deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepViewActivity.this);
+                builder.setTitle("Deletar obra");
+                builder.setMessage("Tem certeza que deseja deletar a obra?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.deleteConstruction(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        cancelImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepViewActivity.this);
+                builder.setTitle("Cancelar obra");
+                builder.setMessage("Tem certeza que deseja cancelar a obra?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.cancelConstruction(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        newStageImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConstructionPrepViewActivity.this);
+                builder.setTitle("Avançar etapa");
+                builder.setMessage("Tem certeza que deseja avançar a etapa da obra para \"Em execução\"?");
+                AlertDialog dialog = builder.create();
+                dialog.setButton(Dialog.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        service.advanceStageToExec(constructionUidStr);
+                        finish();
+                    }
+                });
+                dialog.setButton(Dialog.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
     }
 
 

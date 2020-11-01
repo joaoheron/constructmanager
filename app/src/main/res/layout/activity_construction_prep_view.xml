@@ -31,6 +31,46 @@
         app:srcCompat="@drawable/ic_edit_card"
         tools:ignore="VectorDrawableCompat" />
 
+    <ImageView
+        android:id="@+id/construction_prep_view_delete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/construction_prep_view_edit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_delete_button"
+        app:tint="@color/colorPrimary"
+        tools:ignore="VectorDrawableCompat" />
+
+
+    <ImageView
+        android:id="@+id/construction_prep_view_new_stage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/construction_prep_view_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_new_stage_button"
+        app:tint="@color/colorPrimary"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageView
+        android:id="@+id/construction_prep_view_cancel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/construction_prep_view_new_stage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cancel_button"
+        app:tint="@color/colorPrimary"
+        tools:ignore="VectorDrawableCompat" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/construction_prep_view_title_card"
         android:layout_width="match_parent"

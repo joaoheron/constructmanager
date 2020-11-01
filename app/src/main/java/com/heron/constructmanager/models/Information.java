@@ -2,7 +2,9 @@ package com.heron.constructmanager.models;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Information {
@@ -10,13 +12,14 @@ public class Information {
     private String address;
     private String type;
     private String stage;
-    private String responsibles;
+    @Exclude
+    private List<User> responsibles;
 
     public Information() {
         // Default constructor required for calls to DataSnapshot.getValue(Construction.class)
     }
 
-    public Information(String title, String address, String type, String stage, String responsibles) {
+    public Information(String title, String address, String type, String stage, List<User> responsibles) {
         this.title = title;
         this.address = address;
         this.type = type;
@@ -56,12 +59,23 @@ public class Information {
         this.stage = stage;
     }
 
-    public String getResponsibles() {
+    @Exclude
+    public List<User> getResponsibles() {
         return responsibles;
     }
 
-    public void setResponsibles(String responsibles) {
+    @Exclude
+    public void setResponsibles(List responsibles) {
         this.responsibles = responsibles;
+    }
+
+    @Exclude
+    public List getResponsiblesEmails() {
+        List<String> responsiblesMails = new ArrayList();
+        for (User user: this.responsibles) {
+            responsiblesMails.add(user.getEmail());
+        }
+        return responsiblesMails;
     }
 
     // [START info_to_map]
