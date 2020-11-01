@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -171,6 +172,7 @@ public class ScheduleViewActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     public boolean delayExists(String deadline, SimpleDateFormat dateFormatter) {
         Date dateDeadline;
         Date dateToday;
@@ -182,7 +184,6 @@ public class ScheduleViewActivity extends AppCompatActivity {
             dateToday = new Date();
 
             if(dateToday.compareTo(dateDeadline) > 0) {
-                System.out.println("O cronograma da obra está atrasado.");
                 return true;
 
             }
