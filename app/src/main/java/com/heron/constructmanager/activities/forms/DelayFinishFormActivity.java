@@ -65,7 +65,7 @@ public class DelayFinishFormActivity extends AppCompatActivity {
 
     public void getComponentsContent() {
         aditionalInfoStr = aditionalInfoEditText.getText().toString().trim();
-        days = Integer.valueOf(aditionalInfoEditText.getText().toString().trim());
+        days = Integer.valueOf(daysEditText.getText().toString().trim());
     }
 
 }
