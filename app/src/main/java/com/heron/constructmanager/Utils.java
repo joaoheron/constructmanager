@@ -14,4 +14,6 @@ public class Utils {
             Toast.makeText(context, Constants.FAILURE + action, Toast.LENGTH_LONG).show();
         }
     }
+
+    public void uploadFile(){}
 }
