@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.heron.constructmanager.Constants;
 import com.heron.constructmanager.R;
 import com.heron.constructmanager.ValidateInput;
 import com.heron.constructmanager.service.ResponsabilityService;
@@ -37,7 +38,7 @@ public class ScheduleFormActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stateStr = "Dentro do prazo";
+        stateStr = Constants.ON_SCHEDULE;
         setContentView(R.layout.activity_schedule_form);
         backArrowImg = findViewById(R.id.schedule_form_back_arrow);
         titleEditText = findViewById(R.id.schedule_form_title);

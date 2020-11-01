@@ -10,6 +10,7 @@ import com.heron.constructmanager.activities.MainActivity;
 import com.heron.constructmanager.activities.forms.BudgetFormActivity;
 import com.heron.constructmanager.activities.forms.ConstructionPrepFormActivity;
 import com.heron.constructmanager.activities.forms.DelayFormActivity;
+import com.heron.constructmanager.activities.forms.PhotoFormActivity;
 import com.heron.constructmanager.activities.forms.ReponsabilityFormActivity;
 import com.heron.constructmanager.activities.forms.ScheduleFormActivity;
 import com.heron.constructmanager.activities.forms.SignUpFormActivity;
@@ -37,6 +38,12 @@ public class ValidateInput {
         this.context = c;
         this.emailEditText = e;
         this.passwordEditText = p;
+    }
+
+    public ValidateInput(PhotoFormActivity c, EditText title, EditText desc) {
+        this.context = c;
+        this.titleEditText = title;
+        this.descEditText = desc;
     }
 
     public ValidateInput(SignUpFormActivity c, EditText e, EditText p, EditText rp){

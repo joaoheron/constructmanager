@@ -42,8 +42,6 @@ public class ListBudgetsActivity extends AppCompatActivity {
     Button addBudgetButton;
     ImageView backArrowButton;
 
-    FirebaseUser user;
-    FirebaseAuth auth;
     BudgetService budgetService;
 
     String constructionUidStr;
