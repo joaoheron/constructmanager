@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.lists.ListSchedulesActivity">
 
-
     <Button
         android:id="@+id/list_schedule_add_button"
         android:layout_width="70dp"

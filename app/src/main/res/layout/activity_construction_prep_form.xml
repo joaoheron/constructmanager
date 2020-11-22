@@ -7,11 +7,9 @@
     android:layout_height="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activities.forms.ConstructionPrepFormActivity"
-    android:padding="40dp">
+    tools:context=".activities.forms.ConstructionPrepFormActivity">
 
     <ImageView
         android:id="@+id/construction_prep_back_arrow"
@@ -85,11 +83,13 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/colorPrimary"
         android:text="Cadastrar"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/construction_prep_nacho_res_text_view" />

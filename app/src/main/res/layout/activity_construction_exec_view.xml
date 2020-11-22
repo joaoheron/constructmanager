@@ -23,7 +23,6 @@
         app:srcCompat="@drawable/ic_left_arrow"
         tools:ignore="VectorDrawableCompat" />
 
-
     <ImageView
         android:id="@+id/construction_exec_view_delete"
         android:layout_width="50dp"
