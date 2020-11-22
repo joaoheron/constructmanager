@@ -92,6 +92,10 @@ public class ConstructionService {
         return db.getReference().child("constructions");
     }
 
+    public DatabaseReference getResponsiblesReference(String constructionUid){
+        return db.getReference().child("constructions").child(constructionUid).child("responsibles");
+    }
+
     public boolean displayConstructionToUser(String userUid, Construction construction) {
         for (int i = 0; i < construction.getInformation().getResponsibles().size(); i++) {
             if (construction.getInformation().getResponsibles().get(i).getUid().equals(userUid)) {

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 public class ListSchedulesActivity extends AppCompatActivity {
     Context context;
 
+    ArrayList<String> responsiblesEmailList;
     ArrayList<Schedule> schedules;
     ScheduleListAdapter adapter;
 
@@ -48,10 +49,12 @@ public class ListSchedulesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_schedules);
         schedules = new ArrayList<>();
+        responsiblesEmailList = new ArrayList<>();
         context = this;
 
         if(getIntent().getExtras() != null) {
             constructionUidStr = getIntent().getStringExtra("constructionUid");
+            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
         }
 
         auth = FirebaseAuth.getInstance();
@@ -106,7 +109,7 @@ public class ListSchedulesActivity extends AppCompatActivity {
                     schedule.setScheduleUid(resp_snap.getKey());
                     schedules.add(schedule);
                 }
-                adapter = new ScheduleListAdapter(schedules, context, constructionUidStr);
+                adapter = new ScheduleListAdapter(schedules, context, constructionUidStr, responsiblesEmailList);
                 recyclerView.setAdapter(adapter);
             }
 

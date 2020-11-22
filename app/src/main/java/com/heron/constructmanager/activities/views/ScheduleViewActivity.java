@@ -34,12 +34,15 @@ import com.heron.constructmanager.adapters.DelayListAdapter;
 import com.heron.constructmanager.adapters.ScheduleListAdapter;
 import com.heron.constructmanager.models.Delay;
 import com.heron.constructmanager.models.Schedule;
+import com.heron.constructmanager.service.ConstructionService;
 import com.heron.constructmanager.service.ScheduleService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static java.lang.String.join;
 
 public class ScheduleViewActivity extends AppCompatActivity {
 
@@ -50,15 +53,20 @@ public class ScheduleViewActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     LinearLayoutManager linearLayoutManager;
+
+    ConstructionService constructionService;
     ScheduleService scheduleService;
+
+    ArrayList<String> responsiblesEmailList;
     ArrayList<Delay> delays;
     DelayListAdapter adapter;
 
-    String constructionUidStr, scheduleUidStr, titleStr, stateStr, deadlineStr, finishDateStr;
+    String constructionUidStr, scheduleUidStr, titleStr, stateStr, deadlineStr, finishDateStr, responsiblesStr;
 
     FirebaseAuth auth;
     FirebaseUser user;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +78,8 @@ public class ScheduleViewActivity extends AppCompatActivity {
 
         linearLayoutManager = new LinearLayoutManager(this);
         scheduleService = new ScheduleService(this);
+        constructionService = new ConstructionService(this);
+        responsiblesEmailList = new ArrayList<String>();
 
         titleTextView = findViewById(R.id.schedule_view_title_text);
         stateTextView = findViewById(R.id.schedule_view_state_text);
@@ -92,6 +102,7 @@ public class ScheduleViewActivity extends AppCompatActivity {
             stateStr = getIntent().getStringExtra("state");
             deadlineStr = getIntent().getStringExtra("deadline");
             finishDateStr = getIntent().getStringExtra("finishDate");
+            responsiblesEmailList = getIntent().getStringArrayListExtra("responsibles");
         }
 
         titleTextView.setText(titleStr);
@@ -100,6 +111,7 @@ public class ScheduleViewActivity extends AppCompatActivity {
         finishDateTextView.setText(finishDateStr);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        responsiblesStr = join(", ", responsiblesEmailList);
 
         adaptDelaysToView(constructionUidStr, scheduleUidStr);
 
@@ -167,6 +179,18 @@ public class ScheduleViewActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
+            }
+        });
+
+        emailImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(Intent.ACTION_SEND);
+                it.putExtra(Intent.EXTRA_EMAIL, new String[]{responsiblesStr});
+                it.putExtra(Intent.EXTRA_SUBJECT, "Construct App - Obra atrasada");
+                it.putExtra(Intent.EXTRA_TEXT, "Insira o texto de comunicação de sua preferência");
+                it.setType("message/rfc822");
+                startActivity(Intent.createChooser(it,"Escolha o aplicativo de e-mail preferido."));
             }
         });
 

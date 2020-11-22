@@ -15,19 +15,22 @@ import com.heron.constructmanager.R;
 import com.heron.constructmanager.activities.views.ScheduleViewActivity;
 import com.heron.constructmanager.models.Schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapter.ViewHolder> {
 
     private final List scheduleList;
     private final String constructionUid;
+    private final ArrayList<String> responsiblesEmailList;
     private final Context context;
 
 
-    public ScheduleListAdapter(List scheduleList, Context context, String constructionUid) {
+    public ScheduleListAdapter(List scheduleList, Context context, String constructionUid, ArrayList<String> responsiblesEmailList) {
         this.scheduleList = scheduleList;
         this.context = context;
         this.constructionUid = constructionUid;
+        this.responsiblesEmailList = responsiblesEmailList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +63,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
             public void onClick(View view) {
                 Intent intent;
                 intent = new Intent(context, ScheduleViewActivity.class);
-                intent = putExtrasSchedule(intent, schedule);
+                intent = putExtrasSchedule(intent, schedule, responsiblesEmailList);
                 context.startActivity(intent);
             }
         });
@@ -69,7 +72,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
             public void onClick(View view) {
                 Intent intent;
                 intent = new Intent(context, ScheduleViewActivity.class);
-                intent = putExtrasSchedule(intent, schedule);
+                intent = putExtrasSchedule(intent, schedule, responsiblesEmailList);
                 context.startActivity(intent);
             }
         });
@@ -80,13 +83,14 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
         return scheduleList.size();
     }
 
-    private Intent putExtrasSchedule(Intent intent, Schedule schedule) {
+    private Intent putExtrasSchedule(Intent intent, Schedule schedule, ArrayList<String> responsiblesEmailList) {
         intent.putExtra("constructionUid", constructionUid);
         intent.putExtra("scheduleUid", schedule.getScheduleUid());
         intent.putExtra("title", schedule.getTitle());
         intent.putExtra("deadline", schedule.getDeadline());
         intent.putExtra("state", schedule.getState());
         intent.putExtra("finishDate", schedule.getFinishDate());
+        intent.putStringArrayListExtra("responsibles", responsiblesEmailList);
         return intent;
     }
 
