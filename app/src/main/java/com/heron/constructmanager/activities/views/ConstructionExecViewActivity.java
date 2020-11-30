@@ -27,7 +27,7 @@ public class ConstructionExecViewActivity extends AppCompatActivity {
     Context context;
     ImageView backArrowImg, deleteImg, newStageImg, cancelImg;
     CardView infoCard, budgetCard, scheduleCard, photoCard, mapCard, responsabilitiesCard;
-    TextView titleTextView, stageTextView, infoTextView, budgetTextView, scheduleTextView, photoTextView, mapTextView, responsiblesTextView;
+    TextView titleTextView, stageTextView;
     String titleStr, stageStr, addressStr, typeStr, constructionUidStr;
     ArrayList<String> responsiblesEmailList;
     ConstructionService service;
