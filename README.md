@@ -1,6 +1,6 @@
 # ConstructManager
 
-ConstructManager is an application to apply concepts described on the [final paper](https://repositorio.ufsc.br/bitstream/handle/123456789/218177/TCC_Final__Version_7329_%281%29.pdf?sequence=1&isAllowed=y) of my Information Systems Bachelor's Degreee at [Federal University of Santa Catarina](https://ufsc.br/).
+ConstructManager is an application designed to apply concepts described in the [final paper](https://repositorio.ufsc.br/bitstream/handle/123456789/218177/TCC_Final__Version_7329_%281%29.pdf?sequence=1&isAllowed=y) of my Information Systems Bachelor's Degreee at [Federal University of Santa Catarina](https://ufsc.br/).
 
 
 ## Abstract
